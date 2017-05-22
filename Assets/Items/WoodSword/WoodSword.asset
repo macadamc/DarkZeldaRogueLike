@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55529042d773cbe40b187168c4dac717, type: 3}
+  m_Name: WoodSword
+  m_EditorClassIdentifier: 
+  onGroundPrefab: {fileID: 1614545392452658, guid: ca1cce8adfad03643b98c7853e283dce,
+    type: 2}
+  itemDescription:
+    itemName: 
+    itemType: 0
+    itemDescription: 
+    itemPanelSize: {x: 0, y: 0}
+  baseCost: 1
+  HeldObj: {fileID: 1104587797487370, guid: 5552879975122d64187c6d3a9ac355a0, type: 2}
+  baseDamage: 1
+  AttackDelay: 0.25
+  knockBack: 1

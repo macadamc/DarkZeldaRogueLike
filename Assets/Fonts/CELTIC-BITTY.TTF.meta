@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: e177f23b1f110c34797190bcb7fc7bfa
+timeCreated: 1494342870
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Celtic Bitty - Modern
+  fontNames:
+  - Celtic Bitty - Modern
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

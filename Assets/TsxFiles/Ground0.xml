@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tileset name="Ground0" tilewidth="16" tileheight="16" tilecount="56">
+ <properties>
+  <property name="Collision" value="self"/>
+ </properties>
+ <image source="../../DawnLike/Objects/Ground0.png" trans="ffffff" width="128" height="112"/>
+</tileset>
