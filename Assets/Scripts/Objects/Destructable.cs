@@ -7,6 +7,7 @@ public class Destructable : ZOrderObject {
 
     public float health = 0f;
     public Stats stats;
+    public StatModifiers statMods;
 
     public bool skipDamageFlash;
     bool flashing;
@@ -51,6 +52,8 @@ public class Destructable : ZOrderObject {
         health = stats.health;
         Spawn(stats.spawnOnCreate);
         audioSource = GetComponent<AudioSource>();
+
+        statMods = new StatModifiers();
     }
 
     public void PlayHurtSFX()

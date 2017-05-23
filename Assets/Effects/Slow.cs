@@ -17,13 +17,14 @@ public class Slow : ActiveEffect {
 
     public override IEnumerator Update()
     {
-        Debug.Log("Slowed :" + target.name);
-        float oldSpd = target.curMaxSpd;
-        target.curMaxSpd = target.stats.moveSpeed * (1f - percentage);
+        float spdMod = target.stats.moveSpeed * percentage;
+
+        target.statMods.maxSpeed -= spdMod;
+        target.statMods.attackDelay += percentage;
 
         yield return new WaitForSeconds(duration);
 
-        target.curMaxSpd = oldSpd;
-        
+        target.statMods.maxSpeed += spdMod;
+        target.statMods.attackDelay -= percentage;
     }
 }

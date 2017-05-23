@@ -53,10 +53,7 @@ public class GameManager : MonoBehaviour {
         pauseManager = GetComponent<PauseManager>();
         levelGenerator = GetComponent<LevelGenerator>();
         audioManager = GetComponent<AudioManager>();
-    }
 
-    public void Start()
-    {
         InGameObjects = GameObject.Find("InGameObjects");
         InGameObjectManager = InGameObjects.GetComponent<InGameObjectManager>();
         if (InGameObjects == null || InGameObjectManager == null)

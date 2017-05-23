@@ -6,7 +6,9 @@ public class EffectManager : MonoBehaviour {
 
     void Start()
     {
-        //Poison p = new Poison(3, 20, GameObject.Find("Player").GetComponent<Entity>());
-        new Slow(4, .75f, GameObject.Find("Player").GetComponent<Entity>());
+        Entity p = GameObject.Find("Player").GetComponent<Entity>();
+
+        new Slow(10, .75f, p);
+        new Poison(2, 10, p);
     }
 }

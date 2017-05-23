@@ -32,8 +32,8 @@ public class Entity : Destructable
     public StateController controller;
     [HideInInspector]
     public bool attack;
-    [HideInInspector]
-    public float curMaxSpd;
+    //[HideInInspector]
+    //public float curMaxSpd;
 
     float stunLockTimer;
     public bool stunLocked;
@@ -77,7 +77,6 @@ public class Entity : Destructable
         activeEffects = new List<ActiveEffect>();
     }
 
-
     // Use this for initialization
     public override void Start()
     {
@@ -89,7 +88,7 @@ public class Entity : Destructable
 
         Equip(weaponName);
 
-        curMaxSpd = stats.moveSpeed;
+        //curMaxSpd = stats.moveSpeed;
     }
 
     // Update is called once per frame
@@ -130,10 +129,10 @@ public class Entity : Destructable
         // curently it uses the lookDir and just moves it out by some Distance;
         atkPos = lookDir * atkSpawnDistance;
 
-        foreach (ActiveEffect effect in activeEffects)
-        {
-            effect.Update();
-        }
+        //foreach (ActiveEffect effect in activeEffects)
+        //{
+        //    effect.Update();
+        //}
     }
 
     void FixedUpdate()
@@ -146,8 +145,9 @@ public class Entity : Destructable
         rb.velocity = moveVector;
         if(rb.velocity.magnitude > 0)
         {
-            if (rb.velocity.magnitude > curMaxSpd)
-                rb.velocity = rb.velocity.normalized * curMaxSpd;
+
+            if (rb.velocity.magnitude > MaxSpeed)//curMaxSpeed
+                rb.velocity = rb.velocity.normalized * MaxSpeed;//curMaxSpeed
         }
 
         UpdateKnockback();
@@ -274,5 +274,19 @@ public class Entity : Destructable
     }
 
 
+    public float MaxSpeed
+    {
+        get
+        {
+            return Mathf.Clamp(stats.moveSpeed + statMods.maxSpeed, 0, Mathf.Infinity);
+        }
+    }
 
+    public float BaseDamage
+    {
+        get
+        {
+            return statMods.damage;
+        }
+    }
 }

@@ -18,7 +18,7 @@ public abstract class RangedBase : ActiveItem {
         HeldSprite = (GameObject)GameObject.Instantiate(itemData.HeldObj, entity.gameObject.transform);
         HeldSprite.transform.localPosition = entity.atkPos;
         HeldSprite.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
-        entity.curMaxSpd = entity.stats.moveSpeed / 8;
+        entity.statMods.maxSpeed -= entity.stats.moveSpeed / 8;
     }
 
     public override void OnAttackHeld(Entity entity)
@@ -28,14 +28,14 @@ public abstract class RangedBase : ActiveItem {
             HeldSprite.transform.localPosition = entity.atkPos;
             HeldSprite.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
         }
-        entity.curMaxSpd = entity.stats.moveSpeed / 8;
+        //entity.curMaxSpd = entity.stats.moveSpeed / 8;
     }
 
     public override void OnAttackEnd(Entity entity)
     {
         CreateProjectile(entity, (entity.lookDir * itemData.baseSpeed) + entity.moveVector);
         DestroyHeldSprite();
-        entity.curMaxSpd = entity.stats.moveSpeed ;
+        entity.statMods.maxSpeed += entity.stats.moveSpeed / 8;
     }
 
     public override void OnHit(Collider2D other, Entity entity, GameObject AttackObject)

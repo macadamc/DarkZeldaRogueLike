@@ -51,7 +51,11 @@ public class PlayerController : MonoBehaviour
 
         if (input.magnitude < deadZone) { input = Vector2.zero; }
 
-        entity.moveVector = input * entity.stats.moveSpeed;
+        if (entity.MaxSpeed > 0)
+        {
+            entity.moveVector = input * entity.MaxSpeed;
+        }
+        
     }
 
     void SetLookDir()

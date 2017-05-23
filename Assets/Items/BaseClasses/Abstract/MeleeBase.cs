@@ -7,10 +7,12 @@ using ShadyPixel.CameraSystem;
 public abstract class MeleeBase : ActiveItem {
 
     new MeleeBaseSO itemData;
+    float spdMod;
 
     public override void Start(Entity entity)
     {
         itemData = (MeleeBaseSO)base.itemData;
+        spdMod = (float)Math.Round(entity.stats.moveSpeed / 1.5f, 2);
     }
 
     public override void OnAttackEnd(Entity entity)
@@ -22,7 +24,7 @@ public abstract class MeleeBase : ActiveItem {
         g.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
         entity.attack = true;
         entity.attackDelay = itemData.AttackDelay;
-        entity.curMaxSpd = entity.stats.moveSpeed;
+        entity.statMods.maxSpeed += spdMod;
     }
 
     public override void OnHit(Collider2D other, Entity entity, GameObject AttackObject)
@@ -59,11 +61,11 @@ public abstract class MeleeBase : ActiveItem {
 
     public override void OnAttackTriggered(Entity entity)
     {
-        entity.curMaxSpd = entity.stats.moveSpeed / 1.5f;
+        entity.statMods.maxSpeed -= spdMod;
     }
 
     public override void OnAttackHeld(Entity entity)
     {
-        entity.curMaxSpd = entity.stats.moveSpeed / 1.5f;
+        //entity.curMaxSpd = entity.stats.moveSpeed / 1.5f;
     }
 }
