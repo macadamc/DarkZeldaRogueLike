@@ -24,6 +24,8 @@ namespace ShadyPixel.CameraSystem
         {
             FindCameraWidthAndHeight();
 
+            targets.Add(GameObject.FindGameObjectWithTag("Player").transform);
+
         }
 
         void FindCameraWidthAndHeight()
@@ -102,6 +104,9 @@ namespace ShadyPixel.CameraSystem
 
         void MoveTowardTargetPosition()
         {
+            if (targets.Count == 0)
+                return;
+
             // checks to see if has bounds. If true, return clamped bounds, if not return unclamped.
             Vector3 newMovePos = Vector2.Lerp(transform.position, GetAverageTargetPosition(true), lerpSpd*Time.deltaTime);
             // keeps z position the same as it was. (z must be less that other gameobjects in order to render right. ( normally camera is set to -10 ) )

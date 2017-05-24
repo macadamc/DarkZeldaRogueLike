@@ -14,12 +14,12 @@ MonoBehaviour:
   onGroundPrefab: {fileID: 1614545392452658, guid: ca1cce8adfad03643b98c7853e283dce,
     type: 2}
   itemDescription:
-    itemName: 
+    itemName: Wood Sword
     itemType: 0
-    itemDescription: 
-    itemPanelSize: {x: 0, y: 0}
+    itemDescription: A wood sword.
+    itemPanelSize: {x: 200, y: 100}
   baseCost: 1
   HeldObj: {fileID: 1104587797487370, guid: 5552879975122d64187c6d3a9ac355a0, type: 2}
   baseDamage: 1
   AttackDelay: 0.25
-  knockBack: 1
+  knockBack: 10

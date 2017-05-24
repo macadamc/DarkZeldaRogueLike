@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ShadyPixel.Astar;
+using UnityEngine.SceneManagement;
 
 public class LevelGenerator : MonoBehaviour {
 
@@ -13,11 +14,24 @@ public class LevelGenerator : MonoBehaviour {
     {
         GameManager.GM.Rng = new DefaultRNG(System.DateTime.Now.GetHashCode());
 
+        SceneManager.sceneLoaded += OnLevelLoad;
+
+    }
+
+    void OnLevelLoad(Scene scene, LoadSceneMode mode)
+    {
         if (CurrentConfig != null)
         {
             GenerateLvL();
         }
-        
+    }
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnLevelLoad;
+    }
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLevelLoad;
     }
 
     public void GenerateLvL ()

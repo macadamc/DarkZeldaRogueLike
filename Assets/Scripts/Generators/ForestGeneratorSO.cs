@@ -282,7 +282,7 @@ public class ForestGeneratorSO : MapGenerator
         //Camera.main.transform.parent.transform.position = new Vector3(sZone.centerPos.x, sZone.centerPos.y, Camera.main.transform.position.z);
 
         // set the player to its starting position.
-        GameObject player = GameObject.Find("Player");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.transform.position = new Vector3(sZone.centerPos.x - (Map.width / 2), sZone.centerPos.y - (Map.height / 2), player.transform.position.z);
 
         //place Map End "Stairs"

@@ -33,7 +33,7 @@ public class BaseInteractable : MonoBehaviour, iInteractable
 
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Entity") == false) { return; }
+        if (other.CompareTag("Player") == false && other.CompareTag("Entity") == false) { return; }
 
         if (interactType == InteractType.ON_ENTER)
         {
@@ -48,7 +48,7 @@ public class BaseInteractable : MonoBehaviour, iInteractable
     }
     public virtual void OnTriggerExit2D(Collider2D other)
     {
-        if(other.CompareTag("Entity") == false) { return; }
+        if (other.CompareTag("Player") == false && other.CompareTag("Entity") == false) { return; }
 
         if (interactType == InteractType.ON_EXIT)
         {

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c54bffdc51504344996dbf021574d0e6, type: 3}
+  m_Name: Chris
+  m_EditorClassIdentifier: 
+  className: Chris
+  description: 'Developer.
+
+    Makes things look nice.'
+  playerPrefab: {fileID: 1524787442566700, guid: 6029150867c126c4799b9633b89ecaed,
+    type: 2}

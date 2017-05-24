@@ -109,5 +109,22 @@ public class PlayerController : MonoBehaviour
             entity.wep.OnAttackEnd(entity);
             attackBool = false;
         }
+
+        onDown = CnInputManager.GetButtonDown("Fire3");
+        if (onDown && entity.wep != null)
+        {
+            entity.wep.OnAttackTriggered(entity);
+            attackBool = true;
+        }
+        if (onDown == false && CnInputManager.GetButton("Fire3") && entity.wep != null)
+        {
+            entity.wep.OnAttackHeld(entity);
+        }
+        if (CnInputManager.GetButton("Fire3") == false && attackBool && entity.wep != null)
+        {
+            entity.wep.OnAttackEnd(entity);
+            attackBool = false;
+        }
+
     }
 }

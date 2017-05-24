@@ -156,7 +156,7 @@ public class Entity : Destructable
         Animate();
 
         
-        if (gameObject.name != "Player")
+        if (gameObject.tag != "Player")
         {
             dist = Vector2.Distance(transform.position, Camera.main.transform.position);
             if (dist >= (Camera.main.orthographicSize * 2)+6)

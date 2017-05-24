@@ -179,9 +179,10 @@ namespace ShadyPixel.Astar
             return grid[x, y];
         }
 
+
         void OnDrawGizmos()
         {
-            Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y));
+            //Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y));
             if (grid != null && displayGridGizmos)
             {
                 foreach (Node n in grid)

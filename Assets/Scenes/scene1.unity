@@ -130,6 +130,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1666246594445468, guid: e45bb541398ac9d46b37b16c74afc32e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e45bb541398ac9d46b37b16c74afc32e, type: 2}
   m_IsPrefabParent: 0
@@ -172,31 +176,13 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1181736895399172, guid: 0930538bdf069f143a9b33787ef59584, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0930538bdf069f143a9b33787ef59584, type: 2}
   m_IsPrefabParent: 0
---- !u!84 &923989077
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: SpriteLightKit RT
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_Width: 766
-  m_Height: 479
-  m_AntiAliasing: 1
-  m_DepthFormat: 0
-  m_ColorFormat: 0
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_TextureSettings:
-    m_FilterMode: 0
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapMode: 1
 --- !u!1001 &1153306641
 Prefab:
   m_ObjectHideFlags: 0
@@ -204,6 +190,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114072736348378320, guid: 3d4613150b62b224aa2573fd59dea0ca,
+        type: 2}
+      propertyPath: targets.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4216878743237008, guid: 3d4613150b62b224aa2573fd59dea0ca, type: 2}
       propertyPath: m_LocalPosition.x
       value: 14
@@ -241,26 +232,16 @@ Prefab:
       propertyPath: targets.Array.data[0]
       value: 
       objectReference: {fileID: 1198925487}
-    - target: {fileID: 114626191569548436, guid: 3d4613150b62b224aa2573fd59dea0ca,
-        type: 2}
-      propertyPath: spriteLightRT
-      value: 
-      objectReference: {fileID: 923989077}
     - target: {fileID: 20929674518203920, guid: 3d4613150b62b224aa2573fd59dea0ca,
         type: 2}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 923989077}
-    - target: {fileID: 20560482750851072, guid: 3d4613150b62b224aa2573fd59dea0ca,
+      objectReference: {fileID: 1336201505}
+    - target: {fileID: 114626191569548436, guid: 3d4613150b62b224aa2573fd59dea0ca,
         type: 2}
-      propertyPath: orthographic size
-      value: 7.484375
-      objectReference: {fileID: 0}
-    - target: {fileID: 20929674518203920, guid: 3d4613150b62b224aa2573fd59dea0ca,
-        type: 2}
-      propertyPath: orthographic size
-      value: 7.484375
-      objectReference: {fileID: 0}
+      propertyPath: spriteLightRT
+      value: 
+      objectReference: {fileID: 1336201505}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d4613150b62b224aa2573fd59dea0ca, type: 2}
   m_IsPrefabParent: 0
@@ -269,6 +250,28 @@ Transform:
   m_PrefabParentObject: {fileID: 4214051455865216, guid: 6029150867c126c4799b9633b89ecaed,
     type: 2}
   m_PrefabInternal: {fileID: 1692929715}
+--- !u!84 &1336201505
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: SpriteLightKit RT
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_Width: 806
+  m_Height: 504
+  m_AntiAliasing: 1
+  m_DepthFormat: 0
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_TextureSettings:
+    m_FilterMode: 0
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapMode: 1
 --- !u!1001 &1407146329
 Prefab:
   m_ObjectHideFlags: 0
@@ -326,14 +329,14 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1644569314
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1644569313}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 941e460dbee981948ae2511118522452, type: 3}
   m_Name: 
@@ -390,10 +393,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114944827350223732, guid: 6029150867c126c4799b9633b89ecaed,
-        type: 2}
-      propertyPath: weaponName
-      value: WoodSword
+    - target: {fileID: 1524787442566700, guid: 6029150867c126c4799b9633b89ecaed, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6029150867c126c4799b9633b89ecaed, type: 2}
