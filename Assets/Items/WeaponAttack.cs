@@ -8,6 +8,7 @@ public class WeaponAttack : MonoBehaviour {
     public Entity owner;
     [HideInInspector]
     public Destructable d_owner;
+    public ActiveItem weapon;
 
     void Awake()
     {
@@ -22,6 +23,6 @@ public class WeaponAttack : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        owner.wep.OnHit(other, owner, gameObject);
+        weapon.OnHit(other, owner, gameObject);
     }
 }

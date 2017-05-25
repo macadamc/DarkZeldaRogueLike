@@ -53,7 +53,8 @@ public class Entity : Destructable
     //when the entity is created this creates whatever item the name is and equips it.
     public string weaponName;
     // Equiped Weapon;
-    public ActiveItem wep;
+    //public ActiveItem wep;
+    public ActiveItem[] weapons;
     public List<Item> inventory;
 
     public iInteractable targetInteractable;
@@ -73,6 +74,7 @@ public class Entity : Destructable
         {
             asm = Assembly.Load("Assembly-CSharp");
         }
+        weapons = new ActiveItem[2];
         inventory = new List<Item>();
         activeEffects = new List<ActiveEffect>();
     }
@@ -86,7 +88,8 @@ public class Entity : Destructable
         controller = GetComponent<StateController>();
         base.Start();
 
-        Equip(weaponName);
+        Equip(weaponName, 0);
+        Equip("PoisonBow", 1);
 
         //curMaxSpd = stats.moveSpeed;
     }
@@ -156,7 +159,7 @@ public class Entity : Destructable
         Animate();
 
         
-        if (gameObject.tag != "Player")
+        if (CompareTag("Player"))
         {
             dist = Vector2.Distance(transform.position, Camera.main.transform.position);
             if (dist >= (Camera.main.orthographicSize * 2)+6)
@@ -243,7 +246,8 @@ public class Entity : Destructable
 
     }
 
-    public void Equip(string Name)
+
+    public void Equip(string Name, int slot)
     {
         if (items.wepKeys.Contains(Name))
         {
@@ -253,17 +257,17 @@ public class Entity : Destructable
             int i = items.wepKeys.IndexOf(Name);
             if (i < 0) { return; }
             ActiveItemSO wepSO = items.weapons[i];
-            wep = (ActiveItem)asm.CreateInstance(Name);
-            wep.itemData = wepSO;
-            wep.Start(this);
-            wep.OnEquip(this);
+            weapons[slot] = (ActiveItem)asm.CreateInstance(Name);
+            weapons[slot].itemData = wepSO;
+            weapons[slot].Start(this);
+            weapons[slot].OnEquip(this);
         }
     }
 
-    public void Equip(ActiveItem Weapon)
+    public void Equip(ActiveItem Weapon, int slot)
     {
-        wep = Weapon;
-        wep.OnEquip(this);
+        weapons[slot] = Weapon;
+        weapons[slot].OnEquip(this);
     }
 
     public void UnEquip() { }

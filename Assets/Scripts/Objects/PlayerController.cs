@@ -10,8 +10,11 @@ public class PlayerController : MonoBehaviour
     Entity entity;
     public bool strafe;
     bool attackBool;
+    bool isInteracting;
     public float deadZone = 0.2f;
     public bool dead;
+
+    int _ActiveItemSlot;
 
     void Start()
     {
@@ -81,48 +84,81 @@ public class PlayerController : MonoBehaviour
     {
         if(entity.targetInteractable != null)
         {
+            bool fire2Down = CnInputManager.GetButtonDown("Fire2");
+            bool fire2Up = CnInputManager.GetButtonUp("Fire2");
 
-            if (CnInputManager.GetButtonDown("Fire1"))
+            bool fire3Down = CnInputManager.GetButtonDown("Fire3");
+            bool fire3Up = CnInputManager.GetButtonUp("Fire3");
+
+            if (fire2Down || fire3Down)
             {
+                isInteracting = true;
+
+                if(fire2Down)
+                {
+                    _ActiveItemSlot = 0;
+                }
+                else if (fire3Down)
+                {
+                    _ActiveItemSlot = 1;
+                }
+            }
+
+            if ((fire2Up || fire3Up) && isInteracting)
+            {
+                isInteracting = false;
+
+                if (entity.targetInteractable is ItemPickup)
+                {
+                    ((ItemPickup)entity.targetInteractable).activeItemSlot = _ActiveItemSlot;
+                }
+
                 entity.Interact();
             }
+            
         }
     }
 
     void CheckForAttacks()
     {
-        if (entity.attackDelay > 0)
+        if (entity.attackDelay > 0 || isInteracting)
             return;
 
         bool onDown = CnInputManager.GetButtonDown("Fire2");
-        if (onDown && entity.wep != null)
+        bool onHeld = CnInputManager.GetButton("Fire2");
+        bool onUp = CnInputManager.GetButtonUp("Fire2");
+        ActiveItem weapon = entity.weapons[0];
+        if (onDown && attackBool == false && weapon != null)
         {
-            entity.wep.OnAttackTriggered(entity);
+            weapon.OnAttackTriggered(entity);
             attackBool = true;
         }
-        if (onDown == false && CnInputManager.GetButton("Fire2") && entity.wep != null)
+        if (onDown == false && onHeld && attackBool && weapon != null)
         {
-            entity.wep.OnAttackHeld(entity);
+            weapon.OnAttackHeld(entity);
         }
-        if (CnInputManager.GetButton("Fire2") == false && attackBool && entity.wep != null)
+        if (onUp && attackBool && weapon != null)
         {
-            entity.wep.OnAttackEnd(entity);
+            weapon.OnAttackEnd(entity);
             attackBool = false;
         }
 
         onDown = CnInputManager.GetButtonDown("Fire3");
-        if (onDown && entity.wep != null)
+        onHeld = CnInputManager.GetButton("Fire3");
+        onUp = CnInputManager.GetButtonUp("Fire3");
+        weapon = entity.weapons[1];
+        if (onDown && attackBool == false && weapon != null)
         {
-            entity.wep.OnAttackTriggered(entity);
+            weapon.OnAttackTriggered(entity);
             attackBool = true;
         }
-        if (onDown == false && CnInputManager.GetButton("Fire3") && entity.wep != null)
+        if (onDown == false && onHeld && attackBool && weapon != null)
         {
-            entity.wep.OnAttackHeld(entity);
+            weapon.OnAttackHeld(entity);
         }
-        if (CnInputManager.GetButton("Fire3") == false && attackBool && entity.wep != null)
+        if (onUp && attackBool && weapon != null)
         {
-            entity.wep.OnAttackEnd(entity);
+            weapon.OnAttackEnd(entity);
             attackBool = false;
         }
 

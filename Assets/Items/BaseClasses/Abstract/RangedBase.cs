@@ -16,6 +16,7 @@ public abstract class RangedBase : ActiveItem {
         }
 
         HeldSprite = (GameObject)GameObject.Instantiate(itemData.HeldObj, entity.gameObject.transform);
+
         HeldSprite.transform.localPosition = entity.atkPos;
         HeldSprite.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
         entity.statMods.maxSpeed -= entity.stats.moveSpeed / 8;
@@ -93,6 +94,7 @@ public abstract class RangedBase : ActiveItem {
         arrow.GetComponent<DestroyAfterTime>().time = itemData.MaxFlightTime;
         arrow.GetComponent<Rigidbody2D>().velocity = velocityVector;
         arrow.GetComponent<WeaponAttack>().d_owner = entity.gameObject.GetComponent<Destructable>();
+        arrow.GetComponent<WeaponAttack>().weapon = this;
     }
     public void DestroyHeldSprite()
     {

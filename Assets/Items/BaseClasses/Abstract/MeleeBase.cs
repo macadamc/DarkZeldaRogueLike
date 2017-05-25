@@ -25,6 +25,7 @@ public abstract class MeleeBase : ActiveItem {
         entity.attack = true;
         entity.attackDelay = itemData.AttackDelay;
         entity.statMods.maxSpeed += spdMod;
+        g.GetComponent<WeaponAttack>().weapon = this;
     }
 
     public override void OnHit(Collider2D other, Entity entity, GameObject AttackObject)

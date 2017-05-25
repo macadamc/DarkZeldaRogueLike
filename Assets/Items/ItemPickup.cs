@@ -8,8 +8,8 @@ public class ItemPickup : BasePickup
 
     public static Assembly asm;
     public ItemSO itemData;
-
     bool inTrigger;
+    public int activeItemSlot;
 
     public override void Awake()
     {
@@ -17,6 +17,14 @@ public class ItemPickup : BasePickup
         if (asm == null)
         {
             asm = Assembly.Load("Assembly-CSharp");
+        }
+    }
+
+    void Update()
+    {
+        if (inTrigger)
+        {
+            GameManager.GM.itemPanel.SetPanel(transform.position, itemData.itemDescription);
         }
     }
 
@@ -33,11 +41,38 @@ public class ItemPickup : BasePickup
 
         if (item is ActiveItem)
         {
-            owner.Equip((ActiveItem)item);
+            owner.Equip((ActiveItem)item, activeItemSlot);
         }
+
         inTrigger = false;
         GameManager.GM.itemPanel.HidePanel();
         Destroy(gameObject);
+    }
+
+    public override void OnTriggerEnter2D(Collider2D other)
+    {
+        base.OnTriggerEnter2D(other);
+        if (other.CompareTag("Player"))
+        {
+            if (other.GetComponent<PlayerController>())
+            {
+                GameManager.GM.itemPanel.SetPanel(transform.position, itemData.itemDescription);
+                inTrigger = true;
+            }
+        }
+    }
+
+    public override void OnTriggerExit2D(Collider2D other)
+    {
+        base.OnTriggerExit2D(other);
+        if (other.CompareTag("Player"))
+        {
+            if (other.GetComponent<PlayerController>())
+            {
+                GameManager.GM.itemPanel.HidePanel();
+                inTrigger = false;
+            }
+        }
     }
 
     Item CreateItem(string name, Entity owner)
@@ -49,37 +84,5 @@ public class ItemPickup : BasePickup
         return i;
     }
 
-    public override void OnTriggerEnter2D(Collider2D other)
-    {
-        base.OnTriggerEnter2D(other);
-        if(other.CompareTag("Entity"))
-        {
-            if(other.GetComponent<PlayerController>())
-            {
-                GameManager.GM.itemPanel.SetPanel(transform.position, itemData.itemDescription);
-                inTrigger = true;
-            }
-        }
-    }
-
-    void Update()
-    {
-        if(inTrigger)
-        {
-            GameManager.GM.itemPanel.SetPanel( transform.position , itemData.itemDescription);
-        }
-    }
-
-    public override void OnTriggerExit2D(Collider2D other)
-    {
-        base.OnTriggerExit2D(other);
-        if (other.CompareTag("Entity"))
-        {
-            if (other.GetComponent<PlayerController>())
-            {
-                GameManager.GM.itemPanel.HidePanel();
-                inTrigger = false;
-            }
-        }
-    }
+    
 }

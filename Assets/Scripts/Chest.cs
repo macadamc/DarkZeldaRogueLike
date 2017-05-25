@@ -11,6 +11,7 @@ public class Chest : BaseInteractable
     public int seed;
     DefaultRNG rng;
 
+    public Collider2D trigger;
     public Sprite openSprite;
     public Sprite closedSprite;
     SpriteRenderer rend;
@@ -43,6 +44,7 @@ public class Chest : BaseInteractable
         rend = gameObject.transform.parent.gameObject.GetComponent<SpriteRenderer>();
         rend.sprite = closedSprite;
         allItems = GameObject.Find("Manager").GetComponent<GameManager>().itemsMetaData;
+        trigger = GetComponent<Collider2D>();
     }
 
     public override void Interact(Entity other)
@@ -59,6 +61,9 @@ public class Chest : BaseInteractable
             StartCoroutine("CreateContents");
             triggered = true;
             PlaySFX(interactSFX);
+
+            other.targetInteractable = null;
+            trigger.enabled = false;
         }
 
     }
@@ -78,41 +83,6 @@ public class Chest : BaseInteractable
             rend.sprite = closedSprite;
             //Debug.Log("Chest Closed!!");
         }
-    }
-
-    //from resources
-    GameObject CreatePickup(string name, float MinForce, float ForceRange)
-    {
-        if (!source.isPlaying)
-            PlaySFX(chestSpawnSFX);
-
-        GameObject item = (GameObject)Instantiate(Resources.Load(name));
-        item.transform.position = transform.position;
-        item.transform.parent = GameManager.GM.InGameObjectManager.GetContainer("TempGameObjects").transform;
-
-        //item.GetComponent<Coin>().amount = 1;
-        item.GetComponent<Rigidbody2D>().AddForce(rng.PointOnCircle((rng.NextFloat() * ForceRange) + MinForce));
-        Shadow shadow = item.GetComponent<Shadow>();
-        shadow.yVel = -(.2f + rng.NextFloat() * .2f);
-
-        return item;
-    }
-    //from a refrence.
-    GameObject CreatePickup(UnityEngine.Object prefab, float MinForce, float ForceRange)
-    {
-        if(!source.isPlaying)
-            PlaySFX(chestSpawnSFX);
-
-        GameObject item = (GameObject)Instantiate(prefab);
-        item.transform.position = transform.position;
-        item.transform.parent = GameManager.GM.InGameObjectManager.GetContainer("TempGameObjects").transform;
-
-        //item.GetComponent<Coin>().amount = 1;
-        item.GetComponent<Rigidbody2D>().AddForce(rng.PointOnCircle((rng.NextFloat() * ForceRange) + MinForce));
-        Shadow shadow = item.GetComponent<Shadow>();
-        shadow.yVel = -(.2f + rng.NextFloat() * .2f);
-
-        return item;
     }
 
     IEnumerator CreateContents()
@@ -143,7 +113,12 @@ public class Chest : BaseInteractable
         if (chestQuality <= itemChance || forceItemSpawn)
         {
             Object prefab = allItems.weapons[rng.Next(0, allItems.weapons.Count)].onGroundPrefab;
-            CreatePickup(prefab, 30, 15);
+
+            if (!source.isPlaying)
+                PlaySFX(chestSpawnSFX);
+
+            InGameObjectManager.CreatePickup(prefab, transform.position, 30, 15);
+
             itemGenerated = true;
         }
 
@@ -162,7 +137,11 @@ public class Chest : BaseInteractable
         // the player gets shotgun blased with coins....
         for (int i = 0; i < numberOfCoins;)
         {
-            GameObject coin = CreatePickup("Coin", 15, 15);
+            if (!source.isPlaying)
+                PlaySFX(chestSpawnSFX);
+
+            GameObject coin = InGameObjectManager.CreatePickup("Coin", transform.position, 30, 15);
+
             int amount;
 
             if (i + 5 < numberOfCoins && rng.NextDouble() <= .25f)
@@ -181,6 +160,5 @@ public class Chest : BaseInteractable
         running = false;
 
     }
-
 
 }

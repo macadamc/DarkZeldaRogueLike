@@ -34,7 +34,7 @@ public class BasePickup : BaseInteractable
 
     }
 
-    public void OncollisionEnter2D(Collision2D other)
+    public void OnCollisionEnter2D(Collision2D other)
     {
         if (other.transform.root.name == "MapChunks")
         {
