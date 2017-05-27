@@ -51,10 +51,6 @@ public class ForestGeneratorSO : MapGenerator
         TerrainGameObjects = ObjManager.GetContainer("TerrainObjects");
         Chests = ObjManager.GetContainer("Chests");
         Spawners = ObjManager.GetContainer("Spawners");
-
-
-
-
     }
 
     public override void Generate()
@@ -90,22 +86,24 @@ public class ForestGeneratorSO : MapGenerator
 
             if (tag == "BigTree")
             {
-                SpawnBigTrees(id);
+                SpawnBigTrees(id, 10, 100);
             }
 
             if (tag == "Campfire")
             {
-                SpawnBigTrees(id);
+                SpawnBigTrees(id, 10, 100);
                 SpawnCampfire(id);
                 int cCount = Rng.Next(1, 4);
                 for (int i = 0; i < cCount; i++)
                 {
                     SpawnChest(id);
                 }
-
             }
-
-
+            if (tag == "Shrine")
+            {
+                GameObject go = (GameObject)Instantiate(Resources.Load("SpeedBuffInteractable"));
+                go.transform.position = GetRandomSpawnPoint(id);
+            }
 
             SpawnBushes(id);
 
@@ -428,30 +426,19 @@ public class ForestGeneratorSO : MapGenerator
         PrefabSpawner ps = spawner.GetComponent<PrefabSpawner>();
         ps.spawnObjects = new SpawnObject[maxEnemysPerZone];
 
-
         for (int i = 0; i < maxEnemysPerZone && curCost < maxCost; i++)
         {
-            List<Vector3> points = zoneSpawnPoints[zone.ID];
-            EnemyMetaData enemyData = currentLvlEnemys[Rng.Next(0, currentLvlEnemys.Count)];
-            // get random point in zone and place an enemy there.
-
-            int pointIndex = Rng.Next(0, points.Count);
-            Vector3 pos = points[pointIndex];
-            points.RemoveAt(pointIndex);
-
             SpawnObject s = new SpawnObject();
+            EnemyMetaData enemyData = currentLvlEnemys[Rng.Next(0, currentLvlEnemys.Count)];
+            
             s.objectToSpawn = enemyData.prefab;
-            s.positionOffset = pos - spawner.transform.position;
+            s.positionOffset = GetRandomSpawnPoint(id) - spawner.transform.position;
             ps.player = Camera.main.gameObject;
             ps.cameraZone = GameObject.Find("Bounds").GetComponent<Zone>();
 
             ps.spawnObjects[i] = s;
             ps.spawnType = SpawnType.Distance;
             ps.spawnDistance = (Camera.main.orthographicSize * 2) + zone.radius;
-
-            //GameObject enemy = GameObject.Instantiate(enemyData.prefab, InGameObjects.transform) as GameObject;
-            //Vector2 pos = Rng.PointInCircle(zone.centerPos.x - (Map.width / 2), zone.centerPos.y - (Map.height / 2), zone.radius - 2);
-            //enemy.transform.position = new Vector3(pos.x, pos.y, enemy.transform.position.z);
 
             curCost += enemyData.cost;
         }
@@ -475,30 +462,18 @@ public class ForestGeneratorSO : MapGenerator
         PrefabSpawner ps = spawner.GetComponent<PrefabSpawner>();
         ps.spawnObjects = new SpawnObject[maxEnemysPerZone];
 
-
         for (int i = 0; i < maxEnemysPerZone; i++)
         {
-            List<Vector3> points = zoneSpawnPoints[zone.ID];
-            EntityMetaData entityData = currentLvlEnemys[Rng.Next(0, currentLvlEnemys.Count)];
-            // get random point in zone and place an enemy there.
-
-            int pointIndex = Rng.Next(0, points.Count);
-            Vector3 pos = points[pointIndex];
-            points.RemoveAt(pointIndex);
-
             SpawnObject s = new SpawnObject();
-            s.objectToSpawn = entityData.prefab;
-            s.positionOffset = pos - spawner.transform.position;
+            
+            s.objectToSpawn = currentLvlEnemys[Rng.Next(0, currentLvlEnemys.Count)].prefab;
+            s.positionOffset = GetRandomSpawnPoint(id) - spawner.transform.position;
             ps.player = Camera.main.gameObject;
             ps.cameraZone = GameObject.Find("Bounds").GetComponent<Zone>();
 
             ps.spawnObjects[i] = s;
             ps.spawnType = SpawnType.Distance;
             ps.spawnDistance = (Camera.main.orthographicSize * 2) + zone.radius;
-
-            //GameObject enemy = GameObject.Instantiate(enemyData.prefab, InGameObjects.transform) as GameObject;
-            //Vector2 pos = Rng.PointInCircle(zone.centerPos.x - (Map.width / 2), zone.centerPos.y - (Map.height / 2), zone.radius - 2);
-            //enemy.transform.position = new Vector3(pos.x, pos.y, enemy.transform.position.z);
         }
     }
 
@@ -542,17 +517,12 @@ public class ForestGeneratorSO : MapGenerator
         zoneSpawnPoints.Add(id, spawnPoints);
     }
 
-    void SpawnChest(int id)
+    void SpawnChest(int zoneID)
     {
-        Circle zone = layout.Zones[id];
+        Circle zone = layout.Zones[zoneID];
         GameObject chest = (GameObject)GameObject.Instantiate(Resources.Load("Chest"));
 
-        List<Vector3> points = zoneSpawnPoints[id];
-        int index = Rng.Next(0, points.Count);
-        Vector3 pos = points[index];
-        points.RemoveAt(index);
-
-        chest.transform.position = pos;
+        chest.transform.position = GetRandomSpawnPoint(zoneID);
         chest.transform.GetChild(0).GetComponent<Chest>().seed = Rng.Next(0, 100000);
         chest.transform.parent = Chests.transform;
     }
@@ -572,10 +542,10 @@ public class ForestGeneratorSO : MapGenerator
         Map["Fg", x + 1, y + 1] = t.firstTileID + 11;
         Map["Walls", x + 1, y + 1] = 0;
     }// Draws the tiles in the tilemap.
-    void SpawnBigTrees(int id)
+    void SpawnBigTrees(int id, int maxPerZone, int maxTrys = 100)
     {
-        int MaxPerRoom = 10;
-        int maxPlacementRetrys = 100;
+        //int MaxPerRoom = 10;
+        //int maxPlacementRetrys = 100;
 
         Circle zone = layout.Zones[id];
         List<Vector3> SpawnedObjectPos = new List<Vector3>();
@@ -587,7 +557,7 @@ public class ForestGeneratorSO : MapGenerator
             int numberofTrees = 0;
             int count = 0;
 
-            while (numberofTrees < MaxPerRoom && count < maxPlacementRetrys)
+            while (numberofTrees < maxPerZone && count < maxTrys)
             {
                 count++;
 
@@ -795,13 +765,18 @@ public class ForestGeneratorSO : MapGenerator
 
     void SpawnCampfire(int id)
     {
-        List<Vector3> spawnPoints = zoneSpawnPoints[id];
-        int i = Rng.Next(0, spawnPoints.Count);
-        Vector3 pos = spawnPoints[i];
-        spawnPoints.RemoveAt(i);
-
         GameObject go = (GameObject)GameObject.Instantiate(Resources.Load("CampFire"));
-        go.transform.position = pos;
+        go.transform.position = GetRandomSpawnPoint(id);
         go.transform.parent = TerrainGameObjects.transform;
+    }
+
+    Vector3 GetRandomSpawnPoint(int id)
+    {
+        List<Vector3> points = zoneSpawnPoints[id];
+        int index = Rng.Next(0, points.Count);
+        Vector3 pos = points[index];
+        points.RemoveAt(index);
+
+        return pos;
     }
 }

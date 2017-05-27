@@ -288,7 +288,6 @@ MonoBehaviour:
   remainState: {fileID: 11400000, guid: e79033472eb7130419188e4f9f2316ac, type: 2}
   targetPos: {x: 0, y: 0}
   waiting: 0
-  targets: []
   aiActive: 1
   entity: {fileID: 0}
   pathfinder: {fileID: 0}
@@ -308,6 +307,10 @@ MonoBehaviour:
   skipZOrderUpdate: 0
   health: 0
   stats: {fileID: 11400000, guid: dfc63b0747938404c80d088fe1fc14be, type: 2}
+  statMods:
+    damage: 0
+    maxSpeed: 0
+    attackDelay: 0
   skipDamageFlash: 0
   hurtSfx: {fileID: 8300000, guid: 820a8b921d8b59042a90742b37248be1, type: 3}
   lookDirObj: {fileID: 0}
@@ -331,6 +334,7 @@ MonoBehaviour:
   weaponName: 
   atkPos: {x: 0, y: 0}
   atkSpawnDistance: 0
+  activeEffects: []
 --- !u!114 &114540062744340944
 MonoBehaviour:
   m_ObjectHideFlags: 1

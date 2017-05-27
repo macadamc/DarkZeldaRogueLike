@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d2fb04c509d6847b9e04c15dae2099, type: 3}
   m_Name: FlyStats
   m_EditorClassIdentifier: 
+  objName: Fly
   health: 1
   acceleration: 1
   moveSpeed: 0.5

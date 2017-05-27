@@ -10,6 +10,7 @@ public abstract class RangedBase : ActiveItem {
 
     public override void OnAttackTriggered(Entity entity)
     {
+        base.OnAttackTriggered(entity);
         if (HeldSprite != null)
         {
             OnAttackEnd(entity);
@@ -19,7 +20,6 @@ public abstract class RangedBase : ActiveItem {
 
         HeldSprite.transform.localPosition = entity.atkPos;
         HeldSprite.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
-        entity.statMods.maxSpeed -= entity.stats.moveSpeed / 8;
     }
 
     public override void OnAttackHeld(Entity entity)
@@ -34,9 +34,9 @@ public abstract class RangedBase : ActiveItem {
 
     public override void OnAttackEnd(Entity entity)
     {
+        base.OnAttackEnd(entity);
         CreateProjectile(entity, (entity.lookDir * itemData.baseSpeed) + entity.moveVector);
         DestroyHeldSprite();
-        entity.statMods.maxSpeed += entity.stats.moveSpeed / 8;
     }
 
     public override void OnHit(Collider2D other, Entity entity, GameObject AttackObject)
@@ -56,7 +56,7 @@ public abstract class RangedBase : ActiveItem {
                 return;
             }
         }
-        if(attack.d_owner != d)
+        else if(attack.d_owner != d)
         {
             if (d != null)
             {
@@ -73,6 +73,7 @@ public abstract class RangedBase : ActiveItem {
 
     public override void Start(Entity entity)
     {
+        base.Start(entity);
         itemData = (RangedBaseSO)base.itemData;
     }
 

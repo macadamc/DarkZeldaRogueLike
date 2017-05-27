@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d2fb04c509d6847b9e04c15dae2099, type: 3}
   m_Name: SpiderStats
   m_EditorClassIdentifier: 
+  objName: Spider
   health: 3
   acceleration: 1
   moveSpeed: 5
@@ -24,7 +25,7 @@ MonoBehaviour:
   softCollisions:
     serializedVersion: 2
     m_Bits: 1024
-  visionDistance: 1
+  visionDistance: 8
   fieldOfView: 0
   spawnOnCreate: []
   spawnOnDeath:

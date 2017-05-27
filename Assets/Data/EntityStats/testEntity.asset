@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d2fb04c509d6847b9e04c15dae2099, type: 3}
   m_Name: testEntity
   m_EditorClassIdentifier: 
+  objName: NPC
   health: 1
   acceleration: 3
   moveSpeed: 2

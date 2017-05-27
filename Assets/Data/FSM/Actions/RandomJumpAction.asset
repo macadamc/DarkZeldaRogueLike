@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: facf280d1a10a3f4387a38cf2d1dad3a, type: 3}
   m_Name: RandomJumpAction
   m_EditorClassIdentifier: 
-  timeBetweenMovements: 0.5
+  timeBetweenMovements: 1
   timerRandomness: 0.25
-  jumpTimeMin: 0.5
-  jumpTimeMax: 0.8
-  deadZone: 0
+  jumpTimeMin: 0.15
+  jumpTimeMax: 0.25
+  deadZone: 0.25

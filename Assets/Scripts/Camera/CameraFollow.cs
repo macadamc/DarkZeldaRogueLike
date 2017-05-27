@@ -24,7 +24,8 @@ namespace ShadyPixel.CameraSystem
         {
             FindCameraWidthAndHeight();
 
-            targets.Add(GameObject.FindGameObjectWithTag("Player").transform);
+            if(targets.Count == 0)
+                targets.Add(GameObject.FindGameObjectWithTag("Player").transform);
 
         }
 

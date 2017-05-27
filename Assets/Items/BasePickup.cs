@@ -10,35 +10,32 @@ public class BasePickup : BaseInteractable
     public float lerpSpd;
     public AudioClip pickupSfx;
 
+    public Collider2D coll;
+
     public override void Awake()
     {
         base.Awake();
         shadow = GetComponent<Shadow>();
         rb = GetComponent<Rigidbody2D>();
-        coll = GetComponent<Collider2D>();
-        coll.isTrigger = false;
+
+        coll = transform.FindChild("Shadow").GetComponent<Collider2D>();
     }
 
     public virtual void FixedUpdate()
     {
-
-        if (shadow.objOffset <= .01f)
+        if (shadow.objOffset <= .01f && shadow.yVel <= 0.01f)
         {
-            coll.isTrigger = true;
+            coll.enabled = false;
+            trigger.enabled = true;
+
             rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, lerpSpd * Time.deltaTime);
         }
-        else if (coll.isTrigger)
+        else if (trigger.enabled)
         {
-            coll.isTrigger = false;
+            trigger.enabled = false;
+            coll.enabled = true;
+            OnTriggerExit2D(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>());
         }
 
-    }
-
-    public void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.transform.root.name == "MapChunks")
-        {
-            rb.velocity = -rb.velocity;
-        }
     }
 }

@@ -15,6 +15,9 @@ public class Destructable : ZOrderObject {
     public AudioClip hurtSfx;
     AudioSource audioSource;
 
+    delegate void OnObjDeath(string name);
+    OnObjDeath onObjDeath;
+
     public System.Random random = new System.Random();
 
     public void ModifyHealth(float changeInHealth)
@@ -36,6 +39,9 @@ public class Destructable : ZOrderObject {
     {
         if (health <= 0)
         {
+            if (onObjDeath != null)
+                onObjDeath(stats.objName);
+
             DestroyObject();
         }
     }
@@ -54,6 +60,17 @@ public class Destructable : ZOrderObject {
         audioSource = GetComponent<AudioSource>();
 
         statMods = new StatModifiers();
+
+        onObjDeath += AchievementManager.am.OnObjDeath;
+    }
+    void OnDisable()
+    {
+        onObjDeath -= AchievementManager.am.OnObjDeath;
+    }
+
+    void OnDestroy()
+    {
+        onObjDeath -= AchievementManager.am.OnObjDeath;
     }
 
     public void PlayHurtSFX()

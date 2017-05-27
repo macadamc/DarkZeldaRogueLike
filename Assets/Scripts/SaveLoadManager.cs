@@ -11,19 +11,30 @@ namespace ShadyPixel.SaveLoad
     {
         public List<string> progressionKeyNames;
         public List<string> progressionValues;
+        public Dictionary<string, int> monsterKills;
 
     }
 
     public class SaveLoadManager : MonoBehaviour
     {
 
+        public static SaveLoadManager slm;
+
+        public void Awake()
+        {
+            slm = this;
+        }
+
         public void SaveGame()
         {
             string savePath = Application.persistentDataPath + "/save.dat";
 
             SaveFile saveFile = new SaveFile();
+
             saveFile.progressionKeyNames = GameManager.GM.progressionManager.gameProgression.progressionKeyNames;
             saveFile.progressionValues = GameManager.GM.progressionManager.gameProgression.progressionValues;
+
+            saveFile.monsterKills = AchievementManager.am.monsterKills;
 
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Create(savePath);
@@ -46,6 +57,8 @@ namespace ShadyPixel.SaveLoad
 
                 GameManager.GM.progressionManager.gameProgression.progressionKeyNames = saveFile.progressionKeyNames;
                 GameManager.GM.progressionManager.gameProgression.progressionValues = saveFile.progressionValues;
+
+                AchievementManager.am.monsterKills = saveFile.monsterKills;
 
                 file.Close();
 

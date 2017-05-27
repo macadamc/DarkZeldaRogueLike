@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ShadyPixel.Astar;
 using System;
+using ShadyPixel.SaveLoad;
 
 public class GameManager : MonoBehaviour {
 
@@ -62,9 +63,15 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    void Start()
+    {
+        SaveLoadManager.slm.LoadGame();
+    }
+
     public void PlayerDeath()
     {
         deathScreen.SetActive(true);
+        AchievementManager.am.DebugPrint();
     }
 
     public void QuitApplication()

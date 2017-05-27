@@ -11,13 +11,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 087b8add335bdf447b49619bb0820bf9, type: 3}
   m_Name: ItemsMetaData
   m_EditorClassIdentifier: 
-  wepKeys:
+  activeItemKeys:
+  - DevBow
   - Bow
   - WoodSword
-  - DevBow
   - PoisonBow
-  weapons:
+  activeItems:
+  - {fileID: 11400000, guid: 29cddc06b337aef4ab0ce6e5110a4297, type: 2}
   - {fileID: 11400000, guid: 13051904519637a42a171b397d3aeb53, type: 2}
   - {fileID: 11400000, guid: a2808a81201c269458bcd1b623453c05, type: 2}
-  - {fileID: 11400000, guid: 29cddc06b337aef4ab0ce6e5110a4297, type: 2}
   - {fileID: 11400000, guid: b2e984ed4d8d480488b8470390220fcf, type: 2}
+  passiveItemKeys:
+  - DashBoots
+  passiveItems:
+  - {fileID: 11400000, guid: dcc7da4e0865b74488d97ac6fca7c8c3, type: 2}

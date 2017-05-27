@@ -5,11 +5,12 @@ using System.Reflection;
 
 public class ItemPickup : BasePickup
 {
+    static Assembly asm;
 
-    public static Assembly asm;
     public ItemSO itemData;
     bool inTrigger;
-    public int activeItemSlot;
+    [System.NonSerialized]
+    public int activeItemSlot;    
 
     public override void Awake()
     {
@@ -30,22 +31,24 @@ public class ItemPickup : BasePickup
 
     public override void Interact(Entity owner)
     {
-        //idk if this is needed but just to make sure that you cant jam the interact button and create more than one Item.
-        owner.targetInteractable = null;
-
-        // do item pickup stuff..
-        Debug.Log(string.Format("{0} picked up {1}", owner.name, itemData.name));
-
         Item item = CreateItem(itemData.name, owner);// create the runtime version of the item.
-        owner.inventory.Add(item);
 
         if (item is ActiveItem)
         {
+            owner.weapons[activeItemSlot].OnUnequip(owner);
+
+            Object prefab = owner.weapons[activeItemSlot].itemData.onGroundPrefab;
+            InGameObjectManager.CreatePickup(prefab, transform.position, 30, 15);
             owner.Equip((ActiveItem)item, activeItemSlot);
         }
 
-        inTrigger = false;
-        GameManager.GM.itemPanel.HidePanel();
+        else if (item is PassiveItem)
+        {
+            owner.inventory.Add((PassiveItem)item);
+            item.OnEquip(owner);
+        }
+
+        OnTriggerExit2D(owner.GetComponent<Collider2D>());
         Destroy(gameObject);
     }
 
@@ -54,11 +57,8 @@ public class ItemPickup : BasePickup
         base.OnTriggerEnter2D(other);
         if (other.CompareTag("Player"))
         {
-            if (other.GetComponent<PlayerController>())
-            {
-                GameManager.GM.itemPanel.SetPanel(transform.position, itemData.itemDescription);
-                inTrigger = true;
-            }
+            GameManager.GM.itemPanel.SetPanel(transform.position, itemData.itemDescription);
+            inTrigger = true;
         }
     }
 
@@ -67,11 +67,8 @@ public class ItemPickup : BasePickup
         base.OnTriggerExit2D(other);
         if (other.CompareTag("Player"))
         {
-            if (other.GetComponent<PlayerController>())
-            {
-                GameManager.GM.itemPanel.HidePanel();
-                inTrigger = false;
-            }
+            GameManager.GM.itemPanel.HidePanel();
+            inTrigger = false;
         }
     }
 

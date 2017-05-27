@@ -8,6 +8,7 @@ namespace ShadyPixel.CameraSystem
     public class Zone : MonoBehaviour
     {
         public bool cameraZone;
+        public bool forceCameraZoneAtStart;
 
         public string sendMessageOnZoneEnter;
 
@@ -21,6 +22,9 @@ namespace ShadyPixel.CameraSystem
         {
             boundsCollider2D = GetComponent<BoxCollider2D>();
             bounds = boundsCollider2D.bounds;
+
+            if (forceCameraZoneAtStart && cameraZone)
+                EnterZone();
         }
 
         void OnTriggerEnter2D(Collider2D col)

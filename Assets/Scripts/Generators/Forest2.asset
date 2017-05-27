@@ -46,6 +46,16 @@ MonoBehaviour:
         weight: 1
     - useSize: 1
       sizeConstraint:
+        minSizeThreshold: 0.3
+        maxSizeThreshhold: 0.7
+      useMinSpawn: 1
+      minSpawnConstraint:
+        MinSpawnCounts: 02000000
+      tagList:
+      - value: Shrine
+        weight: 1
+    - useSize: 1
+      sizeConstraint:
         minSizeThreshold: 0.7
         maxSizeThreshhold: 1
       useMinSpawn: 0

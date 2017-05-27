@@ -20,7 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4955415689189606}
   - component: {fileID: 212483467800366564}
-  m_Layer: 9
+  - component: {fileID: 58526857707384944}
+  - component: {fileID: 114146405431595598}
+  m_Layer: 12
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,12 +132,26 @@ CircleCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1383282185021884}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!58 &58526857707384944
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1074220047176248}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0.0000019073486}
   serializedVersion: 2
   m_Radius: 0.5
 --- !u!95 &95307819309039510
@@ -166,14 +182,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9836623fcc3634d98b06386fe9b024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactType: 0
   interactSFX: {fileID: 0}
   source: {fileID: 0}
-  coll: {fileID: 0}
-  interactType: 0
+  trigger: {fileID: 0}
   shadow: {fileID: 0}
   lerpSpd: 0.3
   pickupSfx: {fileID: 8300000, guid: 75eadda4607c77646b414514494c4eec, type: 3}
+  coll: {fileID: 0}
   anim: {fileID: 0}
+--- !u!114 &114146405431595598
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1074220047176248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2941ad335549b24b906e3e2148defd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
 --- !u!114 &114549844570770832
 MonoBehaviour:
   m_ObjectHideFlags: 1

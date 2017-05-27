@@ -15,7 +15,6 @@ public class PoisonBow : Bow {
     public override void OnHit(Collider2D other, Entity entity, GameObject AttackObject)
     {
         Entity o = other.GetComponent<Entity>();
-        WeaponAttack attack = AttackObject.GetComponent<WeaponAttack>();
 
         if (o != null && o != entity)
         {

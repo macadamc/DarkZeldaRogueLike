@@ -6,15 +6,17 @@ using CnControls;
 [RequireComponent(typeof(Entity))]
 public class PlayerController : MonoBehaviour
 {
-
     Entity entity;
-    public bool strafe;
-    bool attackBool;
-    bool isInteracting;
+
+    public enum AttackSlot { None = -1, One, Two };
+    public AttackSlot currentAttack = AttackSlot.None;
+
+    public bool isInteracting;
+    int _ActiveItemSlot;
+
     public float deadZone = 0.2f;
     public bool dead;
-
-    int _ActiveItemSlot;
+    public bool strafe;
 
     void Start()
     {
@@ -27,11 +29,11 @@ public class PlayerController : MonoBehaviour
         if (PauseManager.gamePaused)
             return;
 
-        CheckForInteractable();
-
         SetMoveVector();
 
         SetLookDir();
+
+        CheckForInteractable();
 
         CheckForAttacks();
 
@@ -106,7 +108,6 @@ public class PlayerController : MonoBehaviour
 
             if ((fire2Up || fire3Up) && isInteracting)
             {
-                isInteracting = false;
 
                 if (entity.targetInteractable is ItemPickup)
                 {
@@ -114,8 +115,15 @@ public class PlayerController : MonoBehaviour
                 }
 
                 entity.Interact();
+                isInteracting = false;
             }
-            
+        }
+        else
+        {
+            if (isInteracting && CnInputManager.GetButton("Fire2") == false && CnInputManager.GetButton("Fire3") == false)
+            {
+                isInteracting = false;
+            }
         }
     }
 
@@ -128,39 +136,40 @@ public class PlayerController : MonoBehaviour
         bool onHeld = CnInputManager.GetButton("Fire2");
         bool onUp = CnInputManager.GetButtonUp("Fire2");
         ActiveItem weapon = entity.weapons[0];
-        if (onDown && attackBool == false && weapon != null)
+
+        if (currentAttack == AttackSlot.None && onDown && weapon != null)
         {
             weapon.OnAttackTriggered(entity);
-            attackBool = true;
+            currentAttack = AttackSlot.One;
         }
-        if (onDown == false && onHeld && attackBool && weapon != null)
+        if (currentAttack == AttackSlot.One && onDown == false && onHeld && weapon != null)
         {
             weapon.OnAttackHeld(entity);
         }
-        if (onUp && attackBool && weapon != null)
+        if (currentAttack == AttackSlot.One && onUp && weapon != null)
         {
             weapon.OnAttackEnd(entity);
-            attackBool = false;
+            currentAttack = AttackSlot.None;
         }
 
         onDown = CnInputManager.GetButtonDown("Fire3");
         onHeld = CnInputManager.GetButton("Fire3");
         onUp = CnInputManager.GetButtonUp("Fire3");
         weapon = entity.weapons[1];
-        if (onDown && attackBool == false && weapon != null)
+
+        if (currentAttack == AttackSlot.None && onDown && weapon != null)
         {
             weapon.OnAttackTriggered(entity);
-            attackBool = true;
+            currentAttack = AttackSlot.Two;
         }
-        if (onDown == false && onHeld && attackBool && weapon != null)
+        if (currentAttack == AttackSlot.Two && onDown == false && onHeld && weapon != null)
         {
             weapon.OnAttackHeld(entity);
         }
-        if (onUp && attackBool && weapon != null)
+        if (currentAttack == AttackSlot.Two && onUp && weapon != null)
         {
             weapon.OnAttackEnd(entity);
-            attackBool = false;
+            currentAttack = AttackSlot.None;
         }
-
     }
 }

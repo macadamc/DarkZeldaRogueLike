@@ -11,7 +11,6 @@ public class Chest : BaseInteractable
     public int seed;
     DefaultRNG rng;
 
-    public Collider2D trigger;
     public Sprite openSprite;
     public Sprite closedSprite;
     SpriteRenderer rend;
@@ -44,7 +43,6 @@ public class Chest : BaseInteractable
         rend = gameObject.transform.parent.gameObject.GetComponent<SpriteRenderer>();
         rend.sprite = closedSprite;
         allItems = GameObject.Find("Manager").GetComponent<GameManager>().itemsMetaData;
-        trigger = GetComponent<Collider2D>();
     }
 
     public override void Interact(Entity other)
@@ -53,7 +51,6 @@ public class Chest : BaseInteractable
         {
             ToggleOpenState();
         }
-        
 
         // spawn contents of the chest.
         if (triggered == false)
@@ -62,8 +59,9 @@ public class Chest : BaseInteractable
             triggered = true;
             PlaySFX(interactSFX);
 
-            other.targetInteractable = null;
-            trigger.enabled = false;
+            //other.targetInteractable = null;
+            base.OnTriggerExit2D(other.GetComponent<Collider2D>());
+            //trigger.enabled = false;
         }
 
     }
@@ -112,7 +110,16 @@ public class Chest : BaseInteractable
 
         if (chestQuality <= itemChance || forceItemSpawn)
         {
-            Object prefab = allItems.weapons[rng.Next(0, allItems.weapons.Count)].onGroundPrefab;
+            Object prefab;
+            if (rng.NextDouble() <= .5f)
+            {
+                prefab = allItems.activeItems[rng.Next(0, allItems.activeItems.Count)].onGroundPrefab;
+            }
+            else
+            {
+                prefab = allItems.passiveItems[rng.Next(0, allItems.passiveItems.Count)].onGroundPrefab;
+            }
+             
 
             if (!source.isPlaying)
                 PlaySFX(chestSpawnSFX);

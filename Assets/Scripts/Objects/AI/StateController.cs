@@ -21,7 +21,6 @@ public class StateController : MonoBehaviour {
 
     public bool waiting;
 
-    public List<GameObject> targets;
 	public bool aiActive;
 
     bool start;

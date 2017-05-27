@@ -55,7 +55,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4032026689953282}
   - component: {fileID: 212681085614693800}
-  m_Layer: 0
+  - component: {fileID: 58430133176545198}
+  - component: {fileID: 114555411472182858}
+  m_Layer: 12
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +85,7 @@ Transform:
   m_GameObject: {fileID: 1106459032701148}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 4923864190257582}
   m_RootOrder: 0
@@ -95,7 +97,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1160901979143798}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.956975, y: 9.254469, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4127013440027950}
@@ -123,13 +125,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &58430133176545198
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1353809588571906}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!58 &58833376386815968
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1160901979143798}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -155,6 +171,18 @@ MonoBehaviour:
   yVel: 0
   dampening: 0.5
   stopCutoffVel: 0.01
+--- !u!114 &114555411472182858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1353809588571906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2941ad335549b24b906e3e2148defd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
 --- !u!114 &114756483635307832
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -166,13 +194,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09a649737880dff4ea62066d5c35a78a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactType: 2
   interactSFX: {fileID: 0}
   source: {fileID: 0}
-  coll: {fileID: 0}
-  interactType: 2
+  trigger: {fileID: 0}
   shadow: {fileID: 0}
   lerpSpd: 0.5
   pickupSfx: {fileID: 0}
+  coll: {fileID: 0}
   itemData: {fileID: 11400000, guid: 13051904519637a42a171b397d3aeb53, type: 2}
 --- !u!212 &212377380055707436
 SpriteRenderer:

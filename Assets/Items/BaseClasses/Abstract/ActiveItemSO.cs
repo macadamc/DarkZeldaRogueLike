@@ -10,4 +10,7 @@ public class ActiveItemSO : ItemSO {
     public float AttackDelay;
     public float knockBack;
 
+    [Range(0f, 1f)]
+    public float attackingMoveSpeed;
+
 }

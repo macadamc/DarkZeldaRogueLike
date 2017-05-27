@@ -82,7 +82,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
@@ -193,12 +193,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ea3fc8027315143a2f857516543a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactType: 2
   interactSFX: {fileID: 8300000, guid: 9e67d445f05583144ab91d11d898d99d, type: 3}
   source: {fileID: 0}
-  coll: {fileID: 58181515168614830}
-  interactType: 2
-  seed: 0
   trigger: {fileID: 0}
+  seed: 0
   openSprite: {fileID: 21300002, guid: 7d3f790f99be962459c16b37ba20f033, type: 3}
   closedSprite: {fileID: 21300000, guid: 7d3f790f99be962459c16b37ba20f033, type: 3}
   trapped: 0

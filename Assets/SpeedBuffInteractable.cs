@@ -15,6 +15,6 @@ public class SpeedBuffInteractable : BaseInteractable {
         new Slow(durationInSeconds, -modifier, other);
         other.targetInteractable = null;
         GetComponentInParent<SpriteRenderer>().color = new Color(.6f, .2f, .2f);
-        coll.enabled = false;
+        trigger.enabled = false;
     }
 }

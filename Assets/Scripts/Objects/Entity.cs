@@ -67,6 +67,7 @@ public class Entity : Destructable
 
     public List<ActiveEffect> activeEffects;
 
+
     public override void Awake()
     {
         base.Awake();
@@ -80,13 +81,13 @@ public class Entity : Destructable
     }
 
     // Use this for initialization
-    public override void Start()
+    public /*override*/ void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
         controller = GetComponent<StateController>();
-        base.Start();
+        //base.Start();
 
         Equip(weaponName, 0);
         Equip("PoisonBow", 1);
@@ -95,9 +96,9 @@ public class Entity : Destructable
     }
 
     // Update is called once per frame
-    public override void Update()
+    public /*override*/ void Update()
     {
-        base.Update();
+        //base.Update();
 
         if (PauseManager.gamePaused || !rend.isVisible)
             return;
@@ -159,7 +160,7 @@ public class Entity : Destructable
         Animate();
 
         
-        if (CompareTag("Player"))
+        if (CompareTag("Entity"))
         {
             dist = Vector2.Distance(transform.position, Camera.main.transform.position);
             if (dist >= (Camera.main.orthographicSize * 2)+6)
@@ -249,14 +250,11 @@ public class Entity : Destructable
 
     public void Equip(string Name, int slot)
     {
-        if (items.wepKeys.Contains(Name))
+        if (items.activeItemKeys.Contains(Name))
         {
-            // this is looking in all the objects to find a item then spawns the runtime counterpart and initalize it.
-            // sets the object we created to the current wep variable
-            // and runs its OnEquipfunction;
-            int i = items.wepKeys.IndexOf(Name);
+            int i = items.activeItemKeys.IndexOf(Name);
             if (i < 0) { return; }
-            ActiveItemSO wepSO = items.weapons[i];
+            ActiveItemSO wepSO = items.activeItems[i];
             weapons[slot] = (ActiveItem)asm.CreateInstance(Name);
             weapons[slot].itemData = wepSO;
             weapons[slot].Start(this);
@@ -264,10 +262,10 @@ public class Entity : Destructable
         }
     }
 
-    public void Equip(ActiveItem Weapon, int slot)
+    public void Equip(ActiveItem Item, int slot)
     {
-        weapons[slot] = Weapon;
-        weapons[slot].OnEquip(this);
+        weapons[slot] = Item;
+        Item.OnEquip(this);
     }
 
     public void UnEquip() { }
@@ -275,6 +273,7 @@ public class Entity : Destructable
     public void Interact()
     {
         targetInteractable.Interact(this);
+        targetInteractable = null;
     }
 
 

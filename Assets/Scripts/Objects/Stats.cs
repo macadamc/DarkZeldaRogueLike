@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class Stats : ScriptableObject {
 
+    public string objName;
     public float health;
     public float acceleration;
     public float moveSpeed;

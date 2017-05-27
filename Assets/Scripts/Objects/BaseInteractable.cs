@@ -7,9 +7,15 @@ using System;
 [RequireComponent (typeof(AudioSource))]
 public class BaseInteractable : MonoBehaviour, iInteractable
 {
+    public enum InteractType { ON_ENTER, ON_EXIT, ON_INTERACT }
+
+    public InteractType interactType;
+
     public AudioClip interactSFX;
     [HideInInspector]
     public AudioSource source;
+
+    public Collider2D trigger;
 
     public void PlaySFX(AudioClip sfx)
     {
@@ -18,16 +24,9 @@ public class BaseInteractable : MonoBehaviour, iInteractable
         source.Play();
     }
 
-    public enum InteractType { ON_ENTER, ON_EXIT, ON_INTERACT }
-
-    public Collider2D coll;
-    
-    public InteractType interactType;
-
     public virtual void Awake()
     {
-        coll = GetComponent<Collider2D>();
-        coll.isTrigger = true;
+        trigger = GetComponent<Collider2D>();
         source = GetComponent<AudioSource>();
     }
 

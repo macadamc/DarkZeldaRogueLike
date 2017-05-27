@@ -7,25 +7,29 @@ using ShadyPixel.CameraSystem;
 public abstract class MeleeBase : ActiveItem {
 
     new MeleeBaseSO itemData;
-    float spdMod;
 
     public override void Start(Entity entity)
     {
+        base.Start(entity);
         itemData = (MeleeBaseSO)base.itemData;
-        spdMod = (float)Math.Round(entity.stats.moveSpeed / 1.5f, 2);
+
+
     }
+
+
+
 
     public override void OnAttackEnd(Entity entity)
     {
+        base.OnAttackEnd(entity);
         //create the "weapon swing" gameobject.
         GameObject g = (GameObject)GameObject.Instantiate(itemData.HeldObj, entity.gameObject.transform);
         //set the attacks position and rotation to match the entitys atkPos and.. TODO : look direction?
         g.transform.localPosition = entity.atkPos;
         g.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
         entity.attack = true;
-        entity.attackDelay = itemData.AttackDelay;
-        entity.statMods.maxSpeed += spdMod;
         g.GetComponent<WeaponAttack>().weapon = this;
+
     }
 
     public override void OnHit(Collider2D other, Entity entity, GameObject AttackObject)
@@ -58,11 +62,6 @@ public abstract class MeleeBase : ActiveItem {
 
     public override void OnUnequip(Entity entity)
     {
-    }
-
-    public override void OnAttackTriggered(Entity entity)
-    {
-        entity.statMods.maxSpeed -= spdMod;
     }
 
     public override void OnAttackHeld(Entity entity)

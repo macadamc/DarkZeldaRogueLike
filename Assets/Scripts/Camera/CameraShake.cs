@@ -43,5 +43,10 @@ namespace ShadyPixel.CameraSystem
             shakeStrength = str;
             shakeTime = time;
         }
+        public void Shake(float str)
+        {
+            shakeStrength = str;
+            shakeTime = 0.05f;
+        }
     }
 }

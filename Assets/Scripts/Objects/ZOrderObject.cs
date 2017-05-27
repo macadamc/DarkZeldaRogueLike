@@ -17,15 +17,8 @@ public class ZOrderObject : MonoBehaviour {
             rend = GetComponent<SpriteRenderer>();
     }
 
-    // Use this for initialization
-    public virtual void Start()
-    {
-        
-		
-	}
-
     // Update is called once per frame
-    public virtual void Update()
+    public virtual void LateUpdate()
     {
         if (rend.isVisible && !skipZOrderUpdate)
         {

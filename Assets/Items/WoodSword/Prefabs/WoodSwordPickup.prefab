@@ -36,7 +36,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4525265063935310}
   - component: {fileID: 212249281143726922}
-  m_Layer: 0
+  - component: {fileID: 58944605928612820}
+  - component: {fileID: 114520563554856184}
+  m_Layer: 12
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +71,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1300787204078088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.548, y: -0.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4971510313272842}
@@ -95,7 +97,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1614545392452658}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.6812263, y: 9.34117, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4203609547139142}
@@ -129,10 +131,24 @@ CircleCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1614545392452658}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!58 &58944605928612820
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1443540548835458}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
@@ -148,14 +164,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09a649737880dff4ea62066d5c35a78a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactType: 2
   interactSFX: {fileID: 0}
   source: {fileID: 0}
-  coll: {fileID: 0}
-  interactType: 2
+  trigger: {fileID: 0}
   shadow: {fileID: 0}
   lerpSpd: 0.5
   pickupSfx: {fileID: 0}
+  coll: {fileID: 0}
   itemData: {fileID: 11400000, guid: a2808a81201c269458bcd1b623453c05, type: 2}
+--- !u!114 &114520563554856184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1443540548835458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2941ad335549b24b906e3e2148defd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
 --- !u!114 &114787208845612694
 MonoBehaviour:
   m_ObjectHideFlags: 1

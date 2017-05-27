@@ -14,15 +14,16 @@ MonoBehaviour:
   onGroundPrefab: {fileID: 1160901979143798, guid: 9f809d60b882b2243a97841f5d28e53f,
     type: 2}
   itemDescription:
-    itemName: 
+    itemName: ??? Bow
     itemType: 0
-    itemDescription: 
-    itemPanelSize: {x: 0, y: 0}
-  baseCost: 1
+    itemDescription: Whats This!?!?
+    itemPanelSize: {x: 128, y: 128}
+  baseCost: 9999
   HeldObj: {fileID: 1436578917777678, guid: cebaf6a2331149e4bb92e2b3d6f83560, type: 2}
-  baseDamage: 1
-  AttackDelay: 0.25
-  knockBack: 0.1
+  baseDamage: 3
+  AttackDelay: 0.2
+  knockBack: 30
+  attackingMoveSpeed: 0.8
   projectile: {fileID: 1644639822220258, guid: cbeff95e6fb9aa447aba7ef26c31d999, type: 2}
   baseSpeed: 5
-  MaxFlightTime: 3
+  MaxFlightTime: 4
