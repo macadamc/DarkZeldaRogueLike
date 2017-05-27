@@ -32,8 +32,14 @@ public class Entity : Destructable
     public StateController controller;
     [HideInInspector]
     public bool attack;
+    [HideInInspector]
+    public bool holding;
+    [HideInInspector]
+    public bool strafe;
     //[HideInInspector]
     //public float curMaxSpd;
+
+    public GameObject handTransform;
 
     float stunLockTimer;
     public bool stunLocked;
@@ -129,10 +135,6 @@ public class Entity : Destructable
         if (lookDirObj != null)
             UpdateLookDirObj();
 
-        // atkPos is used to position the weapon that gets spwned when an entity triggers a weapon to be used;
-        // curently it uses the lookDir and just moves it out by some Distance;
-        atkPos = lookDir * atkSpawnDistance;
-
         //foreach (ActiveEffect effect in activeEffects)
         //{
         //    effect.Update();
@@ -185,24 +187,32 @@ public class Entity : Destructable
         if(sac != null)
             sac.Animate(this);
 
-        if(flipSpriteBasedOnVel)
+        if (attack)
+            attack = false;
+
+        if(!strafe)
         {
-            if(moveVector.magnitude > 0)
+            // atkPos is used to position the weapon that gets spwned when an entity triggers a weapon to be used;
+            // curently it uses the lookDir and just moves it out by some Distance;
+            atkPos = lookDir * atkSpawnDistance;
+
+
+            if (flipSpriteBasedOnVel && !strafe)
             {
-                if(moveVector.x > 0)
+                if (moveVector.magnitude > 0)
                 {
-                    rend.flipX = false;
-                }
-                else
-                if(moveVector.x < 0)
-                {
-                    rend.flipX = true;
+                    if (moveVector.x > 0)
+                    {
+                        rend.flipX = false;
+                    }
+                    else
+                    if (moveVector.x < 0)
+                    {
+                        rend.flipX = true;
+                    }
                 }
             }
         }
-
-        if (attack)
-            attack = false;
 
 
     }
@@ -242,6 +252,9 @@ public class Entity : Destructable
 
     public void UpdateLookDirObj()
     {
+        if (strafe)
+            return;
+
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
         lookDirObj.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 

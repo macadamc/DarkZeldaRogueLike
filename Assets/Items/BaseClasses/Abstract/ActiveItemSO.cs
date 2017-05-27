@@ -9,6 +9,7 @@ public class ActiveItemSO : ItemSO {
     public int baseDamage;
     public float AttackDelay;
     public float knockBack;
+    public bool strafe;
 
     [Range(0f, 1f)]
     public float attackingMoveSpeed;

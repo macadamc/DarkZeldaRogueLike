@@ -17,6 +17,10 @@ public abstract class ActiveItem : Item {
     public virtual void OnAttackTriggered(Entity entity)
     {
         entity.statMods.maxSpeed -= speedModifier;
+        entity.holding = true;
+
+        if (((ActiveItemSO)itemData).strafe)
+            entity.strafe = true;
     }
 
     public abstract void OnAttackHeld(Entity entity);
@@ -24,7 +28,10 @@ public abstract class ActiveItem : Item {
     public virtual void OnAttackEnd(Entity entity)
     {
         entity.attackDelay = ((ActiveItemSO)itemData).AttackDelay + entity.statMods.attackDelay;
+        if (((ActiveItemSO)itemData).strafe)
+            entity.strafe = false;
         entity.statMods.maxSpeed += speedModifier;
+        entity.holding = false;
     }
 
     public abstract void OnHit(Collider2D other, Entity entity, GameObject AttackObject);

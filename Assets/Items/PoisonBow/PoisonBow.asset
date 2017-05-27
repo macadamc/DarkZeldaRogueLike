@@ -23,6 +23,7 @@ MonoBehaviour:
   baseDamage: 1
   AttackDelay: 0.2
   knockBack: 10
+  strafe: 1
   attackingMoveSpeed: 0.75
   projectile: {fileID: 1644639822220258, guid: cbeff95e6fb9aa447aba7ef26c31d999, type: 2}
   baseSpeed: 5

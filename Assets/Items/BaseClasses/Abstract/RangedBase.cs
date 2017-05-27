@@ -18,7 +18,9 @@ public abstract class RangedBase : ActiveItem {
 
         HeldSprite = (GameObject)GameObject.Instantiate(itemData.HeldObj, entity.gameObject.transform);
 
+        //was entity.atkPos
         HeldSprite.transform.localPosition = entity.atkPos;
+
         HeldSprite.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
     }
 
@@ -27,7 +29,9 @@ public abstract class RangedBase : ActiveItem {
         if (HeldSprite != null)
         {
             HeldSprite.transform.localPosition = entity.atkPos;
-            HeldSprite.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
+
+            if (!itemData.strafe)
+                HeldSprite.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
         }
         //entity.curMaxSpd = entity.stats.moveSpeed / 8;
     }

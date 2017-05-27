@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
     void SetLookDir()
     {
-        if (strafe == true || entity.stunLocked)
+        if (entity.strafe || entity.stunLocked)
         {
             return;
         }

@@ -308,9 +308,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acca711fc2a54184c91b8a7d212caff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strafe: 0
+  currentAttack: -1
+  isInteracting: 0
   deadZone: 0.2
   dead: 0
+  strafe: 0
 --- !u!114 &114944827350223732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -336,7 +338,7 @@ MonoBehaviour:
   lookDirObj: {fileID: 1001125101503084}
   softCollisionSize: 0.25
   softCollisionForce: 2
-  flipSpriteBasedOnVel: 0
+  flipSpriteBasedOnVel: 1
   sac: {fileID: 11400000, guid: 2d3096d3b7dff0848adaa422c30f4cfa, type: 2}
   anim: {fileID: 0}
   rb: {fileID: 0}
@@ -346,6 +348,8 @@ MonoBehaviour:
   moving: 0
   controller: {fileID: 0}
   attack: 0
+  holding: 0
+  handTransform: {fileID: 0}
   stunLocked: 0
   attackDelay: 0
   knockbackVector: {x: 0, y: 0}

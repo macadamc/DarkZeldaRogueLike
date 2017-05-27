@@ -14,7 +14,6 @@ namespace ShadyPixel.CameraSystem
         // Use this for initialization
         void Awake()
         {
-            cam = Camera.main;
         }
 
         // Update is called once per frame
@@ -24,7 +23,6 @@ namespace ShadyPixel.CameraSystem
             {
                 shakeTime -= Time.deltaTime;
                 SetRandomPos(shakeStrength);
-                shakeStrength = Mathf.Lerp(shakeStrength, 0, shakeTime);
             }
             else
                 shakeTime = 0f;
@@ -40,11 +38,13 @@ namespace ShadyPixel.CameraSystem
 
         public void Shake(float str, float time)
         {
+            cam = Camera.main;
             shakeStrength = str;
             shakeTime = time;
         }
         public void Shake(float str)
         {
+            cam = Camera.main;
             shakeStrength = str;
             shakeTime = 0.05f;
         }
