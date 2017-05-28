@@ -12,13 +12,6 @@ public class ForestGeneratorSO : MapGenerator
     GameObject Chests;
     GameObject Spawners;
 
-    TileMapManager mManager;
-
-    //EnemyMetaDataSO enemyData;
-    EntityMetaDataSO entityData;
-    sMap Map;
-    DefaultRNG Rng;
-
     public LayoutGenerator layout;
 
     public Dictionary<int, List<Vector3>> zoneSpawnPoints;
@@ -39,28 +32,14 @@ public class ForestGeneratorSO : MapGenerator
     public float grassMod;
     public float TreeGrassMod;
 
-    public override void Init(TileMapManager mManager, DefaultRNG rng, EntityMetaDataSO EntityData)
-    {
-        this.mManager = mManager;
-        Map = mManager.map;
-        Rng = rng;
-        entityData = EntityData;
-
-        ObjManager = GameManager.GM.InGameObjectManager;
-
-        TerrainGameObjects = ObjManager.GetContainer("TerrainObjects");
-        Chests = ObjManager.GetContainer("Chests");
-        Spawners = ObjManager.GetContainer("Spawners");
-    }
-
-    public override void Generate()
+    public override void Generate(sMap map, DefaultRNG rng, EntityMetaDataSO entityData)
     {
         InitGenerator();
         layout.Generate();
-        InitStartEndObjects();
+        InitStartEndObjects(map);
 
-        CreateWalls();
-        CreateFloor();
+        CreateWalls(map, rng);
+        CreateFloor(map, rng);
 
         foreach (int id in layout.zIds)
         {
@@ -71,41 +50,41 @@ public class ForestGeneratorSO : MapGenerator
                 continue;
             }
 
-            GenerateSpawnPoints(id);
+            GenerateSpawnPoints(id, map, rng);
 
             if (tag != "Start" && tag != "Campfire")
             {
-                PlaceEnemys(id);
-                PlacePassives(id);
+                PlaceEnemys(id, map, rng, entityData);
+                PlacePassives(id, map, rng, entityData);
             }
 
             if (tag == "TreasureRoom")
             {
-                SpawnChest(id);
+                SpawnChest(id, rng);
             }
 
             if (tag == "BigTree")
             {
-                SpawnBigTrees(id, 10, 100);
+                SpawnBigTrees(id, 10, 100, map, rng);
             }
 
             if (tag == "Campfire")
             {
-                SpawnBigTrees(id, 10, 100);
-                SpawnCampfire(id);
-                int cCount = Rng.Next(1, 4);
+                SpawnBigTrees(id, 10, 100, map, rng);
+                SpawnCampfire(id, rng);
+                int cCount = rng.Next(1, 4);
                 for (int i = 0; i < cCount; i++)
                 {
-                    SpawnChest(id);
+                    SpawnChest(id, rng);
                 }
             }
             if (tag == "Shrine")
             {
                 GameObject go = (GameObject)Instantiate(Resources.Load("SpeedBuffInteractable"));
-                go.transform.position = GetRandomSpawnPoint(id);
+                go.transform.position = GetRandomSpawnPoint(id, rng);
             }
 
-            SpawnBushes(id);
+            SpawnBushes(id, rng);
 
         }
 
@@ -115,6 +94,12 @@ public class ForestGeneratorSO : MapGenerator
     {
         layout.Init();
         zoneSpawnPoints = new Dictionary<int, List<Vector3>>();
+
+        ObjManager = GameManager.GM.InGameObjectManager;
+
+        TerrainGameObjects = ObjManager.GetContainer("TerrainObjects");
+        Chests = ObjManager.GetContainer("Chests");
+        Spawners = ObjManager.GetContainer("Spawners");
     }
 
     //void CreateLayout()
@@ -268,7 +253,7 @@ public class ForestGeneratorSO : MapGenerator
     //    }
     //}
 
-    void InitStartEndObjects()
+    void InitStartEndObjects(sMap Map)
     {
         List<int> longestPath = layout.longestPath;
         Dictionary<int, Circle> Zones = layout.Zones;
@@ -289,16 +274,14 @@ public class ForestGeneratorSO : MapGenerator
         End.transform.parent = GameManager.GM.InGameObjects.transform.FindChild("TerrainObjects");
     }
 
-    void CreateFloor()
+    void CreateFloor(sMap Map, DefaultRNG Rng)
     {
         //ground tileIDs; TILEID START AT 1 FOR EACH TILESET!
         int[] grass = new int[7] { 49, 50, 51, 52, 53, 54, 55 };
         int[] flowers = new int[2] { 52, 53 };
         int[] mushrooms = new int[2] { 54, 55 };
 
-        Tileset ground = mManager.map.GetTilesetByName("forestTileset");
-
-
+        Tileset ground = Map.GetTilesetByName("forestTileset");
 
         for (int y = 0; y < Map.height; y++)
         {
@@ -336,9 +319,9 @@ public class ForestGeneratorSO : MapGenerator
         }
     }
 
-    void CreateWalls()
+    void CreateWalls(sMap Map, DefaultRNG Rng)
     {
-        int fid = mManager.map.GetTilesetByName("forestTileset").firstTileID;
+        int fid = Map.GetTilesetByName("forestTileset").firstTileID;
 
         int[] smallTrees = new int[4] { fid, fid + 1, fid + 2, fid + 3 };
         List<int> weights = new List<int>(new int[4] { 3, 3, 10, 1 });
@@ -403,16 +386,16 @@ public class ForestGeneratorSO : MapGenerator
 
             if (inbounds == true)
             {
-                DrawBigTree(rX, rY);
+                DrawBigTree(rX, rY, Map);
             }
         }
     }
 
-    void PlaceEnemys(int id)
+    void PlaceEnemys(int id, sMap Map, DefaultRNG Rng, EntityMetaDataSO EntityData)
     {
         int curCost = 0;
 
-        List<EnemyMetaData> currentLvlEnemys = entityData.GetEnemyByFirstLvlRange(1, 1);
+        List<EnemyMetaData> currentLvlEnemys = EntityData.GetEnemyByFirstLvlRange(1, 1);
 
         Circle zone = layout.Zones[id];
 
@@ -432,7 +415,7 @@ public class ForestGeneratorSO : MapGenerator
             EnemyMetaData enemyData = currentLvlEnemys[Rng.Next(0, currentLvlEnemys.Count)];
             
             s.objectToSpawn = enemyData.prefab;
-            s.positionOffset = GetRandomSpawnPoint(id) - spawner.transform.position;
+            s.positionOffset = GetRandomSpawnPoint(id, Rng) - spawner.transform.position;
             ps.player = Camera.main.gameObject;
             ps.cameraZone = GameObject.Find("Bounds").GetComponent<Zone>();
 
@@ -444,9 +427,9 @@ public class ForestGeneratorSO : MapGenerator
         }
     }
 
-    void PlacePassives(int id)
+    void PlacePassives(int id, sMap Map, DefaultRNG Rng, EntityMetaDataSO EntityData)
     {
-        List<EntityMetaData> currentLvlEnemys = entityData.GetPassiveByFirstLvlRange(1, 1);
+        List<EntityMetaData> currentLvlEnemys = EntityData.GetPassiveByFirstLvlRange(1, 1);
 
         Circle zone = layout.Zones[id];
 
@@ -467,7 +450,7 @@ public class ForestGeneratorSO : MapGenerator
             SpawnObject s = new SpawnObject();
             
             s.objectToSpawn = currentLvlEnemys[Rng.Next(0, currentLvlEnemys.Count)].prefab;
-            s.positionOffset = GetRandomSpawnPoint(id) - spawner.transform.position;
+            s.positionOffset = GetRandomSpawnPoint(id, Rng) - spawner.transform.position;
             ps.player = Camera.main.gameObject;
             ps.cameraZone = GameObject.Find("Bounds").GetComponent<Zone>();
 
@@ -477,7 +460,7 @@ public class ForestGeneratorSO : MapGenerator
         }
     }
 
-    void GenerateSpawnPoints(int id)
+    void GenerateSpawnPoints(int id, sMap Map, DefaultRNG Rng)
     {
         bool intPos = true;
         Circle zone = layout.Zones[id];
@@ -504,9 +487,6 @@ public class ForestGeneratorSO : MapGenerator
                 if (!spawnPoints.Contains(point))
                 {
                     spawnPoints.Add(point);
-
-                    //GameObject SpawnPoint = (GameObject)GameObject.Instantiate(Resources.Load("SpawnPointVisualization"));
-                    //SpawnPoint.transform.position = point;
                     n++;
                 }
 
@@ -517,17 +497,17 @@ public class ForestGeneratorSO : MapGenerator
         zoneSpawnPoints.Add(id, spawnPoints);
     }
 
-    void SpawnChest(int zoneID)
+    void SpawnChest(int zoneID, DefaultRNG Rng)
     {
         Circle zone = layout.Zones[zoneID];
         GameObject chest = (GameObject)GameObject.Instantiate(Resources.Load("Chest"));
 
-        chest.transform.position = GetRandomSpawnPoint(zoneID);
+        chest.transform.position = GetRandomSpawnPoint(zoneID, Rng);
         chest.transform.GetChild(0).GetComponent<Chest>().seed = Rng.Next(0, 100000);
         chest.transform.parent = Chests.transform;
     }
 
-    void DrawBigTree(int x, int y)
+    void DrawBigTree(int x, int y, sMap Map)
     {
         Tileset t = Map.GetTilesetByName("forestTileset");
 
@@ -542,11 +522,8 @@ public class ForestGeneratorSO : MapGenerator
         Map["Fg", x + 1, y + 1] = t.firstTileID + 11;
         Map["Walls", x + 1, y + 1] = 0;
     }// Draws the tiles in the tilemap.
-    void SpawnBigTrees(int id, int maxPerZone, int maxTrys = 100)
+    void SpawnBigTrees(int id, int maxPerZone, int maxTrys, sMap Map, DefaultRNG Rng)
     {
-        //int MaxPerRoom = 10;
-        //int maxPlacementRetrys = 100;
-
         Circle zone = layout.Zones[id];
         List<Vector3> SpawnedObjectPos = new List<Vector3>();
 
@@ -609,7 +586,7 @@ public class ForestGeneratorSO : MapGenerator
 
     }// Creates a gameobject at a spawnPoint. (has better collider... also fixes the problem with sword slahing through it that the tilemap version has..)
 
-    void SpawnBushes(int id)
+    void SpawnBushes(int id, DefaultRNG Rng)
     {
         if (layout.Zones[id].Tag == "Empty") { return; }
 
@@ -629,31 +606,6 @@ public class ForestGeneratorSO : MapGenerator
             bush.transform.parent = TerrainGameObjects.transform;
         }
         spawnPoints.Clear();
-        //place some fluff objects
-        //for (int y = 0; y < Map.height; y++)
-        //{
-        //    for (int x = 0; x < Map.width; x++)
-        //    {
-
-        //        if (Map["Walls", x, y] == 0)
-        //        {
-        //            float xCoord = (float)x / Map.width * perlinSize;
-        //            float yCoord = (float)y / Map.height * perlinSize;
-        //            float sample = Mathf.PerlinNoise(xCoord, yCoord);
-        //            GameObject bush;
-
-        //            if (sample <= bushMod)
-        //            {
-        //                bush = GameObject.Instantiate(Resources.Load("bush", typeof(GameObject))) as GameObject;
-        //                bush.transform.position = new Vector3((x + .5f) - (Map.width / 2), (y + .5f) - (Map.height / 2), bush.transform.position.z);
-        //                bush.transform.parent = InGameObjects.transform;
-        //                if (mManager.map["Bg", x, y] != 0) { mManager.map["Bg", x, y] = 0; }
-        //            }
-
-        //        }
-
-        //    }
-        //}
     }
 
     //void DrawDebug()
@@ -763,14 +715,14 @@ public class ForestGeneratorSO : MapGenerator
     //    }
     //}
 
-    void SpawnCampfire(int id)
+    void SpawnCampfire(int id, DefaultRNG Rng)
     {
         GameObject go = (GameObject)GameObject.Instantiate(Resources.Load("CampFire"));
-        go.transform.position = GetRandomSpawnPoint(id);
+        go.transform.position = GetRandomSpawnPoint(id, Rng);
         go.transform.parent = TerrainGameObjects.transform;
     }
 
-    Vector3 GetRandomSpawnPoint(int id)
+    Vector3 GetRandomSpawnPoint(int id, DefaultRNG Rng)
     {
         List<Vector3> points = zoneSpawnPoints[id];
         int index = Rng.Next(0, points.Count);

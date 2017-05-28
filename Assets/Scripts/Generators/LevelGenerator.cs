@@ -25,6 +25,7 @@ public class LevelGenerator : MonoBehaviour {
             GenerateLvL();
         }
     }
+
     void OnDisable()
     {
         SceneManager.sceneLoaded -= OnLevelLoad;
@@ -45,8 +46,7 @@ public class LevelGenerator : MonoBehaviour {
         
         GameManager.GM.InGameObjectManager.DestroyAllGameObjects();
 
-        CurrentConfig.Init(GameManager.GM.mapManager, GameManager.GM.Rng, GameManager.GM.entityMetaData);
-        CurrentConfig.Generate();
+        CurrentConfig.Generate(GameManager.GM.mapManager.map, GameManager.GM.Rng, GameManager.GM.entityMetaData);
 
         GameManager.GM.mapManager.cManager.UpdateChunks(force: true);// true forces the whole map to be regenerated.
         GameManager.GM.GetComponent<Grid>().Start();

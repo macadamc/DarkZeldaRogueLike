@@ -50,7 +50,7 @@ public class Tileset {
         return data;
     }
 
-#if UNITY_EDITOR
+
     public void Initalize(sMap Map)
     {
 
@@ -91,7 +91,10 @@ public class Tileset {
         {
             material = new Material(Shader.Find("Sprites/Default"));
             material.mainTexture = image;
+
+#if UNITY_EDITOR
             AssetDatabase.CreateAsset(material, string.Format("Assets/{0}.asset", image.name));
+#endif
         }
         if (colliderDataType == "self")
         {
@@ -128,6 +131,6 @@ public class Tileset {
         //    Tilesets.Add(name, this);
         //}
     }
-#endif
+
 
 }

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="16" tileheight="16" nextobjectid="1">
+ <tileset firstgid="1" source="TsxFiles/forestTileset.tsx"/>
+ <layer name="Floor" width="12" height="12">
+  <properties>
+   <property name="EmptyTileCollision" type="bool" value="false"/>
+   <property name="FullTileCollision" type="bool" value="false"/>
+   <property name="SortingLayer" value=""/>
+   <property name="SortingOrder" type="int" value="0"/>
+   <property name="UnityLayer" value=""/>
+   <property name="UseCollisions" type="bool" value="false"/>
+   <property name="isTrigger" type="bool" value="false"/>
+  </properties>
+  <data encoding="csv">
+49,49,49,49,49,49,49,49,49,49,49,49,
+49,49,49,49,49,49,49,49,49,49,49,49,
+49,49,49,49,49,49,49,49,49,49,49,49,
+49,49,49,49,49,49,49,49,49,49,49,49,
+49,49,49,49,49,49,49,49,49,49,49,49,
+49,49,49,49,49,49,49,49,49,49,49,49,
+49,49,49,49,49,49,49,49,49,49,49,49,
+49,49,49,49,49,49,49,49,49,49,49,49,
+49,49,49,49,49,49,49,49,49,49,49,49,
+49,49,49,49,49,49,49,49,49,49,49,49,
+49,49,49,49,49,49,49,49,49,49,49,49,
+49,49,49,49,49,49,49,49,49,49,49,49
+</data>
+ </layer>
+ <layer name="Bg" width="12" height="12">
+  <properties>
+   <property name="EmptyTileCollision" type="bool" value="false"/>
+   <property name="FullTileCollision" type="bool" value="false"/>
+   <property name="SortingLayer" value=""/>
+   <property name="SortingOrder" type="int" value="0"/>
+   <property name="UnityLayer" value=""/>
+   <property name="UseCollisions" type="bool" value="false"/>
+   <property name="isTrigger" type="bool" value="false"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,58,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Walls" width="12" height="12">
+  <properties>
+   <property name="EmptyTileCollision" type="bool" value="false"/>
+   <property name="FullTileCollision" type="bool" value="false"/>
+   <property name="SortingLayer" value=""/>
+   <property name="SortingOrder" type="int" value="0"/>
+   <property name="UnityLayer" value=""/>
+   <property name="UseCollisions" type="bool" value="true"/>
+   <property name="isTrigger" type="bool" value="false"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,19,20,0,0,0,0,
+0,19,20,0,2,0,3,0,0,2,0,0,
+0,0,0,0,0,0,0,0,3,3,19,20,
+19,20,3,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,19,20,0,
+0,19,20,0,0,58,0,0,0,3,2,0,
+0,0,0,0,0,0,0,0,3,2,0,0,
+0,0,0,0,0,0,0,0,0,3,19,20,
+0,19,20,0,0,0,0,0,0,2,0,0,
+0,2,0,0,0,0,0,3,0,0,2,0,
+0,0,0,3,0,0,0,2,19,20,0,0,
+19,20,0,0,0,19,20,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Fg" width="12" height="12">
+  <properties>
+   <property name="EmptyTileCollision" type="bool" value="false"/>
+   <property name="FullTileCollision" type="bool" value="false"/>
+   <property name="SortingLayer" value=""/>
+   <property name="SortingOrder" type="int" value="0"/>
+   <property name="UnityLayer" value=""/>
+   <property name="UseCollisions" type="bool" value="false"/>
+   <property name="isTrigger" type="bool" value="false"/>
+  </properties>
+  <data encoding="csv">
+0,11,12,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,11,12,
+11,12,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,11,12,0,
+0,11,12,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,11,12,
+0,11,12,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,11,12,0,0,
+11,12,0,0,0,11,12,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

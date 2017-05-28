@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using CoreGame.Helper;
 
 public static class Utility {
-    public static IntPoint[] dirs = new IntPoint[4] { new IntPoint(-1, 0), new IntPoint(0, 1), new IntPoint(1, 0), new IntPoint(0, -1) };
+    public static MazeGenerator.IntPoint[] dirs = new MazeGenerator.IntPoint[4] { new MazeGenerator.IntPoint(-1, 0), new MazeGenerator.IntPoint(0, 1), new MazeGenerator.IntPoint(1, 0), new MazeGenerator.IntPoint(0, -1) };
     static Queue<IntPoint> fringe = new Queue<IntPoint>();
 
     //   Flood-fill(node, target-color, replacement-color):
@@ -25,6 +25,7 @@ public static class Utility {
 
     public static int[,] floodfill(int sx, int sy, int[,] Map, int targetColor = 1, int replaceColor = 1)
     {
+        ClipperLib.IntPoint[] dirs = new ClipperLib.IntPoint[4] { new ClipperLib.IntPoint(-1, 0), new ClipperLib.IntPoint(0, 1), new ClipperLib.IntPoint(1, 0), new ClipperLib.IntPoint(0, -1) };
         int[,] ret = new int[Map.GetLength(0), Map.GetLength(1)];
         //if (targetColor == replaceColor)
         //    return ret;

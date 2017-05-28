@@ -8,14 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7863e7f9fbbd2484589d26ebd110dfeb, type: 3}
-  m_Name: DashBoots
+  m_Script: {fileID: 11500000, guid: 31673b03e0dd91f4ba0246e1db36dd9a, type: 3}
+  m_Name: MazeGenTest
   m_EditorClassIdentifier: 
-  onGroundPrefab: {fileID: 0}
-  itemDescription:
-    itemName: 
-    itemType: 0
-    itemDescription: 
-    itemPanelSize: {x: 0, y: 0}
-  baseCost: 0
-  SpeedMod: 0
+  loopPercent: 0.593
+  windyOrRandomPercent: 0.43
+  Layer: Walls
