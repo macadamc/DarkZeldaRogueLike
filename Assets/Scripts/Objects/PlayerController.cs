@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
             weapon.OnAttackTriggered(entity);
             currentAttack = AttackSlot.One;
         }
-        if (currentAttack == AttackSlot.One && onDown == false && onHeld && weapon != null)
+        if (currentAttack == AttackSlot.One && onHeld && weapon != null)
         {
             weapon.OnAttackHeld(entity);
         }
@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour
             weapon.OnAttackTriggered(entity);
             currentAttack = AttackSlot.Two;
         }
-        if (currentAttack == AttackSlot.Two && onDown == false && onHeld && weapon != null)
+        if (currentAttack == AttackSlot.Two && onHeld && weapon != null)
         {
             weapon.OnAttackHeld(entity);
         }

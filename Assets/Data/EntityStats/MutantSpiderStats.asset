@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d2fb04c509d6847b9e04c15dae2099, type: 3}
+  m_Name: MutantSpiderStats
+  m_EditorClassIdentifier: 
+  objName: MutantSpider
+  health: 6
+  acceleration: 1
+  moveSpeed: 3
+  knockbackDeceleration: 8
+  visionLayer:
+    serializedVersion: 2
+    m_Bits: 1536
+  obsLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  softCollisions:
+    serializedVersion: 2
+    m_Bits: 1024
+  visionDistance: 8
+  fieldOfView: 0
+  spawnOnCreate: []
+  spawnOnDeath:
+  - objectToSpawn: {fileID: 1194039438552996, guid: 5993d898504ea6945a11da0617815372,
+      type: 2}
+    positionOffset: {x: 0, y: 0}
+    positionRandomness: 0

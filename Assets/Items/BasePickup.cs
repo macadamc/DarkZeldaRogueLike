@@ -34,7 +34,13 @@ public class BasePickup : BaseInteractable
         {
             trigger.enabled = false;
             coll.enabled = true;
-            OnTriggerExit2D(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>());
+
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+            if (player == null)
+                return;
+
+            OnTriggerExit2D(player.GetComponent<Collider2D>());
         }
 
     }

@@ -9,19 +9,22 @@ public abstract class MeleeBase : ActiveItem {
     new MeleeBaseSO itemData;
     GameObject HeldSprite;
     SpriteRenderer sprite;
+    float holdTime;
+    public bool triggerHoldAtk;
 
     public override void Start(Entity entity)
     {
         base.Start(entity);
         itemData = (MeleeBaseSO)base.itemData;
-
-
     }
 
 
     public override void OnAttackTriggered(Entity entity)
     {
         base.OnAttackTriggered(entity);
+
+        triggerHoldAtk = false;
+
         if (HeldSprite != null)
         {
             OnAttackEnd(entity);
@@ -37,6 +40,8 @@ public abstract class MeleeBase : ActiveItem {
 
         sprite.flipX = entity.rend.flipX;
         //HeldSprite.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
+        holdTime = 0f;
+
     }
 
     public override void OnAttackHeld(Entity entity)
@@ -48,19 +53,43 @@ public abstract class MeleeBase : ActiveItem {
             //HeldSprite.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
         }
         //entity.curMaxSpd = entity.stats.moveSpeed / 8;
+        holdTime += Time.deltaTime;
+
+
+        if (holdTime > itemData.holdAttackTime)
+        {
+            triggerHoldAtk = true;
+        }
     }
 
     public override void OnAttackEnd(Entity entity)
     {
         base.OnAttackEnd(entity);
-        //create the "weapon swing" gameobject.
-        GameObject g = (GameObject)GameObject.Instantiate(itemData.attackObject, entity.gameObject.transform);
-        //set the attacks position and rotation to match the entitys atkPos and.. TODO : look direction?
-        g.transform.localPosition = entity.atkPos;
-        g.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
-        entity.attack = true;
-        g.GetComponent<WeaponAttack>().weapon = this;
-        DestroyHeldSprite();
+
+        if(triggerHoldAtk)
+        {
+            //create the "weapon swing" gameobject.
+            GameObject g = (GameObject)GameObject.Instantiate(itemData.holdAttackObject, entity.gameObject.transform);
+            //set the attacks position and rotation to match the entitys atkPos and.. TODO : look direction?
+            g.transform.localPosition = entity.atkPos;
+            g.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
+            entity.attack = true;
+            g.GetComponent<WeaponAttack>().weapon = this;
+            DestroyHeldSprite();
+            triggerHoldAtk = true;
+        }
+        else
+        {
+            //create the "weapon swing" gameobject.
+            GameObject g = (GameObject)GameObject.Instantiate(itemData.attackObject, entity.gameObject.transform);
+            //set the attacks position and rotation to match the entitys atkPos and.. TODO : look direction?
+            g.transform.localPosition = entity.atkPos;
+            g.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
+            entity.attack = true;
+            g.GetComponent<WeaponAttack>().weapon = this;
+            DestroyHeldSprite();
+            triggerHoldAtk = false;
+        }
 
     }
 

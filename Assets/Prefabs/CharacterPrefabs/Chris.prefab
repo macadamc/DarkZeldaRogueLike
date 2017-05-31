@@ -320,13 +320,14 @@ MonoBehaviour:
   controller: {fileID: 0}
   attack: 0
   holding: 0
+  strafe: 0
   handTransform: {fileID: 0}
   stunLocked: 0
   attackDelay: 0
   knockbackVector: {x: 0, y: 0}
   dist: 0
   items: {fileID: 11400000, guid: af2e218907d789740ac31f6eda87cf68, type: 2}
-  weaponName: WoodSword
+  weaponName: Staff
   atkPos: {x: 0, y: 0}
   atkSpawnDistance: 0.5
   activeEffects: []

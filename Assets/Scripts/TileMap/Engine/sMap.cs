@@ -34,6 +34,21 @@ public class sMap : ScriptableObject
     [HideInInspector]
     public int nextTileID;
 
+     public sMap()
+    {
+        if (tilesetPointers == null)
+        {
+            tilesetPointers = new List<string>();
+            tilesetConfig = new List<Tileset>();
+        }
+
+        if (layerPointers == null)
+        {
+            layerPointers = new List<string>();
+            layerConfig = new List<Layer>();
+        }
+    }
+
     public int this[string layer, int x, int y]
     {
         get
@@ -168,9 +183,11 @@ public class sMap : ScriptableObject
     }
 
 
+
+
     public static sMap Load (TextAsset TmxAsTxt)
     {
-        sMap map = ScriptableObject.CreateInstance<sMap>();
+        sMap map = CreateInstance<sMap>();
 
         XmlDocument xml = new XmlDocument();
         xml.LoadXml(TmxAsTxt.text);
@@ -199,7 +216,7 @@ public class sMap : ScriptableObject
 
         for (int i = 0; i < layers.Count; i++)
         {
-            if (map.layerPointers.IndexOf(layers[i].Attributes["name"].Value) >= 0)
+            if (map.layerPointers.IndexOf(layers[i].Attributes["name"].Value) < 0)
             {
                 _createLayer(map, layers[i], oldFirstGID);
             }
@@ -334,3 +351,5 @@ public class sMap : ScriptableObject
 
     }
 }
+
+

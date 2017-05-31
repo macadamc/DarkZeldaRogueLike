@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75591efc40700bc40b55cb42049a6d70, type: 3}
+  m_Name: Staff
+  m_EditorClassIdentifier: 
+  onGroundPrefab: {fileID: 1614545392452658, guid: ca1cce8adfad03643b98c7853e283dce,
+    type: 2}
+  itemDescription:
+    itemName: 
+    itemType: 0
+    itemDescription: 
+    itemPanelSize: {x: 0, y: 0}
+  baseCost: 0
+  HeldObj: {fileID: 1470127497772010, guid: 101cf14cbcad0154593cb3da1c1b0282, type: 2}
+  baseDamage: 1
+  AttackDelay: 0.2
+  knockBack: 7
+  strafe: 0
+  attackingMoveSpeed: 0.8
+  attackObject: {fileID: 1104587797487370, guid: 711a7babe38b0fe469d217f9d7e75222,
+    type: 2}
+  holdAttackObject: {fileID: 1104587797487370, guid: 711a7babe38b0fe469d217f9d7e75222,
+    type: 2}
+  holdAttackTime: 0
+  screenshakeStr: 0.15

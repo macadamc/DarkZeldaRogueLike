@@ -22,5 +22,10 @@ MonoBehaviour:
     firstLvl: 1
     cost: 1
     prefab: {fileID: 1314549201245590, guid: fdb2cc097373fd6488ba3fea7f4a9cbf, type: 2}
+  - name: MutantSpider
+    firstLvl: 1
+    cost: 1
+    prefab: {fileID: 1266545979878766, guid: 992670ac3b8231d41a3ab4aeb75dd79f, type: 2}
   enemyKeys:
   - Spider
+  - MutantSpider

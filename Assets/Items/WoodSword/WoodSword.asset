@@ -23,7 +23,11 @@ MonoBehaviour:
   baseDamage: 1
   AttackDelay: 0.15
   knockBack: 20
+  strafe: 0
   attackingMoveSpeed: 0.5
   attackObject: {fileID: 1104587797487370, guid: 5552879975122d64187c6d3a9ac355a0,
     type: 2}
+  holdAttackObject: {fileID: 1104587797487370, guid: 00e9a232e0a5c704aa8a9fa1999785b1,
+    type: 2}
+  holdAttackTime: 0.4
   screenshakeStr: 0.15
