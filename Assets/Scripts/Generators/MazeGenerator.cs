@@ -19,10 +19,12 @@ public class MazeGenerator : MapGenerator
     }
 
     int TileID;
+    TileMapManager mManager;
 
     public override void Generate(sMap map, DefaultRNG rng, EntityMetaDataSO entityData)
     {
-        TileID = map.GetTilesetByName("forestTileset").firstTileID + 2;
+        mManager = GameManager.GM.mapManager;
+        TileID = mManager.GetTilesetByName("forestTileset").firstTileID + 2;
 
         Visited = new bool[map.width, map.height];
         Fringe = new List<IntPoint>();

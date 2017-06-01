@@ -37,8 +37,8 @@ public class TileMapEditorWindow : EditorWindow
             {
                 int tileID = tManager.map["Walls", x, y];
                 if (tileID == 0) { continue; }
-                Tileset t = tManager.map.GetTilesetByTileID(tileID);
-                int posInTileset = (int)tManager.map.globalIdToLocalId(tileID) - 1;
+                Tileset t = tManager.GetTilesetByTileID(tileID);
+                int posInTileset = (int)tManager.globalIdToLocalId(tileID) - 1;
 
                 tWidth = (t.image.width / TILESIZE);
                 tHeight = (t.image.height / TILESIZE);

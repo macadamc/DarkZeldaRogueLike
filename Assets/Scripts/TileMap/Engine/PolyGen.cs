@@ -5,7 +5,7 @@ using ClipperLib;
 
 public static class PolyGen
 {
-
+    static TileMapManager mManager = GameManager.GM.mapManager;
     static Dictionary<string, Clipper> clippers = new Dictionary<string, Clipper>();
     static Dictionary<string, List<List<IntPoint>>> solutions = new Dictionary<string, List<List<IntPoint>>>();
 
@@ -162,7 +162,7 @@ public static class PolyGen
 
     public static Vector2 TileMin(int id, SubLayer sub, sMap Map)
     {
-        int? idExists = Map.globalIdToLocalId(id);
+        int? idExists = mManager.globalIdToLocalId(id);
         if (idExists != null)
         {
             id = (int)idExists;
@@ -195,7 +195,7 @@ public static class PolyGen
 
                 if (!Map.inBounds(px, py)) continue;
 
-                Tileset t = Map.GetTilesetByTileID(Map[layername, px, py]);
+                Tileset t = mManager.GetTilesetByTileID(Map[layername, px, py]);
                 curSubLayerName = t.name;
 
                 SubLayer subLayer = null;
@@ -261,7 +261,7 @@ public static class PolyGen
 
             if (layer.layerInfo.emptyTileCollision == false && layer.layerInfo.fullTileCollisions == false && Map[layername, px, py] > 0)
             {
-                List<Vector2> ColliderInfo = Map.getTileColliderInfo(Map[layername, px, py]);
+                List<Vector2> ColliderInfo = mManager.getTileColliderInfo(Map[layername, px, py]);
                 List<IntPoint> pointList = new List<IntPoint>();
                 for (int i = 0; i < ColliderInfo.Count; i++)
                 {

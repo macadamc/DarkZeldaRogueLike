@@ -18,8 +18,6 @@ public class ChunkManager
 
     bool triggered;
 
-    public sMap map;
-
     public ChunkManager()
     {
         chunkPointers = new List<WorldPos>();
@@ -28,7 +26,7 @@ public class ChunkManager
         
     }
 
-    public MapChunk CreateChunk(int x, int y)
+    public MapChunk CreateChunk(int x, int y, sMap map)
     {
         MapChunk chunk = new MapChunk(x, y, map);
 
@@ -40,7 +38,7 @@ public class ChunkManager
         return chunk;
     }
 
-    public MapChunk GetChunkFromWorldPos(int x, int y)
+    public MapChunk GetChunkFromWorldPos(int x, int y, sMap map)
     {
         pointer.X = x / map.chunkSize;
 
@@ -52,7 +50,7 @@ public class ChunkManager
         return null;
     }
 
-    public void SpawnChunks()
+    public void SpawnChunks(sMap map)
     {
         int widthInChunks = map.width / map.chunkSize;
         int heightInChunks = map.height / map.chunkSize;
@@ -71,7 +69,7 @@ public class ChunkManager
                 }
                 else
                 {
-                    cChunk = CreateChunk(x, y);
+                    cChunk = CreateChunk(x, y, map);
                 }
             }
         }
@@ -91,7 +89,7 @@ public class ChunkManager
         }
     }
 
-    public void UpdateChunks(bool force = false)
+    public void UpdateChunks(sMap map, bool force = false)
     {
 
         if (force == false)

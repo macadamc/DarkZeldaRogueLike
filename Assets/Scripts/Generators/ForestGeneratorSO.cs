@@ -11,6 +11,7 @@ public class ForestGeneratorSO : MapGenerator
     GameObject TerrainGameObjects;
     GameObject Chests;
     GameObject Spawners;
+    TileMapManager mManager;
 
     public LayoutGenerator layout;
 
@@ -96,6 +97,7 @@ public class ForestGeneratorSO : MapGenerator
         zoneSpawnPoints = new Dictionary<int, List<Vector3>>();
 
         ObjManager = GameManager.GM.InGameObjectManager;
+        mManager = GameManager.GM.mapManager;
 
         TerrainGameObjects = ObjManager.GetContainer("TerrainObjects");
         Chests = ObjManager.GetContainer("Chests");
@@ -281,7 +283,7 @@ public class ForestGeneratorSO : MapGenerator
         int[] flowers = new int[2] { 52, 53 };
         int[] mushrooms = new int[2] { 54, 55 };
 
-        Tileset ground = Map.GetTilesetByName("forestTileset");
+        Tileset ground = mManager.GetTilesetByName("forestTileset");
 
         for (int y = 0; y < Map.height; y++)
         {
@@ -321,7 +323,7 @@ public class ForestGeneratorSO : MapGenerator
 
     void CreateWalls(sMap Map, DefaultRNG Rng)
     {
-        int fid = Map.GetTilesetByName("forestTileset").firstTileID;
+        int fid = mManager.GetTilesetByName("forestTileset").firstTileID;
 
         int[] smallTrees = new int[4] { fid, fid + 1, fid + 2, fid + 3 };
         List<int> weights = new List<int>(new int[4] { 3, 3, 10, 1 });
@@ -351,7 +353,7 @@ public class ForestGeneratorSO : MapGenerator
         tunneler.DrawPath(layout.longestPath);
 
         //Draw BigTrees over over other wall tiles that are not big trees randomly.
-        Tileset t = Map.GetTilesetByName("forestTileset");
+        Tileset t = mManager.GetTilesetByName("forestTileset");
 
         List<int> spriteIDs = new List<int>();
 
@@ -477,7 +479,7 @@ public class ForestGeneratorSO : MapGenerator
 
             int posX = Mathf.FloorToInt(pos.x);
             int posY = Mathf.FloorToInt(pos.y);
-            if (Map["Walls", posX, posY] == 0 && Map["Bg", posX, posY] != Map.GetTilesetByName("forestTileset").firstTileID + 59)
+            if (Map["Walls", posX, posY] == 0 && Map["Bg", posX, posY] != mManager.GetTilesetByName("forestTileset").firstTileID + 59)
             {
                 Vector3 point = new Vector3(pos.x - (Map.width / 2f), pos.y - (Map.height / 2f), pos.z);
                 if (intPos)
@@ -509,7 +511,7 @@ public class ForestGeneratorSO : MapGenerator
 
     void DrawBigTree(int x, int y, sMap Map)
     {
-        Tileset t = Map.GetTilesetByName("forestTileset");
+        Tileset t = mManager.GetTilesetByName("forestTileset");
 
         //bottomleft
         Map["Walls", x, y] = t.firstTileID + 18;

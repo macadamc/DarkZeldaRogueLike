@@ -74,7 +74,7 @@ public class Tunneler
     {
         int index = 1; // dont draw the starting room;
 
-        brush.TileID = map.GetTilesetByName("forestTileset").firstTileID + 59;
+        brush.TileID = GameManager.GM.mapManager.GetTilesetByName("forestTileset").firstTileID + 59;
 
         while (ZoneIDs[index] != ZoneIDs[ZoneIDs.Count - 1])
         {

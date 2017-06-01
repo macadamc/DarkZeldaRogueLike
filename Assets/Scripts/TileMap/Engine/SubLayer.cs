@@ -23,7 +23,7 @@ public class SubLayer
 
     public SubLayer(GameObject parent, string MaterialName, sMap map, string SortingLayerName, int SortingOrder)
     {
-        Tileset t = map.GetTilesetByName(MaterialName);
+        Tileset t = GameManager.GM.mapManager.GetTilesetByName(MaterialName);
 
         gameobject = new GameObject(MaterialName);
 

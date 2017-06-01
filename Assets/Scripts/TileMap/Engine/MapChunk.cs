@@ -13,20 +13,17 @@ public class MapChunk
     public List<ChunkLayer> layerList;
     public List<string> layerPointers;
 
-    sMap map;
-
     public MapChunk(int x, int y, sMap Map)
     {
-        map = Map;
         layerList = new List<ChunkLayer>();
         layerPointers = new List<string>();
 
         gameobject = new GameObject(string.Format("{0},{1}", x, y));
         pos = new WorldPos(x, y);
 
-        foreach (Layer layer in map.layerConfig)
+        foreach (Layer layer in Map.layerConfig)
         {
-            ChunkLayer L = new ChunkLayer(gameobject, map, layer);
+            ChunkLayer L = new ChunkLayer(gameobject, Map, layer);
             layerList.Add(L);
             layerPointers.Add(layer.name);
 
