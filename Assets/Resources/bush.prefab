@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114103228209245120}
   m_Layer: 9
   m_Name: bush
-  m_TagString: Untagged
+  m_TagString: Destructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -154,6 +154,10 @@ MonoBehaviour:
   skipZOrderUpdate: 1
   health: 0
   stats: {fileID: 11400000, guid: 90d5efaf665e5fb45b1bd8911a2c7ef1, type: 2}
+  statMods:
+    damage: 0
+    maxSpeed: 0
+    attackDelay: 0
   skipDamageFlash: 1
   hurtSfx: {fileID: 8300000, guid: 820a8b921d8b59042a90742b37248be1, type: 3}
 --- !u!212 &212271409877756760

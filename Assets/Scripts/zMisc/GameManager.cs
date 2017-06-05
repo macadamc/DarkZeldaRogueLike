@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour {
         {
             throw new Exception("No object Named InGameObjects in the scene...");
         }
+
     }
 
     void Start()

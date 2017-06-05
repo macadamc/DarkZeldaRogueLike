@@ -4,6 +4,5 @@ using UnityEngine;
 
 public abstract class MapGenerator : ScriptableObject {
 
-    public abstract void Generate(sMap map, DefaultRNG rng, EntityMetaDataSO entityData);
-    //public abstract void Init(TileMapManager mManager, DefaultRNG rng, EntityMetaDataSO EntityData);
+    public abstract void Generate(sMap map, DefaultRNG rng, EntityMetaDataSO entityData, LevelGenerator LvlGenerator);
 }

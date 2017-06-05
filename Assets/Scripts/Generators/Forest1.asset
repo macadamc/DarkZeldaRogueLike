@@ -8,74 +8,60 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daa0ac3f16a7d914390d80d63e2bfcba, type: 3}
+  m_Script: {fileID: 11500000, guid: e587430aa53778b42860d595371a9dfe, type: 3}
   m_Name: Forest1
   m_EditorClassIdentifier: 
   layout:
-    zIds: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c000000
-    leafNodes: 06000000080000000a0000000d0000001400000016000000170000001a0000001b0000001c000000
-    longestPath: 1c00000019000000130000000e0000000900000005000000020000000100000004000000070000000b0000000f00000014000000
-    lPathDist: 47.238804
-    maxConnectionsPerZone: 3
+    maxConnectionsPerZone: 5
     minZoneRadius: 2
-    maxZoneRadius: 6
-    MAXDISTFORCONNECTION: 2
+    maxZoneRadius: 7
+    MAXDISTFORCONNECTION: 3
     MINLENGTHOFLOOP: 4
+    spawnBossRoom: 0
+    spawnShop: 0
     constraints:
     - useSize: 1
       sizeConstraint:
         minSizeThreshold: 0
-        maxSizeThreshhold: 0.3
+        maxSizeThreshhold: 0.4
       useMinSpawn: 0
       minSpawnConstraint:
         MinSpawnCounts: 
       tagList:
       - value: Empty
-        weight: 1
-      - value: 
-        weight: 1
-    - useSize: 1
+        weight: 0
+    - useSize: 0
       sizeConstraint:
-        minSizeThreshold: 0.3
+        minSizeThreshold: 0.4
         maxSizeThreshhold: 0.7
       useMinSpawn: 0
       minSpawnConstraint:
         MinSpawnCounts: 
       tagList:
-      - value: TreasureRoom
-        weight: 1
       - value: Empty
-        weight: 2
-      - value: 
         weight: 1
-    - useSize: 1
+      - value: 
+        weight: 2
+    - useSize: 0
       sizeConstraint:
         minSizeThreshold: 0.7
         maxSizeThreshhold: 1
       useMinSpawn: 0
       minSpawnConstraint:
-        MinSpawnCounts: 
-      tagList:
-      - value: BigTree
-        weight: 1
-    - useSize: 1
-      sizeConstraint:
-        minSizeThreshold: 0.7
-        maxSizeThreshhold: 1
-      useMinSpawn: 1
-      minSpawnConstraint:
         MinSpawnCounts: 01000000
       tagList:
-      - value: Campfire
+      - value: TreasureRoom
         weight: 1
-  MinEnemysPerZoneBase: 1
-  MaxEnemysPerZoneBase: 4
+      - value: BigTree
+        weight: 3
+  MinEnemysPerZoneBase: 0
+  MaxEnemysPerZoneBase: 5
   MaxPassivesPerZoneBase: 5
-  maxCost: 70
+  maxCost: 100
   perlinSize: 16
-  bushMod: 0.6
-  chanceToSkip: 0.25
-  flowerMod: 0.2
-  rockMod: 0.1
+  bushMod: 0.35
+  chanceToSkip: 0.75
+  flowerMod: 0.3
+  rockMod: 0.2
   grassMod: 0.4
   TreeGrassMod: 0.2

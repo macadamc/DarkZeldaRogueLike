@@ -108,12 +108,42 @@ public abstract class MeleeBase : ActiveItem {
             e.ModifyHealth(-itemData.baseDamage);
 
             shake.Shake(itemData.screenshakeStr, 0.1f);
+
+            if (AttackObject.gameObject.CompareTag("Projectile"))
+            {
+                Projectile p = AttackObject.GetComponent<Projectile>();
+                if (p != null)
+                    p.SpawnAndDestroy();
+                else
+                    GameObject.Destroy(AttackObject);
+            }
         }
-        else if (d != null)
+        else if (d != null && d != entity)
         {
             d.ModifyHealth(-itemData.baseDamage);
 
-            shake.Shake(itemData.screenshakeStr/2, 0.1f);
+            shake.Shake(itemData.screenshakeStr / 2, 0.1f);
+
+            if (AttackObject.gameObject.CompareTag("Projectile"))
+            {
+                Projectile p = AttackObject.GetComponent<Projectile>();
+                if (p != null)
+                    p.SpawnAndDestroy();
+                else
+                    GameObject.Destroy(AttackObject);
+            }
+        }
+
+        if (AttackObject.gameObject.CompareTag("Projectile"))
+        {
+            if (other.gameObject.transform.root.gameObject.name == "MapChunks")
+            {
+                Projectile p = AttackObject.GetComponent<Projectile>();
+                if (p != null)
+                    p.SpawnAndDestroy();
+                else
+                    GameObject.Destroy(AttackObject);
+            }
         }
     }
 

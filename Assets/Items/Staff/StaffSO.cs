@@ -4,4 +4,6 @@ using UnityEngine;
 
 public class StaffSO : MeleeBaseSO {
 
+    public GameObject spell;
+
 }

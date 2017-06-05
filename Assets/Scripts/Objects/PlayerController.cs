@@ -137,10 +137,11 @@ public class PlayerController : MonoBehaviour
         bool onUp = CnInputManager.GetButtonUp("Fire2");
         ActiveItem weapon = entity.weapons[0];
 
-        if (currentAttack == AttackSlot.None && onDown && weapon != null)
+        if (currentAttack == AttackSlot.None && (onDown || !onDown && onHeld) && weapon != null)
         {
-            weapon.OnAttackTriggered(entity);
             currentAttack = AttackSlot.One;
+            weapon.OnAttackTriggered(entity);
+           
         }
         if (currentAttack == AttackSlot.One && onHeld && weapon != null)
         {
@@ -157,7 +158,7 @@ public class PlayerController : MonoBehaviour
         onUp = CnInputManager.GetButtonUp("Fire3");
         weapon = entity.weapons[1];
 
-        if (currentAttack == AttackSlot.None && onDown && weapon != null)
+        if (currentAttack == AttackSlot.None && (onDown || !onDown && onHeld) && weapon != null)
         {
             weapon.OnAttackTriggered(entity);
             currentAttack = AttackSlot.Two;

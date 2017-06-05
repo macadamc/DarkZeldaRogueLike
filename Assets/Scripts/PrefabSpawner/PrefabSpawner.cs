@@ -29,7 +29,9 @@ public class PrefabSpawner : MonoBehaviour {
 
     void Start()
     {
-        cameraZone.spawners.Add(this);
+        //this is null for some reason i cna t seem to figure out.
+        //cameraZone.spawners.Add(this); 
+
         if (EnemysObj == null)
         {
             EnemysObj = GameManager.GM.InGameObjectManager.GetContainer("Enemys");

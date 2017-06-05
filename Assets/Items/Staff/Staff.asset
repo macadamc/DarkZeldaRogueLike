@@ -21,7 +21,7 @@ MonoBehaviour:
   baseCost: 0
   HeldObj: {fileID: 1470127497772010, guid: 101cf14cbcad0154593cb3da1c1b0282, type: 2}
   baseDamage: 1
-  AttackDelay: 0.2
+  AttackDelay: 0.3
   knockBack: 7
   strafe: 0
   attackingMoveSpeed: 0.8
@@ -29,5 +29,6 @@ MonoBehaviour:
     type: 2}
   holdAttackObject: {fileID: 1104587797487370, guid: 711a7babe38b0fe469d217f9d7e75222,
     type: 2}
-  holdAttackTime: 0
+  holdAttackTime: 0.5
   screenshakeStr: 0.15
+  spell: {fileID: 1644639822220258, guid: 0a627f964508de445abe0e6d93d5c8a4, type: 2}

@@ -10,7 +10,7 @@ public class WeaponAttack : MonoBehaviour {
     public Destructable d_owner;
     public ActiveItem weapon;
 
-    void Awake()
+    public virtual void Awake()
     {
         if (owner == null)
         {
@@ -21,7 +21,7 @@ public class WeaponAttack : MonoBehaviour {
         
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    public virtual void OnTriggerEnter2D(Collider2D other)
     {
         weapon.OnHit(other, owner, gameObject);
     }

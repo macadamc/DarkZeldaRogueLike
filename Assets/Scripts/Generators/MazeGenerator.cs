@@ -21,7 +21,7 @@ public class MazeGenerator : MapGenerator
     int TileID;
     TileMapManager mManager;
 
-    public override void Generate(sMap map, DefaultRNG rng, EntityMetaDataSO entityData)
+    public override void Generate(sMap map, DefaultRNG rng, EntityMetaDataSO entityData, LevelGenerator lvlGenerator)
     {
         mManager = GameManager.GM.mapManager;
         TileID = mManager.GetTilesetByName("forestTileset").firstTileID + 2;

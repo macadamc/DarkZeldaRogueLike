@@ -33,7 +33,7 @@ public class ForestGeneratorSO : MapGenerator
     public float grassMod;
     public float TreeGrassMod;
 
-    public override void Generate(sMap map, DefaultRNG rng, EntityMetaDataSO entityData)
+    public override void Generate(sMap map, DefaultRNG rng, EntityMetaDataSO entityData, LevelGenerator lvlGenerator)
     {
         InitGenerator();
         layout.Generate();
@@ -83,6 +83,15 @@ public class ForestGeneratorSO : MapGenerator
             {
                 GameObject go = (GameObject)Instantiate(Resources.Load("SpeedBuffInteractable"));
                 go.transform.position = GetRandomSpawnPoint(id, rng);
+                go.transform.parent = TerrainGameObjects.transform;
+            }
+            if (tag == "Boss")
+            {
+
+            }
+            if (tag == "Shop")
+            {
+
             }
 
             SpawnBushes(id, rng);
@@ -420,6 +429,7 @@ public class ForestGeneratorSO : MapGenerator
             s.positionOffset = GetRandomSpawnPoint(id, Rng) - spawner.transform.position;
             ps.player = Camera.main.gameObject;
             ps.cameraZone = GameObject.Find("Bounds").GetComponent<Zone>();
+            
 
             ps.spawnObjects[i] = s;
             ps.spawnType = SpawnType.Distance;

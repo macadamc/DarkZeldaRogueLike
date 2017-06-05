@@ -11,11 +11,11 @@ public class LayoutGenerator {
 
     sMap Map;
     DefaultRNG Rng;
-    [System.NonSerialized]
+    [NonSerialized]
     public Graph Connections;
-    [System.NonSerialized]
+    [NonSerialized]
     public Dictionary<int, Circle> Zones;
-    [System.NonSerialized]
+    [NonSerialized]
     public List<int> zIds;
 
     QuadTree<Circle> qTree;
@@ -33,6 +33,9 @@ public class LayoutGenerator {
     public float maxZoneRadius;
     public float MAXDISTFORCONNECTION;
     public int MINLENGTHOFLOOP;
+
+    public bool spawnBossRoom;
+    public bool spawnShop;
 
     public List<ConstraintList> constraints;
 
@@ -72,7 +75,7 @@ public class LayoutGenerator {
 
         Circle sC = new Circle(-Vector2.one, sr);
         sC.ID = id;
-
+        sC.centerPos = new Vector2(Map.width / 2, Map.height / 2);
         while (!Utility.Contains(qTree.QuadRect, sC))
         {
             sC.centerPos = new Vector2(Rng.Next(0, width + 1), Rng.Next(0, height + 1));
@@ -236,16 +239,12 @@ public class LayoutGenerator {
             }
         }
         zone.Tag = Rng.WeightedChoice<string>(tags, weights, totalWeight);
-        if (MinSpawnConstraint.SpawnCounts.ContainsKey(zone.Tag))
-        {
-            MinSpawnConstraint.SpawnCounts[zone.Tag] += 1;
-        }
 
     }
 
     void PostProcessMinSpawnTags ()
     {
-        foreach(MinSpawnConstraint constraint in MinSpawnConstraint._SpawnConstraints)
+        foreach (MinSpawnConstraint constraint in MinSpawnConstraint._SpawnConstraints)
         {
             for(int tagIndex = 0; tagIndex < constraint.parentList.tagList.Count; tagIndex++)
             {
@@ -317,17 +316,21 @@ public class MinSpawnConstraint : ITagConstraint
     [NonSerialized]
     public bool init = false;
 
+    public MinSpawnConstraint ()
+    {
+        if (SpawnCounts == null)
+        {
+            SpawnCounts = new Dictionary<string, int>();
+            _SpawnConstraints = new List<MinSpawnConstraint>();
+        }
+        
+    }
+
     public bool IsValid(Circle zone, ConstraintList parentList, LayoutGenerator layout)
     {
         if (init == false)
         {
             init = true;
-            
-            if (SpawnCounts == null)
-            {
-                SpawnCounts = new Dictionary<string, int>();
-                _SpawnConstraints = new List<MinSpawnConstraint>();
-            }
 
             _SpawnConstraints.Add(this);
             this.parentList = parentList;

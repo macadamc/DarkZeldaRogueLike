@@ -250,6 +250,8 @@ GameObject:
   - component: {fileID: 82333280689418234}
   - component: {fileID: 82794932727205628}
   - component: {fileID: 114683884795891520}
+  - component: {fileID: 114001610253716730}
+  - component: {fileID: 114464113148313372}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -727,7 +729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1601263427666468
 GameObject:
   m_ObjectHideFlags: 1
@@ -1380,6 +1382,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114001610253716730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1181736895399172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05f0af6c5a076c94fa7ad86e48e88bcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114008550325668652
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2711,6 +2724,17 @@ MonoBehaviour:
   masterVolumeSlider: {fileID: 114263334518642436}
   muteSfxToggle: {fileID: 114536864055838202}
   muteBgmToggle: {fileID: 114110402644022716}
+--- !u!114 &114464113148313372
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1181736895399172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65df6a6afe15794a8217f937cf3d738, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114476496760391880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2814,10 +2838,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 374b7b3ef0b275d44a160ee89da02601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForestConfigs:
-  - {fileID: 11400000, guid: c41cd5f878ddfed4db77278dba783825, type: 2}
-  - {fileID: 11400000, guid: 2535aad81d2f046488893a41c5d8f4f1, type: 2}
-  CurrentConfig: {fileID: 11400000, guid: 2535aad81d2f046488893a41c5d8f4f1, type: 2}
+  currentLevel: 0
+  SpawnShop: 0
+  SpawnBoss: 0
+  levelConfigs:
+  - {fileID: 11400000, guid: 105ffaccc3f21d8489972d43242b9ded, type: 2}
+  - {fileID: 11400000, guid: 105ffaccc3f21d8489972d43242b9ded, type: 2}
+  - {fileID: 11400000, guid: c85c81490a486f3468f856f83fc81b44, type: 2}
+  CurrentConfig: {fileID: 0}
 --- !u!114 &114509035681880732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3397,7 +3425,6 @@ MonoBehaviour:
       X: 0
       Y: 0
     mapChunksGameObject: {fileID: 0}
-    map: {fileID: 0}
 --- !u!114 &114758102690005018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5424,7 +5451,7 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1692684325481110}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

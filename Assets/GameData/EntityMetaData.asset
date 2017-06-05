@@ -15,8 +15,12 @@ MonoBehaviour:
   - name: Fly2
     firstLvl: 1
     prefab: {fileID: 1779290085593354, guid: 2807161459978dd42886dd98708cc52a, type: 2}
+  - name: Bat
+    firstLvl: 1
+    prefab: {fileID: 1274811493839106, guid: 77ae9e57c0bf2114a825418daec5e369, type: 2}
   passiveKeys:
   - Fly2
+  - Bat
   enemysData:
   - name: Spider
     firstLvl: 1

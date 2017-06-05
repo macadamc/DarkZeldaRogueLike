@@ -29,7 +29,7 @@ GameObject:
   - component: {fileID: 82210826105481358}
   m_Layer: 10
   m_Name: Spider
-  m_TagString: Untagged
+  m_TagString: Entity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -326,6 +326,9 @@ MonoBehaviour:
   moving: 0
   controller: {fileID: 0}
   attack: 0
+  holding: 0
+  strafe: 0
+  handTransform: {fileID: 0}
   stunLocked: 0
   attackDelay: 0
   knockbackVector: {x: 0, y: 0}

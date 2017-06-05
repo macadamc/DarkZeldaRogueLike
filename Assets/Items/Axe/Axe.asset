@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c4ee585682bcdc478466018c19f1fdd, type: 3}
+  m_Name: Axe
+  m_EditorClassIdentifier: 
+  onGroundPrefab: {fileID: 1614545392452658, guid: ca1cce8adfad03643b98c7853e283dce,
+    type: 2}
+  itemDescription:
+    itemName: 
+    itemType: 0
+    itemDescription: 
+    itemPanelSize: {x: 0, y: 0}
+  baseCost: 0
+  HeldObj: {fileID: 1470127497772010, guid: b3840f1fbca4df4418cbe42b0c4ac97d, type: 2}
+  baseDamage: 2
+  AttackDelay: 0.4
+  knockBack: 25
+  strafe: 0
+  attackingMoveSpeed: 0.25
+  attackObject: {fileID: 1104587797487370, guid: 32d8f80a5b5a44c49b477c857de40f5a,
+    type: 2}
+  holdAttackObject: {fileID: 1104587797487370, guid: 32d8f80a5b5a44c49b477c857de40f5a,
+    type: 2}
+  holdAttackTime: 0
+  screenshakeStr: 0.25

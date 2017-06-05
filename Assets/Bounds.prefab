@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraZone: 1
+  forceCameraZoneAtStart: 0
   sendMessageOnZoneEnter: 
   bounds:
     m_Center: {x: 0, y: 0, z: 0}

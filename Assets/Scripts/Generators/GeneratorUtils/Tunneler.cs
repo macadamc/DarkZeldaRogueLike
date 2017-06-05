@@ -40,6 +40,7 @@ public class Tunneler
         {
             Circle parent = Zones[NextID()];
             visited.Add(parent.ID);
+            brush.DrawCircle(parent.centerPos, parent.radius - .5f);
 
             foreach (int cID in Connections.GetAdjecent(parent.ID))
             {
@@ -63,7 +64,7 @@ public class Tunneler
                         brush.DrawCircle(Pos, 2f);
                     }
 
-                    brush.DrawCircle(Pos, child.radius - .5f);// -1 the zones can be right nect to each other 
+                    //brush.DrawCircle(Pos, child.radius - .5f);// -1 the zones can be right nect to each other 
                     fringe.Add(cID);
                 }
             }

@@ -21,7 +21,7 @@ MonoBehaviour:
   baseCost: 10
   HeldObj: {fileID: 1470127497772010, guid: 960407f076d931246bc1ac57b0e0a4fa, type: 2}
   baseDamage: 1
-  AttackDelay: 0.15
+  AttackDelay: 0.2
   knockBack: 20
   strafe: 0
   attackingMoveSpeed: 0.5

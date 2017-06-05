@@ -4,9 +4,14 @@ using UnityEngine;
 using ShadyPixel.Astar;
 using UnityEngine.SceneManagement;
 
+
 public class LevelGenerator : MonoBehaviour {
 
-    public List<ForestGeneratorSO> ForestConfigs;
+    public int currentLevel;
+    public bool SpawnShop;
+    public bool SpawnBoss;
+
+    public List<MapGenerator> levelConfigs;
 
     public MapGenerator CurrentConfig;
 
@@ -20,10 +25,7 @@ public class LevelGenerator : MonoBehaviour {
 
     void OnLevelLoad(Scene scene, LoadSceneMode mode)
     {
-        if (CurrentConfig != null)
-        {
-            GenerateLvL();
-        }
+        GenerateLvL();
     }
 
     void OnDisable()
@@ -37,18 +39,34 @@ public class LevelGenerator : MonoBehaviour {
 
     public void GenerateLvL ()
     {
+        Clear();
+
+        CurrentConfig = levelConfigs[currentLevel];
+
+        CurrentConfig.Generate(GameManager.GM.mapManager.map, GameManager.GM.Rng, GameManager.GM.entityMetaData, this);
+
+        GameManager.GM.mapManager.cManager.UpdateChunks(GameManager.GM.mapManager.map, force: true);// true forces the whole map to be regenerated.
+        GameManager.GM.GetComponent<Grid>().Start();
+
+        if (currentLevel < levelConfigs.Count - 1)
+        {
+            currentLevel++;
+        }
+        
+    }
+
+    void Clear()
+    {
+        SpawnShop = false;
+        SpawnBoss = false;
+
         GameManager.GM.mapManager.map.ClearData();
 
         if (MinSpawnConstraint.SpawnCounts != null)
         {
             MinSpawnConstraint.SpawnCounts.Clear();
         }
-        
+
         GameManager.GM.InGameObjectManager.DestroyAllGameObjects();
-
-        CurrentConfig.Generate(GameManager.GM.mapManager.map, GameManager.GM.Rng, GameManager.GM.entityMetaData);
-
-        GameManager.GM.mapManager.cManager.UpdateChunks(GameManager.GM.mapManager.map, force: true);// true forces the whole map to be regenerated.
-        GameManager.GM.GetComponent<Grid>().Start();
     }
 }
