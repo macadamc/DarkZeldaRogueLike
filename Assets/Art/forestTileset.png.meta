@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: e4540b8d5af9a90428cb04d23f324988
-timeCreated: 1494688115
+timeCreated: 1498582736
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -21,6 +21,7 @@ TextureImporter:
     21300028: forestTileset_6
     21300030: forestTileset_15
     21300032: forestTileset_16
+    21300034: forestTileset_17
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -307,6 +308,19 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: forestTileset_17
+      rect:
+        serializedVersion: 2
+        x: 64
         y: 0
         width: 16
         height: 16

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ShadyPixel.Astar;
 using UnityEngine.SceneManagement;
 
 
@@ -46,7 +45,6 @@ public class LevelGenerator : MonoBehaviour {
         CurrentConfig.Generate(GameManager.GM.mapManager.map, GameManager.GM.Rng, GameManager.GM.entityMetaData, this);
 
         GameManager.GM.mapManager.cManager.UpdateChunks(GameManager.GM.mapManager.map, force: true);// true forces the whole map to be regenerated.
-        GameManager.GM.GetComponent<Grid>().Start();
 
         if (currentLevel < levelConfigs.Count - 1)
         {

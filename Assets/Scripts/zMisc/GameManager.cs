@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ShadyPixel.Astar;
 using System;
 using ShadyPixel.SaveLoad;
 
@@ -10,7 +9,6 @@ public class GameManager : MonoBehaviour {
     public static GameManager GM;
     public ProgressionManager progressionManager;
     public PlayerReference player;
-    public Grid grid;
 
     public ItemPanel itemPanel;
 
@@ -45,7 +43,6 @@ public class GameManager : MonoBehaviour {
 
         progressionManager = GetComponent<ProgressionManager>();
         player = GetComponent<PlayerReference>();
-        grid = GetComponent<Grid>();
 
         DontDestroyOnLoad(gameObject);
 

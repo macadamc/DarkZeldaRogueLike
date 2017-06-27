@@ -8,7 +8,7 @@ public class SimpleAnimatorSAC : ScriptableAnimationController {
 
     public override void Animate(Entity entity)
     {
-        if(entity.rb.velocity.magnitude > 0.05)
+        if(entity.moveVector.magnitude > 0.1 || !entity.stepOnGround)
         {
             entity.anim.SetBool("walking", true);
         }

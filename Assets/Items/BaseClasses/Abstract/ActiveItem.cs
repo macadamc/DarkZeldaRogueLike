@@ -18,6 +18,7 @@ public abstract class ActiveItem : Item {
     {
         entity.statMods.maxSpeed -= speedModifier;
         entity.holding = true;
+        entity.charged = false;
 
         if (((ActiveItemSO)itemData).strafe)
             entity.strafe = true;

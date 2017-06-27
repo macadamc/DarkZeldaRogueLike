@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ShadyPixel.Astar;
 
 using System.Reflection;
 
@@ -29,17 +28,19 @@ public class Entity : Destructable
     [HideInInspector]
     public bool moving;
     [HideInInspector]
-    public StateController controller;
-    [HideInInspector]
     public bool attack;
     [HideInInspector]
     public bool holding;
     [HideInInspector]
+    public bool charged;
+    [HideInInspector]
     public bool strafe;
+    [HideInInspector]
+    public bool stepOnGround;
     //[HideInInspector]
     //public float curMaxSpd;
 
-    public GameObject handTransform;
+    //public GameObject handTransform;
 
     float stunLockTimer;
     public bool stunLocked;
@@ -52,6 +53,8 @@ public class Entity : Destructable
     [HideInInspector]
     public float dist;
 
+
+
     static Assembly asm;
     //Lists of all items that can be created.
     public ItemsMetaData items;
@@ -63,6 +66,7 @@ public class Entity : Destructable
     public ActiveItem[] weapons;
     public List<Item> inventory;
 
+
     public iInteractable targetInteractable;
 
     //Position that a weapon attack will spawn at.
@@ -73,6 +77,10 @@ public class Entity : Destructable
 
     public List<ActiveEffect> activeEffects;
 
+
+    /// <summary>
+    /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// </summary>
 
     public override void Awake()
     {
@@ -92,7 +100,6 @@ public class Entity : Destructable
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
-        controller = GetComponent<StateController>();
         //base.Start();
 
         Equip(weaponName, 0);
@@ -148,13 +155,16 @@ public class Entity : Destructable
 
         CheckForSoftCollisions(softCollisionSize, softCollisionForce);
 
-        rb.velocity = moveVector;
-        if(rb.velocity.magnitude > 0)
+        if(moveVector.magnitude > 0)
         {
 
-            if (rb.velocity.magnitude > MaxSpeed)//curMaxSpeed
-                rb.velocity = rb.velocity.normalized * MaxSpeed;//curMaxSpeed
+            if (moveVector.magnitude > MaxSpeed)//curMaxSpeed
+            {
+                moveVector = moveVector.normalized * MaxSpeed;
+
+            }
         }
+        rb.velocity = moveVector;
 
         UpdateKnockback();
 
@@ -175,6 +185,7 @@ public class Entity : Destructable
     public void LerpStop()
     {
         moveVector = Vector2.Lerp(moveVector, Vector2.zero, stats.knockbackDeceleration*Time.deltaTime);
+        stepOnGround = true;
     }
 
     public void StunLock(float time)
@@ -288,7 +299,6 @@ public class Entity : Destructable
         targetInteractable.Interact(this);
         targetInteractable = null;
     }
-
 
     public float MaxSpeed
     {

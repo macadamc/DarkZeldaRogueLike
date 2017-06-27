@@ -420,6 +420,9 @@ public class ForestGeneratorSO : MapGenerator
         PrefabSpawner ps = spawner.GetComponent<PrefabSpawner>();
         ps.spawnObjects = new SpawnObject[maxEnemysPerZone];
 
+        if (currentLvlEnemys.Count == 0)
+            return;
+
         for (int i = 0; i < maxEnemysPerZone && curCost < maxCost; i++)
         {
             SpawnObject s = new SpawnObject();
@@ -456,6 +459,10 @@ public class ForestGeneratorSO : MapGenerator
         spawner.transform.parent = Spawners.transform;
         PrefabSpawner ps = spawner.GetComponent<PrefabSpawner>();
         ps.spawnObjects = new SpawnObject[maxEnemysPerZone];
+
+
+        if (currentLvlEnemys.Count == 0)
+            return;
 
         for (int i = 0; i < maxEnemysPerZone; i++)
         {

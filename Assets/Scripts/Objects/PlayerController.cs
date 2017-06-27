@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CnControls;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Entity))]
 public class PlayerController : MonoBehaviour
@@ -17,6 +18,9 @@ public class PlayerController : MonoBehaviour
     public float deadZone = 0.2f;
     public bool dead;
     public bool strafe;
+
+    public ParticleSystem chargingParticle;
+    public ParticleSystem chargedParticle;
 
     void Start()
     {
@@ -141,16 +145,30 @@ public class PlayerController : MonoBehaviour
         {
             currentAttack = AttackSlot.One;
             weapon.OnAttackTriggered(entity);
+            chargingParticle.Play();
            
         }
         if (currentAttack == AttackSlot.One && onHeld && weapon != null)
         {
             weapon.OnAttackHeld(entity);
+
+            if (entity.holding)
+            {
+                if(entity.charged)
+                {
+                    chargingParticle.Stop();
+
+                    if (!chargedParticle.isPlaying)
+                        chargedParticle.Play();
+                }
+            }
         }
         if (currentAttack == AttackSlot.One && onUp && weapon != null)
         {
             weapon.OnAttackEnd(entity);
             currentAttack = AttackSlot.None;
+            chargingParticle.Stop();
+            chargedParticle.Stop();
         }
 
         onDown = CnInputManager.GetButtonDown("Fire3");
@@ -162,15 +180,29 @@ public class PlayerController : MonoBehaviour
         {
             weapon.OnAttackTriggered(entity);
             currentAttack = AttackSlot.Two;
+            chargingParticle.Play();
         }
         if (currentAttack == AttackSlot.Two && onHeld && weapon != null)
         {
             weapon.OnAttackHeld(entity);
+
+            if (entity.holding)
+            {
+                if (entity.charged)
+                {
+                    chargingParticle.Stop();
+
+                    if(!chargedParticle.isPlaying)
+                        chargedParticle.Play();
+                }
+            }
         }
         if (currentAttack == AttackSlot.Two && onUp && weapon != null)
         {
             weapon.OnAttackEnd(entity);
             currentAttack = AttackSlot.None;
+            chargingParticle.Stop();
+            chargedParticle.Stop();
         }
     }
 }

@@ -59,7 +59,7 @@ MonoBehaviour:
   MaxPassivesPerZoneBase: 5
   maxCost: 100
   perlinSize: 16
-  bushMod: 0.35
+  bushMod: 0.2
   chanceToSkip: 0.75
   flowerMod: 0.3
   rockMod: 0.2

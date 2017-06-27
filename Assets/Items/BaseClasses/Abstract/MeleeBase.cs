@@ -59,6 +59,7 @@ public abstract class MeleeBase : ActiveItem {
         if (holdTime > itemData.holdAttackTime)
         {
             triggerHoldAtk = true;
+            entity.charged = true;
         }
     }
 
