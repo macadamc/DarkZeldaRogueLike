@@ -286,21 +286,6 @@ public interface ITagConstraint
 }
 
 [Serializable]
-public class SizeConstraint : ITagConstraint
-{
-    [Range(0, 1f)]
-    public float minSizeThreshold;
-    [Range(0, 1f)]
-    public float maxSizeThreshhold;
-
-    public bool IsValid(Circle zone, ConstraintList parentList, LayoutGenerator layout)
-    {
-        float size = zone.radius / layout.maxZoneRadius;// needs to be maxZoneRadius
-        return size >= minSizeThreshold && size <= maxSizeThreshhold;
-    }
-}
-
-[Serializable]
 public class MinSpawnConstraint : ITagConstraint
 {
     // returns true when there are tagged rooms that are lower than there minimum spawnCount;
@@ -368,13 +353,74 @@ public class ConstraintList
     {
         if(checks == null) { checks = new List<bool>();} 
         else { checks.Clear(); }
-        if (useSize == true) { checks.Add(sizeConstraint.IsValid(zone, this, layout)); }
+        if (useSize == true) { checks.Add(sizeConstraint.IsValid(zone, layout)); }
         if (useMinSpawn == true) { checks.Add(minSpawnConstraint.IsValid(zone, this, layout)); }
         foreach(bool check in checks)
         {
             if (check == false) { return false; }
         }
         return true;
+    }
+}
+
+
+public interface IConstraint
+{
+    bool IsValid(Circle zone, LayoutGenerator layout);
+}
+
+[Serializable]
+public class SizeConstraint : IConstraint
+{
+    public bool useSizeConstraint;
+    [Range(0, 1f)]
+    public float minSizeThreshold;
+    [Range(0, 1f)]
+    public float maxSizeThreshhold;
+
+    public bool IsValid(Circle zone, LayoutGenerator layout)
+    {
+        float size = zone.radius / layout.maxZoneRadius;
+        return size >= minSizeThreshold && size <= maxSizeThreshhold;
+    }
+}
+
+[Serializable]
+public class SpawnRangeConstraint : IConstraint
+{
+    // returns true when there are tagged rooms that are lower than there minimum spawnCount;
+
+    public static Dictionary<SpawnRangeConstraint, int> SpawnCounts;
+
+    public bool useSpawnRangeConstraint;
+
+    [Range(0, 10)]
+    public int MinSpawnCounts;
+    [Range(0,10)]
+    public int maxSpawnCount;
+
+
+    public SpawnRangeConstraint()
+    {
+        if (SpawnCounts == null)
+        {
+            SpawnCounts = new Dictionary<SpawnRangeConstraint, int>();
+        }
+
+    }
+
+    public bool IsValid(Circle zone, LayoutGenerator layout)
+    {
+        if (SpawnCounts.ContainsKey(this) == false)
+        {
+            SpawnCounts.Add(this, 0);
+        }
+
+        if (SpawnCounts[this] < MinSpawnCounts || SpawnCounts[this] < maxSpawnCount)
+        {
+            return true;
+        }
+        return false;
     }
 }
 

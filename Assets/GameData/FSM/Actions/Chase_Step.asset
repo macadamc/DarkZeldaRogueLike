@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63cca318426d0794a9352462f472fa75, type: 3}
   m_Name: Chase_Step
   m_EditorClassIdentifier: 
-  timeBetweenMovements: 0.5
-  movementTimerRandomness: 0.2
+  timeBetweenMovements: 1
+  movementTimerRandomness: 0
   moveStr: 3
   moveStrRandomness: 1
   deadZone: 0

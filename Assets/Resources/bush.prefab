@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61830974783575078}
   - component: {fileID: 82183249904961342}
   - component: {fileID: 114103228209245120}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: bush
   m_TagString: Destructable
   m_Icon: {fileID: 0}
@@ -151,14 +151,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rend: {fileID: 0}
   targetObj: {fileID: 0}
-  skipZOrderUpdate: 1
-  health: 0
+  skipZOrderUpdate: 0
+  health: 2
   stats: {fileID: 11400000, guid: 90d5efaf665e5fb45b1bd8911a2c7ef1, type: 2}
   statMods:
     damage: 0
     maxSpeed: 0
     attackDelay: 0
-  skipDamageFlash: 1
+  skipDamageFlash: 0
   hurtSfx: {fileID: 8300000, guid: 820a8b921d8b59042a90742b37248be1, type: 3}
 --- !u!212 &212271409877756760
 SpriteRenderer:
@@ -189,9 +189,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1472031273
+  m_SortingLayerID: 1988789897
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300066, guid: 69e0425c842b6fa41b135af15c267fac, type: 3}
+  m_Sprite: {fileID: 21300034, guid: e4540b8d5af9a90428cb04d23f324988, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -94,6 +94,19 @@ public class ForestGeneratorSO : MapGenerator
 
             }
 
+            if(tag == "Lore")
+            {
+
+            }
+            if (tag == "Trap")
+            {
+
+            }
+            if (tag == "Enemy")
+            {
+
+            }
+
             SpawnBushes(id, rng);
 
         }
@@ -288,7 +301,7 @@ public class ForestGeneratorSO : MapGenerator
     void CreateFloor(sMap Map, DefaultRNG Rng)
     {
         //ground tileIDs; TILEID START AT 1 FOR EACH TILESET!
-        int[] grass = new int[7] { 49, 50, 51, 52, 53, 54, 55 };
+        int[] grass = new int[3] { 49, 50, 51};
         int[] flowers = new int[2] { 52, 53 };
         int[] mushrooms = new int[2] { 54, 55 };
 
@@ -612,6 +625,10 @@ public class ForestGeneratorSO : MapGenerator
         List<Vector3> spawnPoints = zoneSpawnPoints[id];
         for (int i = 0; i < spawnPoints.Count; i++)
         {
+
+            if (Rng.NextDouble() > 1f - chanceToSkip)
+                continue;
+
             GameObject bush;
             if (Rng.NextDouble() <= 0.15)
             {
@@ -742,6 +759,256 @@ public class ForestGeneratorSO : MapGenerator
     }
 
     Vector3 GetRandomSpawnPoint(int id, DefaultRNG Rng)
+    {
+        List<Vector3> points = zoneSpawnPoints[id];
+        int index = Rng.Next(0, points.Count);
+        Vector3 pos = points[index];
+        points.RemoveAt(index);
+
+        return pos;
+    }
+}
+
+public static class GeneratorTools
+{
+    static void PlaceEnemys(int minBase, int maxBase, int maxCost, int id, sMap Map, DefaultRNG Rng, EntityMetaDataSO EntityData, LayoutGenerator layout, Dictionary<int, List<Vector3>> zoneSpawnPoints, GameObject Spawners)
+    {
+        int curCost = 0;
+
+        List<EnemyMetaData> currentLvlEnemys = EntityData.GetEnemyByFirstLvlRange(1, 1);
+
+        Circle zone = layout.Zones[id];
+
+        float percent = (zone.radius - layout.minZoneRadius) / (layout.maxZoneRadius - layout.minZoneRadius);
+        int maxEnemys = Mathf.RoundToInt(minBase * percent);
+        int maxEnemysPerZone = Rng.Next(maxBase, maxEnemys + 1);
+
+        GameObject spawner = (GameObject)GameObject.Instantiate(Resources.Load("PrefabSpawner"));
+        spawner.transform.position = new Vector3(zone.centerPos.x - (Map.width / 2f), zone.centerPos.y - (Map.height / 2f), spawner.transform.position.z);
+        spawner.transform.parent = Spawners.transform;
+        PrefabSpawner ps = spawner.GetComponent<PrefabSpawner>();
+        ps.spawnObjects = new SpawnObject[maxEnemysPerZone];
+
+        if (currentLvlEnemys.Count == 0)
+            return;
+
+        for (int i = 0; i < maxEnemysPerZone && curCost < maxCost; i++)
+        {
+            SpawnObject s = new SpawnObject();
+            EnemyMetaData enemyData = currentLvlEnemys[Rng.Next(0, currentLvlEnemys.Count)];
+
+            s.objectToSpawn = enemyData.prefab;
+            s.positionOffset = GetRandomSpawnPoint(id, Rng, zoneSpawnPoints) - spawner.transform.position;
+            ps.player = Camera.main.gameObject;
+            ps.cameraZone = GameObject.Find("Bounds").GetComponent<Zone>();
+
+
+            ps.spawnObjects[i] = s;
+            ps.spawnType = SpawnType.Distance;
+            ps.spawnDistance = (Camera.main.orthographicSize * 2) + zone.radius;
+
+            curCost += enemyData.cost;
+        }
+    }
+
+    static void PlacePassives(int maxBase, int id, sMap Map, DefaultRNG Rng, EntityMetaDataSO EntityData, LayoutGenerator layout, Dictionary<int, List<Vector3>> zoneSpawnPoints, GameObject Spawners)
+    {
+        List<EntityMetaData> currentLvlEnemys = EntityData.GetPassiveByFirstLvlRange(1, 1);
+
+        Circle zone = layout.Zones[id];
+
+        float percent = (zone.radius - layout.minZoneRadius) / (layout.maxZoneRadius - layout.minZoneRadius);
+        int maxEnemys = Mathf.RoundToInt(maxBase * percent);
+        int maxEnemysPerZone = Rng.Next(0, maxEnemys + 1);
+
+        if (maxEnemysPerZone == 0) { return; }
+
+        GameObject spawner = (GameObject)GameObject.Instantiate(Resources.Load("PrefabSpawner"));
+        spawner.transform.position = new Vector3(zone.centerPos.x - (Map.width / 2f), zone.centerPos.y - (Map.height / 2f), spawner.transform.position.z);
+        spawner.transform.parent = Spawners.transform;
+        PrefabSpawner ps = spawner.GetComponent<PrefabSpawner>();
+        ps.spawnObjects = new SpawnObject[maxEnemysPerZone];
+
+
+        if (currentLvlEnemys.Count == 0)
+            return;
+
+        for (int i = 0; i < maxEnemysPerZone; i++)
+        {
+            SpawnObject s = new SpawnObject();
+
+            s.objectToSpawn = currentLvlEnemys[Rng.Next(0, currentLvlEnemys.Count)].prefab;
+            s.positionOffset = GetRandomSpawnPoint(id, Rng, zoneSpawnPoints) - spawner.transform.position;
+            ps.player = Camera.main.gameObject;
+            ps.cameraZone = GameObject.Find("Bounds").GetComponent<Zone>();
+
+            ps.spawnObjects[i] = s;
+            ps.spawnType = SpawnType.Distance;
+            ps.spawnDistance = (Camera.main.orthographicSize * 2) + zone.radius;
+        }
+    }
+
+    static void GenerateSpawnPoints(int id, sMap Map, DefaultRNG Rng, LayoutGenerator layout, Dictionary<int, List<Vector3>> zoneSpawnPoints)
+    {
+        bool intPos = true;
+        Circle zone = layout.Zones[id];
+        List<Vector3> spawnPoints = new List<Vector3>();
+
+        float zoneSize = (layout.maxZoneRadius - (layout.maxZoneRadius - zone.radius)) / layout.maxZoneRadius;
+        int MaxPointsPerZone = 50;
+        int trys = 0;
+
+        for (int n = 0; n < Mathf.Round(zoneSize * MaxPointsPerZone) && trys < MaxPointsPerZone;)
+        {
+            trys++;
+            Vector3 pos = Rng.PointInCircle(zone.centerPos.x, zone.centerPos.y, zone.radius);
+
+            int posX = Mathf.FloorToInt(pos.x);
+            int posY = Mathf.FloorToInt(pos.y);
+            if (Map["Walls", posX, posY] == 0 && Map["Bg", posX, posY] != GameManager.GM.mapManager.GetTilesetByName("forestTileset").firstTileID + 59)
+            {
+                Vector3 point = new Vector3(pos.x - (Map.width / 2f), pos.y - (Map.height / 2f), pos.z);
+                if (intPos)
+                {
+                    point = new Vector3(Mathf.Floor(point.x) + .5f, Mathf.Floor(point.y) + .5f, point.z);
+                }
+                if (!spawnPoints.Contains(point))
+                {
+                    spawnPoints.Add(point);
+                    n++;
+                }
+
+            }
+
+        }
+
+        zoneSpawnPoints.Add(id, spawnPoints);
+    }
+
+    static void SpawnChest(int zoneID, DefaultRNG Rng, LayoutGenerator layout, Dictionary<int, List<Vector3>> zoneSpawnPoints, GameObject Chests)
+    {
+        Circle zone = layout.Zones[zoneID];
+        GameObject chest = (GameObject)GameObject.Instantiate(Resources.Load("Chest"));
+
+        chest.transform.position = GetRandomSpawnPoint(zoneID, Rng, zoneSpawnPoints);
+        chest.transform.GetChild(0).GetComponent<Chest>().seed = Rng.Next(0, 100000);
+        chest.transform.parent = Chests.transform;
+    }
+
+    static void DrawBigTree(int x, int y, sMap Map)
+    {
+        Tileset t = GameManager.GM.mapManager.GetTilesetByName("forestTileset");
+
+        //bottomleft
+        Map["Walls", x, y] = t.firstTileID + 18;
+        //bottomRight
+        Map["Walls", x + 1, y] = t.firstTileID + 19;
+        //topLeft
+        Map["Fg", x, y + 1] = t.firstTileID + 10;
+        Map["Walls", x, y + 1] = 0;
+        //potRight
+        Map["Fg", x + 1, y + 1] = t.firstTileID + 11;
+        Map["Walls", x + 1, y + 1] = 0;
+    }// Draws the tiles in the tilemap.
+
+    static void SpawnBigTrees(int id, int maxPerZone, int maxTrys, sMap Map, DefaultRNG Rng, LayoutGenerator layout, Dictionary<int, List<Vector3>> zoneSpawnPoints, GameObject TerrainGameObjects)
+    {
+        Circle zone = layout.Zones[id];
+        List<Vector3> SpawnedObjectPos = new List<Vector3>();
+
+        if ((layout.maxZoneRadius - (layout.maxZoneRadius - zone.radius)) / layout.maxZoneRadius > .0f)
+        {
+            List<Vector3> spawnPoints = zoneSpawnPoints[id];
+
+            int numberofTrees = 0;
+            int count = 0;
+
+            while (numberofTrees < maxPerZone && count < maxTrys)
+            {
+                count++;
+
+                int index = Rng.Next(0, spawnPoints.Count);
+                Vector3 pos = spawnPoints[index];
+
+                int xActual = Mathf.FloorToInt(pos.x + (Map.width / 2));
+                int yActual = Mathf.FloorToInt(pos.y + (Map.height / 2));
+                int wallCount = 0;
+
+                // 5x3 grid check.
+                for (int x = xActual - 1; x <= xActual + 1; x++)
+                {
+                    for (int y = yActual - 1; y <= yActual + 1; y++)
+                    {
+                        if (x == xActual && y == yActual) { continue; }
+                        else if (Map.inBounds(x, y) && Map["Walls", x, y] != 0) { wallCount++; }
+                    }
+                }
+                if (wallCount == 0)
+                {
+                    bool noObjectsInRange = true;
+
+                    foreach (Vector3 spawnedPos in SpawnedObjectPos)
+                    {
+                        if (Vector3.Distance(spawnedPos, pos) < 2f)
+                        {
+                            noObjectsInRange = false;
+                            break;
+                        }
+                    }
+
+                    if (noObjectsInRange == true)
+                    {
+                        spawnPoints.RemoveAt(index);
+
+                        GameObject tree = (GameObject)GameObject.Instantiate(Resources.Load("BigTree"));
+                        tree.transform.position = new Vector3(pos.x, pos.y, tree.transform.position.z);
+                        numberofTrees++;
+                        SpawnedObjectPos.Add(tree.transform.position);
+                        tree.transform.parent = TerrainGameObjects.transform;
+                    }
+
+
+                }
+            }
+
+        }
+
+    }
+
+    static void SpawnBushes(float chanceToSkip, int id, DefaultRNG Rng, LayoutGenerator layout, Dictionary<int, List<Vector3>> zoneSpawnPoints, GameObject TerrainGameObjects)
+    {
+        if (layout.Zones[id].Tag == "Empty") { return; }
+
+        List<Vector3> spawnPoints = zoneSpawnPoints[id];
+        for (int i = 0; i < spawnPoints.Count; i++)
+        {
+
+            if (Rng.NextDouble() > 1f - chanceToSkip)
+                continue;
+
+            GameObject bush;
+            if (Rng.NextDouble() <= 0.15)
+            {
+                bush = (GameObject)GameObject.Instantiate(Resources.Load("GlowingMushroom"));
+            }
+            else
+            {
+                bush = (GameObject)GameObject.Instantiate(Resources.Load("bush"));
+            }
+            bush.transform.position = spawnPoints[i];
+            bush.transform.parent = TerrainGameObjects.transform;
+        }
+        spawnPoints.Clear();
+    }
+
+    static void SpawnCampfire(int id, DefaultRNG Rng, Dictionary<int, List<Vector3>> zoneSpawnPoints, GameObject TerrainGameObjects)
+    {
+        GameObject go = (GameObject)GameObject.Instantiate(Resources.Load("CampFire"));
+        go.transform.position = GetRandomSpawnPoint(id, Rng, zoneSpawnPoints);
+        go.transform.parent = TerrainGameObjects.transform;
+    }
+
+    static Vector3 GetRandomSpawnPoint(int id, DefaultRNG Rng, Dictionary<int, List<Vector3>> zoneSpawnPoints)
     {
         List<Vector3> points = zoneSpawnPoints[id];
         int index = Rng.Next(0, points.Count);

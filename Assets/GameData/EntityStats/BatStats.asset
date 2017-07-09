@@ -14,7 +14,7 @@ MonoBehaviour:
   objName: Bat
   health: 2
   acceleration: 0
-  moveSpeed: 1.5
+  moveSpeed: 3
   knockbackDeceleration: 5
   visionLayer:
     serializedVersion: 2
@@ -25,7 +25,7 @@ MonoBehaviour:
   softCollisions:
     serializedVersion: 2
     m_Bits: 0
-  visionDistance: 8
+  visionDistance: 10
   fieldOfView: 0
   spawnOnCreate: []
   spawnOnDeath:

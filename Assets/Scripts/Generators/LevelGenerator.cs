@@ -36,13 +36,16 @@ public class LevelGenerator : MonoBehaviour {
         SceneManager.sceneLoaded -= OnLevelLoad;
     }
 
+    public MapGenerator CurrentLvlConfig
+    {
+        get { return levelConfigs[currentLevel]; }
+    }
+
     public void GenerateLvL ()
     {
         Clear();
 
-        CurrentConfig = levelConfigs[currentLevel];
-
-        CurrentConfig.Generate(GameManager.GM.mapManager.map, GameManager.GM.Rng, GameManager.GM.entityMetaData, this);
+        CurrentLvlConfig.Generate(GameManager.GM.mapManager.map, GameManager.GM.Rng, GameManager.GM.entityMetaData, this);
 
         GameManager.GM.mapManager.cManager.UpdateChunks(GameManager.GM.mapManager.map, force: true);// true forces the whole map to be regenerated.
 

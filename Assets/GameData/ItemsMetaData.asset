@@ -18,6 +18,7 @@ MonoBehaviour:
   - PoisonBow
   - Staff
   - Axe
+  - MushroomExplode
   activeItems:
   - {fileID: 11400000, guid: 29cddc06b337aef4ab0ce6e5110a4297, type: 2}
   - {fileID: 11400000, guid: 13051904519637a42a171b397d3aeb53, type: 2}
@@ -25,6 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b2e984ed4d8d480488b8470390220fcf, type: 2}
   - {fileID: 11400000, guid: d8b57f2814ec1494cb917f0935138993, type: 2}
   - {fileID: 11400000, guid: 963e3fa25e3ef0f4297111892c57406c, type: 2}
+  - {fileID: 11400000, guid: 9ebedd684dfb1964bb45c1e4a9d08387, type: 2}
   passiveItemKeys:
   - DashBoots
   - DashBoots

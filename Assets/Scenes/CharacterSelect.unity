@@ -1439,12 +1439,7 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 686821932}
---- !u!1 &920063595 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1451199808810784, guid: 0930538bdf069f143a9b33787ef59584,
-    type: 2}
-  m_PrefabInternal: {fileID: 570440911}
---- !u!84 &1012547623
+--- !u!84 &765879967
 RenderTexture:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1453,8 +1448,8 @@ RenderTexture:
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
-  m_Width: 832
-  m_Height: 520
+  m_Width: 1183
+  m_Height: 739
   m_AntiAliasing: 1
   m_DepthFormat: 0
   m_ColorFormat: 0
@@ -1466,6 +1461,11 @@ RenderTexture:
     m_Aniso: 1
     m_MipBias: 0
     m_WrapMode: 1
+--- !u!1 &920063595 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1451199808810784, guid: 0930538bdf069f143a9b33787ef59584,
+    type: 2}
+  m_PrefabInternal: {fileID: 570440911}
 --- !u!1 &1152122462
 GameObject:
   m_ObjectHideFlags: 0
@@ -1826,12 +1826,12 @@ Prefab:
         type: 2}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 1012547623}
+      objectReference: {fileID: 765879967}
     - target: {fileID: 114626191569548436, guid: 3d4613150b62b224aa2573fd59dea0ca,
         type: 2}
       propertyPath: spriteLightRT
       value: 
-      objectReference: {fileID: 1012547623}
+      objectReference: {fileID: 765879967}
     - target: {fileID: 114072736348378320, guid: 3d4613150b62b224aa2573fd59dea0ca,
         type: 2}
       propertyPath: m_Enabled
@@ -1860,12 +1860,12 @@ Prefab:
     - target: {fileID: 20560482750851072, guid: 3d4613150b62b224aa2573fd59dea0ca,
         type: 2}
       propertyPath: orthographic size
-      value: 7.7968755
+      value: 7.6979165
       objectReference: {fileID: 0}
     - target: {fileID: 20929674518203920, guid: 3d4613150b62b224aa2573fd59dea0ca,
         type: 2}
       propertyPath: orthographic size
-      value: 5.416667
+      value: 7.6979165
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d4613150b62b224aa2573fd59dea0ca, type: 2}

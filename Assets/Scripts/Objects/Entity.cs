@@ -37,6 +37,8 @@ public class Entity : Destructable
     public bool strafe;
     [HideInInspector]
     public bool stepOnGround;
+    public Transform stateMachineTargetTransform;
+    public bool stateMachineVisionToTarget;
     //[HideInInspector]
     //public float curMaxSpd;
 
@@ -315,4 +317,5 @@ public class Entity : Destructable
             return statMods.damage;
         }
     }
+
 }

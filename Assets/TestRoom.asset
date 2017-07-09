@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f2d6d8cf8f39341a7645dc8b63e267, type: 3}
+  m_Name: TestRoom
+  m_EditorClassIdentifier: 
+  weight: 0
+  sizeConstraint:
+    useSizeConstraint: 0
+    minSizeThreshold: 0
+    maxSizeThreshhold: 0
+  spawnRangeConstraint:
+    useSpawnRangeConstraint: 0
+    MinSpawnCounts: 1
+    maxSpawnCount: 10

@@ -69,25 +69,30 @@ public abstract class MeleeBase : ActiveItem {
 
         if(triggerHoldAtk)
         {
-            //create the "weapon swing" gameobject.
-            GameObject g = (GameObject)GameObject.Instantiate(itemData.holdAttackObject, entity.gameObject.transform);
-            //set the attacks position and rotation to match the entitys atkPos and.. TODO : look direction?
-            g.transform.localPosition = entity.atkPos;
-            g.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
+            if (itemData.attackObject != null)
+            {
+                GameObject g = (GameObject)GameObject.Instantiate(itemData.attackObject, entity.gameObject.transform);
+                //set the attacks position and rotation to match the entitys atkPos and.. TODO : look direction?
+                g.transform.localPosition = entity.atkPos;
+                g.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
+                g.GetComponent<WeaponAttack>().weapon = this;
+            }
             entity.attack = true;
-            g.GetComponent<WeaponAttack>().weapon = this;
             DestroyHeldSprite();
             triggerHoldAtk = true;
         }
         else
         {
             //create the "weapon swing" gameobject.
-            GameObject g = (GameObject)GameObject.Instantiate(itemData.attackObject, entity.gameObject.transform);
-            //set the attacks position and rotation to match the entitys atkPos and.. TODO : look direction?
-            g.transform.localPosition = entity.atkPos;
-            g.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
+            if(itemData.attackObject != null)
+            {
+                GameObject g = (GameObject)GameObject.Instantiate(itemData.attackObject, entity.gameObject.transform);
+                //set the attacks position and rotation to match the entitys atkPos and.. TODO : look direction?
+                g.transform.localPosition = entity.atkPos;
+                g.transform.rotation = GetQuaternionFromEntityLookDirection(entity);
+                g.GetComponent<WeaponAttack>().weapon = this;
+            }
             entity.attack = true;
-            g.GetComponent<WeaponAttack>().weapon = this;
             DestroyHeldSprite();
             triggerHoldAtk = false;
         }
@@ -102,7 +107,7 @@ public abstract class MeleeBase : ActiveItem {
         CameraShake shake = Camera.main.GetComponent<CameraShake>();
         if (e != null && e != entity)
         {
-            GameManager.GM.pauseManager.StartCoroutine(GameManager.GM.pauseManager.HitPause(0.05f));
+            GameManager.GM.pauseManager.StartCoroutine(GameManager.GM.pauseManager.HitPause(0.15f));
             e.AddKnockback((e.transform.position - entity.transform.position).normalized * itemData.knockBack);
             //e.AddKnockback(entity.lookDir * itemData.knowckBack);
             e.StunLock(0.2f);   //should have stunlock value in weapon maybe

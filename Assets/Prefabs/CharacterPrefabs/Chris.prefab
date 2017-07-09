@@ -381,17 +381,17 @@ MonoBehaviour:
   lookDir: {x: 0, y: 0}
   moveVector: {x: 0, y: 0}
   moving: 0
-  controller: {fileID: 0}
   attack: 0
   holding: 0
   charged: 0
   strafe: 0
+  stepOnGround: 0
   stunLocked: 0
   attackDelay: 0
   knockbackVector: {x: 0, y: 0}
   dist: 0
   items: {fileID: 11400000, guid: af2e218907d789740ac31f6eda87cf68, type: 2}
-  weaponName: Staff
+  weaponName: Axe
   atkPos: {x: 0, y: 0}
   atkSpawnDistance: 0.5
   activeEffects: []

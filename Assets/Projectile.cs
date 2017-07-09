@@ -7,9 +7,20 @@ public class Projectile : WeaponAttack {
     public float destroyAfterTime;
     public SpawnObject[] spawnOnDeath;
 
+    public Vector2 moveVector;
+    Rigidbody2D rb;
+
     public override void Awake()
     {
         base.Awake();
+    }
+
+    
+
+    public void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = moveVector;
     }
 
     // Update is called once per frame

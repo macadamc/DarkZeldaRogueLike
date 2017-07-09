@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f40df150ae9bdd4f8b7bb72b0ec874b, type: 3}
   m_Name: RandomMove_Step
   m_EditorClassIdentifier: 
-  timeBetweenMovements: 0.5
-  movementTimerRandomness: 0.2
+  timeBetweenMovements: 1
+  movementTimerRandomness: 0.5
   moveStr: 1.5
   moveStrRandomness: 0.75
   deadZone: 0.25

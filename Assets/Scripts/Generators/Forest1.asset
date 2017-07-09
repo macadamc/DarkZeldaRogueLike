@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e587430aa53778b42860d595371a9dfe, type: 3}
   m_Name: Forest1
   m_EditorClassIdentifier: 
+  roomGenerators:
+  - {fileID: 11400000, guid: 524180f29ccf0524ea989b755c15c3f9, type: 2}
   layout:
     maxConnectionsPerZone: 5
     minZoneRadius: 2
@@ -22,6 +24,7 @@ MonoBehaviour:
     constraints:
     - useSize: 1
       sizeConstraint:
+        useSizeConstraint: 0
         minSizeThreshold: 0
         maxSizeThreshhold: 0.4
       useMinSpawn: 0
@@ -32,6 +35,7 @@ MonoBehaviour:
         weight: 0
     - useSize: 0
       sizeConstraint:
+        useSizeConstraint: 0
         minSizeThreshold: 0.4
         maxSizeThreshhold: 0.7
       useMinSpawn: 0
@@ -44,6 +48,7 @@ MonoBehaviour:
         weight: 2
     - useSize: 0
       sizeConstraint:
+        useSizeConstraint: 0
         minSizeThreshold: 0.7
         maxSizeThreshhold: 1
       useMinSpawn: 0
@@ -60,8 +65,8 @@ MonoBehaviour:
   maxCost: 100
   perlinSize: 16
   bushMod: 0.2
-  chanceToSkip: 0.75
-  flowerMod: 0.3
-  rockMod: 0.2
-  grassMod: 0.4
+  chanceToSkip: 0.5
+  flowerMod: 0
+  rockMod: 0
+  grassMod: 1
   TreeGrassMod: 0.2

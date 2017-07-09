@@ -29,6 +29,7 @@ public class LookForTargetsAction : Action {
         Entity entity = stateMachine.entity;
 
         stateMachine.visionToTarget = false;
+        entity.stateMachineVisionToTarget = false;
 
         Collider2D[] objs = Physics2D.OverlapCircleAll(entity.transform.position, entity.stats.visionDistance, entity.stats.visionLayer);
 
@@ -41,7 +42,9 @@ public class LookForTargetsAction : Action {
                 if (hit.collider!=null && hit.collider.tag == targetTags[i])
                 {
                     stateMachine.targetTransform = hit.collider.transform;
+                    entity.stateMachineTargetTransform = hit.collider.transform;
                     stateMachine.visionToTarget = true;
+                    entity.stateMachineVisionToTarget = true;
                 }
 
             }
