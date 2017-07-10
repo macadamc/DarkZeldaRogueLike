@@ -23,7 +23,7 @@ public class MushroomExplode : MeleeBase
         Debug.Log("mushroomexplode");
 
         entity.StopAllCoroutines();
-        entity.StartCoroutine(ShootRadial(entity, itemData.spell, 4f, 8, 0.2f));
+        entity.StartCoroutine(ShootRadial(entity, itemData.spell, 360, 2.5f, 4, 0.2f));
         entity.attack = true;
     }
     /*
@@ -61,18 +61,21 @@ public class MushroomExplode : MeleeBase
     }
 
 
-    public IEnumerator ShootRadial(Entity entity, GameObject projectile, float speed, int bullets, float startDelay)
+    public IEnumerator ShootRadial(Entity entity, GameObject projectile, float angleRange, float speed, int bullets, float startDelay)
     {
         Vector2 shootVector = (entity.stateMachineTargetTransform.transform.position - entity.transform.position).normalized;
         //Vector2 dir = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.right;
 
         yield return new WaitForSeconds(startDelay);
         /*
-        float degree = angleRange / bullets;
-        for (float i = -angleRange / 2f; i < angleRange / 2f; i += degree)
-        */
         float degree = 360 / bullets;
         for (float i = -360 / 2f; i < 360 / 2f; i += degree)
+        */
+
+        float startAngle = Mathf.Atan2(shootVector.y, shootVector.x) * Mathf.Rad2Deg;
+        float halfRange = angleRange / 2f;
+        float degreeIncrement = angleRange / bullets;
+        for (float i = startAngle - halfRange; i < startAngle + halfRange; i += degreeIncrement)
         {
             Quaternion rotation = Quaternion.AngleAxis(i, entity.transform.forward);
             //Vector2 dir = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.right;
