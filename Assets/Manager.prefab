@@ -241,8 +241,6 @@ GameObject:
   - component: {fileID: 114755598245631664}
   - component: {fileID: 114107108692648908}
   - component: {fileID: 114489031870406728}
-  - component: {fileID: 114211136383353468}
-  - component: {fileID: 114509035681880732}
   - component: {fileID: 114414372764659190}
   - component: {fileID: 114661959323058334}
   - component: {fileID: 114503947962638904}
@@ -2016,17 +2014,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114211136383353468
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1181736895399172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fea0a89867245044589102bf97d687fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114219559471042220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2844,30 +2831,9 @@ MonoBehaviour:
   levelConfigs:
   - {fileID: 11400000, guid: 105ffaccc3f21d8489972d43242b9ded, type: 2}
   - {fileID: 11400000, guid: 105ffaccc3f21d8489972d43242b9ded, type: 2}
+  - {fileID: 11400000, guid: 105ffaccc3f21d8489972d43242b9ded, type: 2}
   - {fileID: 11400000, guid: c85c81490a486f3468f856f83fc81b44, type: 2}
   CurrentConfig: {fileID: 0}
---- !u!114 &114509035681880732
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1181736895399172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93cc93dd47f21d74bb9ffe798788f8b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  displayGridGizmos: 0
-  gizmosAlpha: 0.17
-  unwalkableMask:
-    serializedVersion: 2
-    m_Bits: 512
-  gridWorldSize: {x: 64, y: 64}
-  nodeRadius: 0.25
-  walkableRegions: []
-  obstacleShell: 0
-  obstacleProximityPenalty: 100
-  blurCostAmount: 4
 --- !u!114 &114534237762211084
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3366,7 +3332,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   progressionManager: {fileID: 114107108692648908}
   player: {fileID: 0}
-  grid: {fileID: 0}
   itemPanel: {fileID: 114278707458427898}
   deathScreen: {fileID: 1409251539416194}
   mapManager: {fileID: 0}

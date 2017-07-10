@@ -77,7 +77,7 @@ public class sMap : ScriptableObject
             }
             else
             {
-                throw new System.Exception();
+                throw new System.Exception("Out Of Bounds");
             }
 
         }
@@ -108,7 +108,7 @@ public class sMap : ScriptableObject
 
     public bool isEdge(int x, int y)
     {
-        return (x == 0 || y == 0) || (x == height - 1 || y == height - 1);
+        return x == 0 || y == 0 || x == width - 1 || y == height - 1;
     }
     public bool inBounds (int x, int y)
     {

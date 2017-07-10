@@ -947,9 +947,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114211136383353468, guid: 0930538bdf069f143a9b33787ef59584, type: 2}
-    - {fileID: 114509035681880732, guid: 0930538bdf069f143a9b33787ef59584, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0930538bdf069f143a9b33787ef59584, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &604191468
@@ -1439,28 +1437,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 686821932}
---- !u!84 &765879967
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: SpriteLightKit RT
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_Width: 1183
-  m_Height: 739
-  m_AntiAliasing: 1
-  m_DepthFormat: 0
-  m_ColorFormat: 0
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_TextureSettings:
-    m_FilterMode: 0
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapMode: 1
 --- !u!1 &920063595 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1451199808810784, guid: 0930538bdf069f143a9b33787ef59584,
@@ -1778,6 +1754,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!84 &1203462053
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: SpriteLightKit RT
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_Width: 1183
+  m_Height: 739
+  m_AntiAliasing: 1
+  m_DepthFormat: 0
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_TextureSettings:
+    m_FilterMode: 0
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapMode: 1
 --- !u!1001 &1205906065
 Prefab:
   m_ObjectHideFlags: 0
@@ -1826,12 +1824,12 @@ Prefab:
         type: 2}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 765879967}
+      objectReference: {fileID: 1203462053}
     - target: {fileID: 114626191569548436, guid: 3d4613150b62b224aa2573fd59dea0ca,
         type: 2}
       propertyPath: spriteLightRT
       value: 
-      objectReference: {fileID: 765879967}
+      objectReference: {fileID: 1203462053}
     - target: {fileID: 114072736348378320, guid: 3d4613150b62b224aa2573fd59dea0ca,
         type: 2}
       propertyPath: m_Enabled
