@@ -34,15 +34,15 @@ public class ChunkManager
         mapChunks.Add(chunk);
 
         chunk.gameobject.transform.parent = mapChunksGameObject.transform;
-        chunk.gameobject.transform.localPosition = new Vector3(x * map.chunkSize, y * map.chunkSize, 0);
+        chunk.gameobject.transform.localPosition = new Vector3(x * map.chunkWidth, y * map.chunkHeight, 0);
         return chunk;
     }
 
     public MapChunk GetChunkFromWorldPos(int x, int y, sMap map)
     {
-        pointer.X = x / map.chunkSize;
+        pointer.X = x / map.chunkWidth;
 
-        pointer.Y = y / map.chunkSize;
+        pointer.Y = y / map.chunkHeight;
 
         if (chunkPointers.Contains(pointer))
             return mapChunks[chunkPointers.IndexOf(pointer)];
@@ -52,8 +52,8 @@ public class ChunkManager
 
     public void SpawnChunks(sMap map)
     {
-        int widthInChunks = map.width / map.chunkSize;
-        int heightInChunks = map.height / map.chunkSize;
+        int widthInChunks = map.width / map.chunkWidth;
+        int heightInChunks = map.height / map.chunkHeight;
         MapChunk cChunk;
 
         for (int y = 0; y < heightInChunks; y++)
@@ -91,7 +91,6 @@ public class ChunkManager
 
     public void UpdateChunks(sMap map, bool force = false)
     {
-
         if (force == false)
         {
             if (redraw == false)
@@ -114,7 +113,10 @@ public class ChunkManager
                     PolyGen.GenerateLayer(new DirtyInfo(chunk, LayernName), map);
                 }
             }
+            
         }
+
+        dirtyList.Clear();
     }
 
     public void ClearData()

@@ -183,14 +183,14 @@ public static class PolyGen
         string layername = dirtyInfo.layerName;
         MapChunk chunk = dirtyInfo.chunk;
 
-        int cx = (int)chunk.pos.X * Map.chunkSize;
-        int cy = (int)chunk.pos.Y * Map.chunkSize;
+        int cx = (int)chunk.pos.X * Map.chunkWidth;
+        int cy = (int)chunk.pos.Y * Map.chunkHeight;
 
 
         // for each position in the current chunk.
-        for (int py = cy; py < cy + Map.chunkSize; py++)
+        for (int py = cy; py < cy + Map.chunkHeight; py++)
         {
-            for (int px = cx; px < cx + Map.chunkSize; px++)
+            for (int px = cx; px < cx + Map.chunkWidth; px++)
             {
 
                 if (!Map.inBounds(px, py)) continue;
@@ -206,7 +206,7 @@ public static class PolyGen
                 // update Tile info.
                 if (Map[layername, px, py] > 0)
                 {
-                    GenTile(px - (chunk.pos.X * Map.chunkSize), py - (chunk.pos.Y * Map.chunkSize), Map[layername, px, py], subLayer, Map);
+                    GenTile(px - (chunk.pos.X * Map.chunkWidth), py - (chunk.pos.Y * Map.chunkHeight), Map[layername, px, py], subLayer, Map);
                 }
 
                 UpdateCollisions(layer, layername, px, py, Map);

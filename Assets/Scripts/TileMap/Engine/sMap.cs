@@ -18,7 +18,8 @@ public class sMap : ScriptableObject
 
     public int width;
     public int height;
-    public int chunkSize;
+    public int chunkWidth;
+    public int chunkHeight;
 
     [HideInInspector]
     public ChunkManager cManager;
@@ -59,7 +60,7 @@ public class sMap : ScriptableObject
             }
             else
             {
-                throw new System.Exception("tried to get a value outside the map bounds..");
+                throw new System.Exception("tried to GET a value outside the map bounds..");
             }
         }
         set
@@ -77,7 +78,7 @@ public class sMap : ScriptableObject
             }
             else
             {
-                throw new System.Exception("Out Of Bounds");
+                throw new System.Exception("tried to SET a value outside the map bounds..");
             }
 
         }

@@ -61,10 +61,10 @@ public static class Utility {
 
     public static bool Contains(Rect R1, Rect R2)
     {
-        return (R2.x + R2.width) < (R1.x + R1.width)
-            && (R2.x) > (R1.x)
-            && (R2.y) > (R1.y)
-            && (R2.y + R2.height) < (R1.y + R1.height);
+        return (R2.x + R2.width) <= (R1.x + R1.width)
+            && (R2.x) >= (R1.x)
+            && (R2.y) >= (R1.y)
+            && (R2.y + R2.height) <= (R1.y + R1.height);
     }
 
     public static bool Contains(Rect rect, Circle circle)
