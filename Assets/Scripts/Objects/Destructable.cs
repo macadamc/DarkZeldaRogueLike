@@ -48,8 +48,10 @@ public class Destructable : ZOrderObject {
 
     public void DestroyObject()
     {
+        Debug.Log("obj destroyed");
         Spawn(stats.spawnOnDeath);
         gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 
     public override void Awake()

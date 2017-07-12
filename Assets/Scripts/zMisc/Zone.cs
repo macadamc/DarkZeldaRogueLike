@@ -17,8 +17,12 @@ namespace ShadyPixel.CameraSystem
 
         public List<PrefabSpawner> spawners = new List<PrefabSpawner>();
 
-        // Use this for initialization
         void Start()
+        {
+            Init();
+        }
+
+        void Init()
         {
             boundsCollider2D = GetComponent<BoxCollider2D>();
             bounds = boundsCollider2D.bounds;

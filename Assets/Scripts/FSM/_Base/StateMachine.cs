@@ -20,11 +20,15 @@ public class StateMachine : MonoBehaviour {
     public Transform targetTransform;
     public bool visionToTarget;
 
+    [HideInInspector]
+    public float lastActionTime;
+    [HideInInspector]
+    public float nextActionTime;
+
     public void Awake()
     {
         entity = gameObject.GetComponent<Entity>();
         curState = startState;
-
     }
 
     public void TransitionToState(State nextState)

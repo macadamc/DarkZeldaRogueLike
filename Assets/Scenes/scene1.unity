@@ -130,10 +130,20 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 61223321141075136, guid: b7e29b5dc0ed4c0468342064dcbbe95f,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 61223321141075136, guid: b7e29b5dc0ed4c0468342064dcbbe95f,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 48
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b7e29b5dc0ed4c0468342064dcbbe95f, type: 2}
   m_IsPrefabParent: 0
---- !u!84 &656419946
+--- !u!84 &180565774
 RenderTexture:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -142,8 +152,8 @@ RenderTexture:
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
-  m_Width: 790
-  m_Height: 494
+  m_Width: 1182
+  m_Height: 739
   m_AntiAliasing: 1
   m_DepthFormat: 0
   m_ColorFormat: 0
@@ -208,7 +218,7 @@ Prefab:
         type: 2}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 656419946}
+      objectReference: {fileID: 180565774}
     - target: {fileID: 114626191569548436, guid: 3d4613150b62b224aa2573fd59dea0ca,
         type: 2}
       propertyPath: spriteLightRT

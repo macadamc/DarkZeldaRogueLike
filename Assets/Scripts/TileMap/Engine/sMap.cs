@@ -107,9 +107,16 @@ public class sMap : ScriptableObject
         }
     }
 
-    public bool isEdge(int x, int y)
+    public bool isEdge(int x, int y, bool useChuckSize= false)
     {
-        return x == 0 || y == 0 || x == width - 1 || y == height - 1;
+        if(useChuckSize)
+        {
+            return x == 0 || y == 0 || x == (width / chunkWidth) * chunkWidth - 1 || y == (height / chunkHeight) * chunkHeight - 1;
+        }
+        else
+        {
+            return x == 0 || y == 0 || x == width -1 || y == height - 1;
+        }
     }
     public bool inBounds (int x, int y)
     {

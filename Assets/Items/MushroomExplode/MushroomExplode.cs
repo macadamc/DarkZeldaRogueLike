@@ -22,8 +22,8 @@ public class MushroomExplode : MeleeBase
 
         Debug.Log("mushroomexplode");
 
-        entity.StopAllCoroutines();
-        entity.StartCoroutine(ShootRadial(entity, itemData.spell, 360, 2.5f, 4, 0.2f));
+        entity.StartCoroutine(ShootRadial(entity, itemData.spell, 360, 2.5f, 4, 0.3f, 3, 30));
+        //entity.StartCoroutine(Shoot(entity, itemData.spell, 3.5f, 4, 0.3f, 10f, 0.4f));
         entity.attack = true;
     }
     /*
@@ -39,18 +39,20 @@ public class MushroomExplode : MeleeBase
         arrow.transform.SetParent(null);
     }
     */
-    public IEnumerator Shoot(Entity entity, GameObject projectile, float speed, int bullets, float startDelay, float timeBetweenShots)
+    public IEnumerator Shoot(Entity entity, GameObject projectile, float speed, int bullets, float startDelay, float randomSpread , float timeBetweenShots)
     {
         yield return new WaitForSeconds(startDelay);
 
         for (int i = 0; i < bullets; i++)
         {
             Vector2 shootVector = (entity.stateMachineTargetTransform.transform.position - entity.transform.position).normalized;
+            float shootAngle = Mathf.Atan2(shootVector.y, shootVector.x) * Mathf.Rad2Deg;
 
             GameObject obj = (GameObject)GameObject.Instantiate(projectile, entity.transform.position + (Vector3)entity.atkPos, entity.transform.rotation, entity.transform);
+            obj.transform.Rotate(Vector3.forward, shootAngle + Random.Range(-randomSpread,randomSpread));
             obj.transform.localPosition = entity.atkPos;
             obj.GetComponent<Projectile>().owner = entity;
-            obj.GetComponent<Projectile>().moveVector = shootVector * speed;
+            obj.GetComponent<Projectile>().moveVector = obj.transform.right * speed;
             obj.GetComponent<Projectile>().destroyAfterTime = 2f;
             obj.GetComponent<Projectile>().d_owner = entity.gameObject.GetComponent<Destructable>();
             obj.GetComponent<Projectile>().weapon = this;
@@ -61,32 +63,39 @@ public class MushroomExplode : MeleeBase
     }
 
 
-    public IEnumerator ShootRadial(Entity entity, GameObject projectile, float angleRange, float speed, int bullets, float startDelay)
+    public IEnumerator ShootRadial(Entity entity, GameObject projectile, float angleRange, float speed, int bullets, float startDelay, int repeat, float rotateAmount)
     {
         Vector2 shootVector = (entity.stateMachineTargetTransform.transform.position - entity.transform.position).normalized;
-        //Vector2 dir = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.right;
+        float shootAngle = Mathf.Atan2(shootVector.y, shootVector.x) * Mathf.Rad2Deg;
+
+        float angleRangeMod = angleRange / bullets;
+        float newAngleRange = angleRange - angleRangeMod;
+
+        float perBulletAngle = newAngleRange / (bullets - 1);
+        float startAngle = newAngleRange * -0.5f;
+
+        float additionalRotation = 0;
 
         yield return new WaitForSeconds(startDelay);
-        /*
-        float degree = 360 / bullets;
-        for (float i = -360 / 2f; i < 360 / 2f; i += degree)
-        */
 
-        float startAngle = Mathf.Atan2(shootVector.y, shootVector.x) * Mathf.Rad2Deg;
-        float halfRange = angleRange / 2f;
-        float degreeIncrement = angleRange / bullets;
-        for (float i = startAngle - halfRange; i < startAngle + halfRange; i += degreeIncrement)
+        for(int r = 0; r < repeat; r++)
         {
-            Quaternion rotation = Quaternion.AngleAxis(i, entity.transform.forward);
-            //Vector2 dir = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.right;
-            GameObject obj = (GameObject)GameObject.Instantiate(projectile, entity.transform.position + (Vector3)entity.atkPos, entity.transform.rotation * rotation, entity.transform);
-            obj.transform.localPosition = entity.atkPos;
-            obj.GetComponent<Projectile>().owner = entity;
-            obj.GetComponent<Projectile>().moveVector = obj.transform.right * speed;
-            obj.GetComponent<Projectile>().destroyAfterTime = 2f;
-            obj.GetComponent<Projectile>().d_owner = entity.gameObject.GetComponent<Destructable>();
-            obj.GetComponent<Projectile>().weapon = this;
-            obj.transform.SetParent(null);
+            for (int i = 0; i < bullets; i++)
+            {
+                GameObject obj = (GameObject)GameObject.Instantiate(projectile, entity.transform.position + (Vector3)entity.atkPos, entity.transform.rotation, entity.transform);
+                obj.transform.Rotate(Vector3.forward, shootAngle + additionalRotation);
+                obj.transform.Rotate(Vector3.forward, startAngle + i * perBulletAngle);
+                obj.transform.localPosition = entity.atkPos;
+                obj.GetComponent<Projectile>().owner = entity;
+                obj.GetComponent<Projectile>().moveVector = obj.transform.right * speed;
+                obj.GetComponent<Projectile>().destroyAfterTime = 2f;
+                obj.GetComponent<Projectile>().d_owner = entity.gameObject.GetComponent<Destructable>();
+                obj.GetComponent<Projectile>().weapon = this;
+                obj.transform.SetParent(null);
+            }
+
+            additionalRotation += rotateAmount;
+            yield return new WaitForSeconds(startDelay);
         }
         yield return null;
     }

@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b28238547f9fad439bca7aaec7382fa, type: 3}
   m_Name: AttackTarget
   m_EditorClassIdentifier: 
-  timeBetweenAttacks: 2
-  timerRandomness: 0.5
+  timeBetweenAttacks: 3
+  timerRandomness: 0.25
