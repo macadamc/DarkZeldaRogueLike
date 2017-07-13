@@ -25,6 +25,11 @@ public class WeaponAttack : MonoBehaviour {
 
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
+        if (other == null)
+            return;
+        if (owner == null)
+            return;
+
         if (other.gameObject == owner.gameObject)
             return;
 

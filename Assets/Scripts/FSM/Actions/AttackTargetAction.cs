@@ -13,6 +13,7 @@ public class AttackTargetAction : Action {
     public override void BeginAction(StateMachine stateMachine)
     {
         base.BeginAction(stateMachine);
+        stateMachine.stateTimers.Add("nextAttackAction", Time.time);
     }
 
     public override void UpdateAction(StateMachine stateMachine)
@@ -22,21 +23,28 @@ public class AttackTargetAction : Action {
         if (stateMachine.entity.stunLocked || PauseManager.gamePaused || !stateMachine.visionToTarget)
             return;
 
-        if(Time.time > stateMachine.nextActionTime)
+        if(stateMachine.stateTimers.ContainsKey("nextAttackAction"))
         {
-            Attack(stateMachine);
+            if (Time.time > stateMachine.stateTimers["nextAttackAction"])
+            {
+                Attack(stateMachine);
+            }
         }
     }
 
     public override void EndAction(StateMachine stateMachine)
     {
         base.EndAction(stateMachine);
+        stateMachine.stateTimers.Remove("nextAttackAction");
     }
 
     public void Attack(StateMachine stateMachine)
     {
-        stateMachine.lastActionTime = Time.time;
-        stateMachine.nextActionTime = NextActionTime();
+        if (stateMachine.entity.weapons[0] == null)
+        {
+            return;
+        }
+        stateMachine.stateTimers["nextAttackAction"] = NextActionTime();
         stateMachine.entity.weapons[0].OnAttackEnd(stateMachine.entity);
         Debug.Log("shoot");
     }

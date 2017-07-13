@@ -20,15 +20,13 @@ public class StateMachine : MonoBehaviour {
     public Transform targetTransform;
     public bool visionToTarget;
 
-    [HideInInspector]
-    public float lastActionTime;
-    [HideInInspector]
-    public float nextActionTime;
+    public Dictionary<string, float> stateTimers = new Dictionary<string, float>();
 
     public void Awake()
     {
         entity = gameObject.GetComponent<Entity>();
         curState = startState;
+        curState.BeginState(this);
     }
 
     public void TransitionToState(State nextState)

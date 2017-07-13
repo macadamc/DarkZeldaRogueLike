@@ -22,5 +22,15 @@ MonoBehaviour:
     firstLvl: 1
     cost: 1
     prefab: {fileID: 1711459915394058, guid: c781093ab1b6f5b41afe9b48e9b6a2d5, type: 2}
+  - name: Spider
+    firstLvl: 1
+    cost: 1
+    prefab: {fileID: 1182709632690322, guid: 0e7134ec7b8cdfb4e87f34095f959621, type: 2}
+  - name: Bat
+    firstLvl: 1
+    cost: 1
+    prefab: {fileID: 1643843654571222, guid: 766a66b519125164c9612680fdb18416, type: 2}
   enemyKeys:
   - Mushroom
+  - Spider
+  - Bat

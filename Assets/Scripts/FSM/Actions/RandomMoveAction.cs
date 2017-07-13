@@ -19,43 +19,30 @@ public class RandomMoveAction : Action {
     public float stepTime;
     public float stepTimeRandomness;
 
-    float stepTimer;
-
-    float moveTimer;
-
-
     public override void BeginAction(StateMachine stateMachine)
     {
         base.BeginAction(stateMachine);
+
+        stateMachine.stateTimers.Add("randomMoveTimer", Time.time);
+        stateMachine.stateTimers.Add("randomStepTimer", Time.time);
     }
 
     public override void UpdateAction(StateMachine stateMachine)
     {
         base.UpdateAction(stateMachine);
 
-
-
         if (stateMachine.entity.stunLocked || PauseManager.gamePaused)
             return;
 
-        if (stepTimer <= 0)
+        if (Time.time >= stateMachine.stateTimers["randomStepTimer"])
         {
             if (step)
                 stateMachine.entity.LerpStop();
 
-            if (moveTimer > 0)
-            {
-                moveTimer -= Time.deltaTime;
-            }
-            else
+            if (Time.time >= stateMachine.stateTimers["randomMoveTimer"])
             {
                 Move(stateMachine);
             }
-
-        }
-        else
-        {
-            stepTimer -= Time.deltaTime;
         }
 
     }
@@ -63,11 +50,11 @@ public class RandomMoveAction : Action {
     public void Move(StateMachine stateMachine)
     {
         if (additiveVelocity)
-            stateMachine.entity.moveVector += GetMoveVector();
+            stateMachine.entity.moveVector += GetMoveVector(stateMachine);
         else
-            stateMachine.entity.moveVector = GetMoveVector();
+            stateMachine.entity.moveVector = GetMoveVector(stateMachine);
 
-        SetMoveTimer();
+        SetMoveTimer(stateMachine);
 
         if (step)
             SetStepTimer(stateMachine);
@@ -77,15 +64,17 @@ public class RandomMoveAction : Action {
     public override void EndAction(StateMachine stateMachine)
     {
         base.EndAction(stateMachine);
+        stateMachine.stateTimers.Remove("randomMoveTimer");
+        stateMachine.stateTimers.Remove("randomStepTimer");
     }
 
     void SetStepTimer(StateMachine stateMachine)
     {
-        stepTimer = stepTime + Random.Range(-stepTimeRandomness, stepTimeRandomness);
+        stateMachine.stateTimers["randomStepTimer"] = Time.time + stepTime + Random.Range(-stepTimeRandomness, stepTimeRandomness);
         stateMachine.entity.stepOnGround = false;
     }
 
-    public Vector2 GetMoveVector()
+    public Vector2 GetMoveVector(StateMachine stateMachine)
     {
         Vector2 randomVector = Random.insideUnitCircle;
         if (randomVector.magnitude < deadZone)
@@ -94,9 +83,9 @@ public class RandomMoveAction : Action {
         return randomVector * (moveStr + Random.Range(-moveStrRandomness, moveStrRandomness));
     }
 
-    public void SetMoveTimer()
+    public void SetMoveTimer(StateMachine stateMachine)
     {
-        moveTimer = timeBetweenMovements + Random.Range(-movementTimerRandomness, movementTimerRandomness);
+        stateMachine.stateTimers["randomMoveTimer"] = Time.time + timeBetweenMovements + Random.Range(-movementTimerRandomness, movementTimerRandomness);
     }
 
 

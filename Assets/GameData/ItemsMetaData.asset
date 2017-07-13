@@ -27,9 +27,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d8b57f2814ec1494cb917f0935138993, type: 2}
   - {fileID: 11400000, guid: 963e3fa25e3ef0f4297111892c57406c, type: 2}
   - {fileID: 11400000, guid: 9ebedd684dfb1964bb45c1e4a9d08387, type: 2}
-  passiveItemKeys:
-  - DashBoots
-  - DashBoots
-  passiveItems:
-  - {fileID: 0}
-  - {fileID: 11400000, guid: dcc7da4e0865b74488d97ac6fca7c8c3, type: 2}
+  passiveItemKeys: []
+  passiveItems: []

@@ -22,7 +22,7 @@ namespace ShadyPixel.CameraSystem
             Init();
         }
 
-        void Init()
+        public void Init()
         {
             boundsCollider2D = GetComponent<BoxCollider2D>();
             bounds = boundsCollider2D.bounds;

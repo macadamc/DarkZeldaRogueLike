@@ -36,6 +36,19 @@ public class ForestGeneratorSO : MapGenerator
     public override void Generate(sMap map, DefaultRNG rng, EntityMetaDataSO entityData, LevelGenerator lvlGenerator)
     {
         InitGenerator();
+
+        GameObject bounds = GameObject.Instantiate(Resources.Load("Bounds")) as GameObject;
+        bounds.SetActive(false);
+        bounds.name = "Bounds";
+        Zone z = bounds.GetComponent<Zone>();
+        z.cameraZone = true;
+        z.Init();
+        bounds.SetActive(true);
+
+        BoxCollider2D b = bounds.GetComponent<BoxCollider2D>();
+        b.size = new Vector2(map.width, map.height);
+        b.transform.position = Vector2.zero;
+
         layout.Generate();
         InitStartEndObjects(map);
 

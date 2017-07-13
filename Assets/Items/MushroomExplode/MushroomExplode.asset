@@ -20,7 +20,7 @@ MonoBehaviour:
   baseCost: 0
   HeldObj: {fileID: 0}
   baseDamage: 1
-  AttackDelay: 0.5
+  AttackDelay: 0.3
   knockBack: 10
   strafe: 0
   attackingMoveSpeed: 0

@@ -16,23 +16,22 @@ public class DungeonGenerator : MapGenerator {
     [NonSerialized]
     public DungeonGraph dungeon;
 
-    [NonSerialized]
-    QuadTree<DungeonRoom> qTree;
-
     void Initalize(sMap Map)
     {
-        qTree = new QuadTree<DungeonRoom>(new Rect(Vector2.zero, new Vector2(Map.width, Map.height)));
+        
     }
 
     public override void Generate(sMap map, DefaultRNG rng, EntityMetaDataSO entityData, LevelGenerator LvlGenerator)
     {
+
         Initalize(map);
 
         map.SetLayerTo("Walls", 1);
-        Vector2 mapSizeInRooms = new Vector2(map.width / RoomWidth, map.height / roomHeight);
-        List<DungeonRoom> res = new List<DungeonRoom>();
 
-        dungeon = new DungeonGraph();
+        Vector2 mapSizeInRooms = new Vector2(map.width / RoomWidth, map.height / roomHeight);
+        Rect mapRect = new Rect(0, 0, map.width, map.height);
+
+        dungeon = new DungeonGraph(map);
 
         for (int x = 0; x < mapSizeInRooms.x; x++)
         {
@@ -40,41 +39,98 @@ public class DungeonGenerator : MapGenerator {
             {
                 DungeonRoom r = dungeon.CreateRoom((RoomSize)rng.Next(4), new Vector2(x * RoomWidth, y * roomHeight), this);
 
-                if (Utility.Contains(new Rect(0, 0, map.width, map.height), r.rect) == false)
+                if (Utility.Contains(mapRect, r.rect) == false || dungeon.RoomCanBePlaced(r) == false)
                 {
                     dungeon.RemoveRoom(r);
                     continue;
                 }
 
-                bool collision = false;
-
-                res.Clear();
-                qTree.GetObjects(r.rect, ref res);
-
-                if (res.Count > 0)
+                else
                 {
-                    foreach (DungeonRoom room in res)
-                    {
-                        if (room.rect.Overlaps(r.rect))
-                        {
-                            collision = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (collision == false)
-                {
-                    qTree.Insert(r);
-
+                    dungeon.qTree.Insert(r);
                     r.Initalize(map);
-                    r.Draw(map);
-
                 }
 
             }
         }
+        foreach (DungeonRoom room in dungeon.rooms.Values)
+        {
+            List<DungeonRoom> neibours = dungeon.GetAdjecentRooms(room);
+
+            if (neibours.Count == 0 ) { continue; }
+
+            DungeonRoom other = neibours[rng.Next(neibours.Count)];
+
+            Vector2 dif = room.rect.position - other.rect.position;
+            Debug.Log(new Vector2(dif.x/26, dif.y/16));
+
+            //dungeon.CreateConnection(room, other, 0, 0);
+            
+        }
+
+        foreach (DungeonRoom room in dungeon.rooms.Values)
+        {
+            room.Draw(map);
+        }
     }
+
+
+    //public override void Generate(sMap map, DefaultRNG rng, EntityMetaDataSO entityData, LevelGenerator LvlGenerator)
+    //{
+
+    //    Initalize(map);
+
+    //    map.SetLayerTo("Walls", 1);
+
+    //    Vector2 mapSizeInRooms = new Vector2(map.width / RoomWidth, map.height / roomHeight);
+    //    Rect mapRect = new Rect(0, 0, map.width, map.height);
+
+    //    dungeon = new DungeonGraph(map);
+
+    //    int x = rng.Next((int)mapSizeInRooms.x);
+    //    int y = rng.Next((int)mapSizeInRooms.y);
+
+    //    DungeonRoom r = dungeon.CreateRoom((RoomSize)rng.Next(4), new Vector2(x * RoomWidth, y * roomHeight), this);
+    //    List<int> doorids = null;
+
+    //    switch(r.roomSize)
+    //    {
+    //        case RoomSize.Small:
+    //            doorids = DungeonRoom.SmallDoorIDs;
+    //            break;
+    //        case RoomSize.Long:
+    //            doorids = DungeonRoom.LongDoorIDs;
+    //            break;
+    //        case RoomSize.Wide:
+    //            doorids = DungeonRoom.WideDoorIds;
+    //            break;
+    //        case RoomSize.Large:
+    //            doorids = DungeonRoom.LargeDoorIds;
+    //            break;
+    //    }
+
+
+    //    if (Utility.Contains(mapRect, r.rect) == false || dungeon.RoomCanBePlaced(r) == false)
+    //    {
+    //        dungeon.RemoveRoom(r);
+    //    }
+
+    //    else
+    //    {
+    //        dungeon.qTree.Insert(r);
+
+    //        r.Initalize(map);
+    //        r.Draw(map);
+
+
+    //        Vector2 nPos = dungeon.GetAdjacentRoomPos(r, doorids[rng.Next(doorids.Count)]);
+    //        r = dungeon.CreateRoom(RoomSize.Small, new Vector2(nPos.x * RoomWidth, nPos.y * roomHeight), this);
+    //        r.Initalize(map);
+    //        r.Draw(map);
+    //    }
+
+
+    //}
 
 }
 
@@ -127,20 +183,23 @@ public class DungeonGenerator : MapGenerator {
 
 public class DungeonGraph
 {
-    static RoomConnection _edgePointer = new RoomConnection(-1, -1);
+    static RoomConnection _edgePointer = new RoomConnection(-1, -1, -1, -1);
     static void _SetEdgePointer(int UID1, int UID2)
     {
-        _edgePointer.nodeIds[0] = UID1;
-        _edgePointer.nodeIds[1] = UID2;
+        _edgePointer.room1 = UID1;
+        _edgePointer.room2 = UID2;
     }
 
     public int NextUID;
     public Dictionary<int, DungeonRoom> rooms;
 
-    public DungeonGraph()
+    public QuadTree<DungeonRoom> qTree;
+
+    public DungeonGraph(sMap Map)
     {
         NextUID = 0;
         rooms = new Dictionary<int, DungeonRoom>();
+        qTree = new QuadTree<DungeonRoom>(new Rect(Vector2.zero, new Vector2(Map.width, Map.height)));
     }
 
     public DungeonRoom CreateRoom(RoomSize size, Vector2 Pos, DungeonGenerator Generator)
@@ -157,17 +216,17 @@ public class DungeonGraph
         rooms.Remove(Room.UID);
     }
 
-    public void CreateEdge (DungeonRoom room1, DungeonRoom room2)
+    public void CreateConnection (DungeonRoom room1, DungeonRoom room2, int doorID1, int doorID2)
     {
         
         if (isConnected(room1, room2) == false)
         {
-            RoomConnection edge = new RoomConnection(room1.UID, room2.UID);
-            room1.connections.Add(edge);
-            room2.connections.Add(edge);
+            RoomConnection connection = new RoomConnection(room1.UID, room2.UID, doorID1, doorID2);
+            room1.connections.Add(connection);
+            room2.connections.Add(connection);
         }
     }
-    public void RemoveEdge(DungeonRoom room1, DungeonRoom room2)
+    public void RemoveConnection(DungeonRoom room1, DungeonRoom room2)
     {
         
         if (isConnected(room1, room2))
@@ -185,23 +244,100 @@ public class DungeonGraph
         return room1.connections.Contains(_edgePointer);
     }
 
+    public RoomConnection GetConnection (DungeonRoom room1, DungeonRoom room2)
+    {
+        if (isConnected(room1, room2))
+        {
+            return room1.connections[room1.connections.IndexOf(_edgePointer)];
+        }
+        return null;
+    }
+
+    public List<DungeonRoom> GetAdjecentRooms (DungeonRoom room)
+    {
+        List<DungeonRoom> ret = new List<DungeonRoom>();
+        qTree.GetObjects(new Rect(room.rect.position - Vector2.one, room.rect.size + Vector2.one), ref ret);
+        ret.Remove(room);
+        return ret;
+    }
+
+    public bool RoomCanBePlaced (DungeonRoom room)
+    {
+        List<DungeonRoom> res = new List<DungeonRoom>();
+        qTree.GetObjects(room.rect, ref res);
+
+        if (res.Count > 0)
+        {
+            foreach (DungeonRoom otherRoom in res)
+            {
+                if (room.rect.Overlaps(otherRoom.rect))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public Vector2 GetAdjacentRoomPos(DungeonRoom room, int doorID)
+    {
+        int roomX = (int)room.rect.position.x / 26;
+        int roomY = (int)room.rect.position.y / 16;
+
+        switch(doorID)
+        {
+            case 1:
+                return new Vector2(roomX, roomY + 1);
+            case 2:
+                return new Vector2(roomX + 1, roomY);
+            case 3:
+                return new Vector2(roomX, roomY - 1);
+            case 4:
+                return new Vector2(roomX - 1, roomY);
+            case 5:
+                return new Vector2(roomX + 1, roomY + 1);
+            case 6:
+                return new Vector2(roomX + 2, roomY);
+            case 7:
+                return new Vector2(roomX + 1, roomY - 1);
+            case 8:
+                return new Vector2(roomX, roomY + 2);
+            case 9:
+                return new Vector2(roomX + 1, roomY + 1);
+            case 10:
+                return new Vector2(roomX - 1, roomY + 1);
+            case 11:
+                return new Vector2(roomX + 1, roomY + 2);
+            case 12:
+                return new Vector2(roomX + 2, roomY + 1);
+        }
+        throw new Exception("DoorID Doesnt Exist");
+    }
+
 }
 
 public class RoomConnection
 {
     public int[] nodeIds;
+    public int room1;
+    public int door1;
+    public int room2;
+    public int door2;
 
-    public RoomConnection(int NodeID, int OtherNodeID)
+    public RoomConnection(int RoomUID, int OtherRoomUID, int DoorID, int OtherDoorID)
     {
-        nodeIds = new int[2] { NodeID, OtherNodeID };
+        room1 = RoomUID;
+        door1 = DoorID;
+
+        room2 = OtherRoomUID;
+        door2 = OtherDoorID;
     }
 
     public override bool Equals(object obj)
     {
         RoomConnection other = (RoomConnection)obj;
-
-        // test to see if both ids are in the other object in any order. if they are then these objects are considered the same object.
-        if (other is RoomConnection && Array.Exists<int>(other.nodeIds, element => element == nodeIds[0]) && Array.Exists<int>(other.nodeIds, element => element == nodeIds[1]))
+        if (other != null && ((room1 == other.room1 || room1 == other.room2) && (room2 == other.room1 || room2 == other.room2)) 
+            )//&& ((door1 == other.door1 || door1 == other.door2) && (door2 == other.door1 || door2 == other.door2)))
         {
             return true;
         }
@@ -217,6 +353,28 @@ public class RoomConnection
 
 public class DungeonRoom : IHasRectangle
 {
+    public static List<int> SmallDoorIDs = new List<int>() { 1, 2, 3, 4 };
+    public static List<int> LongDoorIDs = new List<int>() { 2, 3, 4, 8, 9, 10 };
+    public static List<int> WideDoorIds = new List<int>() { 1, 3, 4, 5, 6, 7 };
+    public static List<int> LargeDoorIds = new List<int>() { 3, 4, 6, 7, 8, 10, 11, 12 };
+
+    public static List<Vector2[]> DoorPositions = new List<Vector2[]>()
+    {
+        new Vector2[2] { new Vector2(13, 16), new Vector2(14, 16) },
+        new Vector2[2] { new Vector2(26, 8), new Vector2(26, 9) },
+        new Vector2[2] { new Vector2(13, 0), new Vector2(14, 0) },
+        new Vector2[2] { new Vector2(0, 8), new Vector2(0, 9) },
+        new Vector2[2] { new Vector2(26+13, 16), new Vector2(26+14, 16) },
+        new Vector2[2] { new Vector2(52, 8), new Vector2(52, 9) },
+        new Vector2[2] { new Vector2(26+13, 0), new Vector2(26+14, 0) },
+        new Vector2[2] { new Vector2(13, 32), new Vector2(14, 32) },
+        new Vector2[2] { new Vector2(26, 16+8), new Vector2(26, 16+9) },
+        new Vector2[2] { new Vector2(0, 16+8), new Vector2(0, 16+9) },
+        new Vector2[2] { new Vector2(26+13, 32), new Vector2(26+14, 32) },
+        new Vector2[2] { new Vector2(52, 16+8), new Vector2(52, 16+9) }
+
+    };
+
     public int UID;
     public List<RoomConnection> connections;
     public RoomSize roomSize;
@@ -314,22 +472,33 @@ public class DungeonRoom : IHasRectangle
         {
             for (int y = Mathf.FloorToInt(rect.position.y); y < rect.position.y + rect.size.y; y++)
             {
-                if (isEdgePosition(x, y) && isDoorPosition(x, y) == false)
+                if (isEdgePosition(x, y))
                 {
                     map["Walls", x, y] = GameManager.GM.mapManager.GetTilesetByName("forestTileset").firstTileID;
                 }
                 else
                 {
-                    if (map.isEdge(x, y, true))
-                    {
-                        map["Walls", x, y] = GameManager.GM.mapManager.GetTilesetByName("forestTileset").firstTileID;
-                    }
-                    else
-                    {
-                        map["Walls", x, y] = GameManager.GM.mapManager.GetTilesetByName("forestTileset").firstTileID + 49;
-                    }
+                    map["Walls", x, y] = GameManager.GM.mapManager.GetTilesetByName("forestTileset").firstTileID + 49;
 
                 }
+            }
+        }
+
+        foreach(RoomConnection connection in connections)
+        {
+            int doorID;
+            if (connection.room1 == UID)
+            {
+                doorID = connection.door1;
+            }
+            else
+            {
+                doorID = connection.door2;
+            }
+
+            foreach(Vector2 pos in DungeonRoom.DoorPositions[doorID])
+            {
+                map["Walls", (int)pos.x, (int)pos.y] = GameManager.GM.mapManager.GetTilesetByName("forestTileset").firstTileID + 49;
             }
         }
     }

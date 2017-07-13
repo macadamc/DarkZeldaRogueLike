@@ -20,14 +20,12 @@ public class FleeAction : Action
     public float stepTime;
     public float stepTimeRandomness;
 
-    float stepTimer;
-
-    float moveTimer;
-
-
     public override void BeginAction(StateMachine stateMachine)
     {
         base.BeginAction(stateMachine);
+
+        stateMachine.stateTimers.Add("fleeMoveTimer", Time.time);
+        stateMachine.stateTimers.Add("fleeStepTimer", Time.time);
     }
 
     public override void UpdateAction(StateMachine stateMachine)
@@ -37,24 +35,15 @@ public class FleeAction : Action
         if (stateMachine.entity.stunLocked || PauseManager.gamePaused)
             return;
 
-        if (stepTimer <= 0)
+        if (Time.time >= stateMachine.stateTimers["fleeStepTimer"])
         {
             if (step)
                 stateMachine.entity.LerpStop();
 
-            if (moveTimer > 0)
-            {
-                moveTimer -= Time.deltaTime;
-            }
-            else
+            if (Time.time >= stateMachine.stateTimers["fleeMoveTimer"])
             {
                 Move(stateMachine);
             }
-
-        }
-        else
-        {
-            stepTimer -= Time.deltaTime;
         }
 
     }
@@ -66,26 +55,29 @@ public class FleeAction : Action
         else
             stateMachine.entity.moveVector = GetMoveVector(stateMachine);
 
-        SetMoveTimer();
+        SetMoveTimer(stateMachine);
 
         if (step)
-            SetStepTimer();
+            SetStepTimer(stateMachine);
 
     }
 
     public override void EndAction(StateMachine stateMachine)
     {
         base.EndAction(stateMachine);
+        stateMachine.stateTimers.Remove("fleeMoveTimer");
+        stateMachine.stateTimers.Remove("fleeStepTimer");
     }
 
-    void SetStepTimer()
+    void SetStepTimer(StateMachine stateMachine)
     {
-        stepTimer = stepTime + Random.Range(-stepTimeRandomness, stepTimeRandomness);
+        stateMachine.stateTimers["fleeStepTimer"] = Time.time + stepTime + Random.Range(-stepTimeRandomness, stepTimeRandomness);
+        stateMachine.entity.stepOnGround = false;
     }
 
     public Vector2 GetMoveVector(StateMachine stateMachine)
     {
-        if(stateMachine.visionToTarget)
+        if (stateMachine.visionToTarget)
         {
             Vector2 fleeVector = (stateMachine.entity.transform.position - stateMachine.targetTransform.position).normalized;
             return fleeVector * (moveStr + Random.Range(-moveStrRandomness, moveStrRandomness));
@@ -96,9 +88,9 @@ public class FleeAction : Action
         }
     }
 
-    public void SetMoveTimer()
+    public void SetMoveTimer(StateMachine stateMachine)
     {
-        moveTimer = timeBetweenMovements + Random.Range(-movementTimerRandomness, movementTimerRandomness);
+        stateMachine.stateTimers["fleeMoveTimer"] = Time.time + timeBetweenMovements + Random.Range(-movementTimerRandomness, movementTimerRandomness);
     }
 
 }

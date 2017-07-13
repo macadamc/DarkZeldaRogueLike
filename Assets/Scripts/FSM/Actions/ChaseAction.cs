@@ -20,14 +20,12 @@ public class ChaseAction : Action
     public float stepTime;
     public float stepTimeRandomness;
 
-    float stepTimer;
-
-    float moveTimer;
-
-
     public override void BeginAction(StateMachine stateMachine)
     {
         base.BeginAction(stateMachine);
+
+        stateMachine.stateTimers.Add("chaseMoveTimer", Time.time);
+        stateMachine.stateTimers.Add("chaseStepTimer", Time.time);
     }
 
     public override void UpdateAction(StateMachine stateMachine)
@@ -37,24 +35,15 @@ public class ChaseAction : Action
         if (stateMachine.entity.stunLocked || PauseManager.gamePaused)
             return;
 
-        if (stepTimer <= 0)
+        if (Time.time >= stateMachine.stateTimers["chaseStepTimer"])
         {
             if (step)
                 stateMachine.entity.LerpStop();
 
-            if (moveTimer > 0)
-            {
-                moveTimer -= Time.deltaTime;
-            }
-            else
+            if (Time.time >= stateMachine.stateTimers["chaseMoveTimer"])
             {
                 Move(stateMachine);
             }
-
-        }
-        else
-        {
-            stepTimer -= Time.deltaTime;
         }
 
     }
@@ -66,7 +55,7 @@ public class ChaseAction : Action
         else
             stateMachine.entity.moveVector = GetMoveVector(stateMachine);
 
-        SetMoveTimer();
+        SetMoveTimer(stateMachine);
 
         if (step)
             SetStepTimer(stateMachine);
@@ -76,11 +65,13 @@ public class ChaseAction : Action
     public override void EndAction(StateMachine stateMachine)
     {
         base.EndAction(stateMachine);
+        stateMachine.stateTimers.Remove("chaseMoveTimer");
+        stateMachine.stateTimers.Remove("chaseStepTimer");
     }
 
     void SetStepTimer(StateMachine stateMachine)
     {
-        stepTimer = stepTime + Random.Range(-stepTimeRandomness, stepTimeRandomness);
+        stateMachine.stateTimers["chaseStepTimer"] = Time.time + stepTime + Random.Range(-stepTimeRandomness, stepTimeRandomness);
         stateMachine.entity.stepOnGround = false;
     }
 
@@ -97,9 +88,9 @@ public class ChaseAction : Action
         }
     }
 
-    public void SetMoveTimer()
+    public void SetMoveTimer(StateMachine stateMachine)
     {
-        moveTimer = timeBetweenMovements + Random.Range(-movementTimerRandomness, movementTimerRandomness);
+        stateMachine.stateTimers["chaseMoveTimer"] = Time.time + timeBetweenMovements + Random.Range(-movementTimerRandomness, movementTimerRandomness);
     }
 
 }
