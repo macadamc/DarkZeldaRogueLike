@@ -15,8 +15,12 @@ MonoBehaviour:
   - name: Fly
     firstLvl: 1
     prefab: {fileID: 1514858578450000, guid: f65a53e42b232604eabea14dc6047daa, type: 2}
+  - name: Ghost
+    firstLvl: 1
+    prefab: {fileID: 1348165859302166, guid: e5fac876e03a7ec498652fb47f296d85, type: 2}
   passiveKeys:
   - Fly
+  - Ghost
   enemysData:
   - name: Mushroom
     firstLvl: 1
@@ -30,7 +34,12 @@ MonoBehaviour:
     firstLvl: 1
     cost: 1
     prefab: {fileID: 1643843654571222, guid: 766a66b519125164c9612680fdb18416, type: 2}
+  - name: MutantSpider
+    firstLvl: 1
+    cost: 1
+    prefab: {fileID: 1517933082313742, guid: c443a3d653383904a9d25004d7282185, type: 2}
   enemyKeys:
   - Mushroom
   - Spider
   - Bat
+  - MutantSpider

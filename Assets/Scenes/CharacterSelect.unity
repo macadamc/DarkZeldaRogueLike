@@ -165,12 +165,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 10496090}
---- !u!114 &57794886 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114278707458427898, guid: 0930538bdf069f143a9b33787ef59584,
-    type: 2}
-  m_PrefabInternal: {fileID: 570440911}
-  m_Script: {fileID: 11500000, guid: 12c240fa8d255f24dbf3bab060bfedfd, type: 3}
 --- !u!1 &78931326
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,11 +915,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114503947962638904, guid: 0930538bdf069f143a9b33787ef59584,
-        type: 2}
-      propertyPath: levelConfigs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4548567156818846, guid: 0930538bdf069f143a9b33787ef59584, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -962,50 +951,8 @@ Prefab:
         type: 2}
       propertyPath: levelConfigs.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 105ffaccc3f21d8489972d43242b9ded,
+      objectReference: {fileID: 11400000, guid: bcd6a46df1fa9f9408912fde092ece5a,
         type: 2}
-    - target: {fileID: 114503947962638904, guid: 0930538bdf069f143a9b33787ef59584,
-        type: 2}
-      propertyPath: CurrentConfig
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114746536482095878, guid: 0930538bdf069f143a9b33787ef59584,
-        type: 2}
-      propertyPath: itemPanel
-      value: 
-      objectReference: {fileID: 57794886}
-    - target: {fileID: 114746536482095878, guid: 0930538bdf069f143a9b33787ef59584,
-        type: 2}
-      propertyPath: deathScreen
-      value: 
-      objectReference: {fileID: 1356962722}
-    - target: {fileID: 114746536482095878, guid: 0930538bdf069f143a9b33787ef59584,
-        type: 2}
-      propertyPath: entityMetaData
-      value: 
-      objectReference: {fileID: 11400000, guid: 0c2ebffb30379c745966f51e898a4516,
-        type: 2}
-    - target: {fileID: 114746536482095878, guid: 0930538bdf069f143a9b33787ef59584,
-        type: 2}
-      propertyPath: itemsMetaData
-      value: 
-      objectReference: {fileID: 11400000, guid: af2e218907d789740ac31f6eda87cf68,
-        type: 2}
-    - target: {fileID: 114746536482095878, guid: 0930538bdf069f143a9b33787ef59584,
-        type: 2}
-      propertyPath: levelGenerator
-      value: 
-      objectReference: {fileID: 920060104}
-    - target: {fileID: 114746536482095878, guid: 0930538bdf069f143a9b33787ef59584,
-        type: 2}
-      propertyPath: progressionManager
-      value: 
-      objectReference: {fileID: 920060105}
-    - target: {fileID: 114503947962638904, guid: 0930538bdf069f143a9b33787ef59584,
-        type: 2}
-      propertyPath: currentLevel
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0930538bdf069f143a9b33787ef59584, type: 2}
   m_IsPrefabParent: 0
@@ -1496,18 +1443,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 686821932}
---- !u!114 &920060104 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114503947962638904, guid: 0930538bdf069f143a9b33787ef59584,
-    type: 2}
-  m_PrefabInternal: {fileID: 570440911}
-  m_Script: {fileID: 11500000, guid: 374b7b3ef0b275d44a160ee89da02601, type: 3}
---- !u!114 &920060105 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114107108692648908, guid: 0930538bdf069f143a9b33787ef59584,
-    type: 2}
-  m_PrefabInternal: {fileID: 570440911}
-  m_Script: {fileID: 11500000, guid: 61cb24ffc140a3d4db65eeedc976aa15, type: 3}
 --- !u!1 &920063595 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1451199808810784, guid: 0930538bdf069f143a9b33787ef59584,
@@ -1825,6 +1760,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!84 &1163119354
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: SpriteLightKit RT
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_Width: 1174
+  m_Height: 734
+  m_AntiAliasing: 1
+  m_DepthFormat: 0
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_TextureSettings:
+    m_FilterMode: 0
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapMode: 1
 --- !u!1001 &1205906065
 Prefab:
   m_ObjectHideFlags: 0
@@ -1873,12 +1830,12 @@ Prefab:
         type: 2}
       propertyPath: m_TargetTexture
       value: 
-      objectReference: {fileID: 1258583871}
+      objectReference: {fileID: 1163119354}
     - target: {fileID: 114626191569548436, guid: 3d4613150b62b224aa2573fd59dea0ca,
         type: 2}
       propertyPath: spriteLightRT
       value: 
-      objectReference: {fileID: 1258583871}
+      objectReference: {fileID: 1163119354}
     - target: {fileID: 114072736348378320, guid: 3d4613150b62b224aa2573fd59dea0ca,
         type: 2}
       propertyPath: m_Enabled
@@ -1907,43 +1864,16 @@ Prefab:
     - target: {fileID: 20560482750851072, guid: 3d4613150b62b224aa2573fd59dea0ca,
         type: 2}
       propertyPath: orthographic size
-      value: 7.65625
+      value: 3.90625
       objectReference: {fileID: 0}
     - target: {fileID: 20929674518203920, guid: 3d4613150b62b224aa2573fd59dea0ca,
         type: 2}
       propertyPath: orthographic size
-      value: 7.65625
+      value: 7.645834
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d4613150b62b224aa2573fd59dea0ca, type: 2}
   m_IsPrefabParent: 0
---- !u!84 &1258583871
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: SpriteLightKit RT
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_Width: 1176
-  m_Height: 735
-  m_AntiAliasing: 1
-  m_DepthFormat: 0
-  m_ColorFormat: 0
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_TextureSettings:
-    m_FilterMode: 0
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapMode: 1
---- !u!1 &1356962722 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1409251539416194, guid: 0930538bdf069f143a9b33787ef59584,
-    type: 2}
-  m_PrefabInternal: {fileID: 570440911}
 --- !u!114 &1361488001 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114665667233330060, guid: 3d4613150b62b224aa2573fd59dea0ca,

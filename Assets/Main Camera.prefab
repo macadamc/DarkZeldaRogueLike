@@ -100,7 +100,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.65625
+  orthographic size: 7.53125
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -134,7 +134,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.65625
+  orthographic size: 7.53125
   m_Depth: -11
   m_CullingMask:
     serializedVersion: 2
@@ -273,11 +273,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxCameraHalfWidthEnabled: 1
   maxCameraHalfHeightEnabled: 1
-  maxCameraHalfWidth: 12.88
-  maxCameraHalfHeight: 8.05
-  targetDimension: 1
-  targetCameraHalfWidth: 10
-  targetCameraHalfHeight: 8.05
+  maxCameraHalfWidth: 12.5
+  maxCameraHalfHeight: 10
+  targetDimension: 0
+  targetCameraHalfWidth: 12
+  targetCameraHalfHeight: 10
   pixelPerfect: 1
   retroSnap: 0
   assetsPixelsPerUnit: 16

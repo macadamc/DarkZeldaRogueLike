@@ -9,27 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5d2fb04c509d6847b9e04c15dae2099, type: 3}
-  m_Name: Mushroom
+  m_Name: GhostStats
   m_EditorClassIdentifier: 
-  objName: Mushroom
-  health: 1
-  acceleration: 0
-  moveSpeed: 0
-  knockbackDeceleration: 100
+  objName: Ghost
+  health: 0
+  acceleration: 2
+  moveSpeed: 2
+  knockbackDeceleration: 0.05
   visionLayer:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 1024
   obsLayer:
     serializedVersion: 2
     m_Bits: 0
   softCollisions:
     serializedVersion: 2
     m_Bits: 0
-  visionDistance: 5
+  visionDistance: 10
   fieldOfView: 0
   spawnOnCreate: []
-  spawnOnDeath:
-  - objectToSpawn: {fileID: 1194039438552996, guid: 5993d898504ea6945a11da0617815372,
-      type: 2}
-    positionOffset: {x: 0, y: 0}
-    positionRandomness: 0
+  spawnOnDeath: []

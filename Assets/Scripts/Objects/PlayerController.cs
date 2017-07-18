@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        if (currentAttack == AttackSlot.One && onUp && weapon != null)
+        if (currentAttack == AttackSlot.One && !onHeld && weapon != null)
         {
             weapon.OnAttackEnd(entity);
             currentAttack = AttackSlot.None;
@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        if (currentAttack == AttackSlot.Two && onUp && weapon != null)
+        if (currentAttack == AttackSlot.Two && !onHeld && weapon != null)
         {
             weapon.OnAttackEnd(entity);
             currentAttack = AttackSlot.None;

@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Name: MutantSpiderStats
   m_EditorClassIdentifier: 
   objName: MutantSpider
-  health: 6
+  health: 2
   acceleration: 1
-  moveSpeed: 3
+  moveSpeed: 8
   knockbackDeceleration: 8
   visionLayer:
     serializedVersion: 2
     m_Bits: 1536
   obsLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 512
   softCollisions:
     serializedVersion: 2
     m_Bits: 1024

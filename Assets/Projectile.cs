@@ -37,6 +37,12 @@ public class Projectile : WeaponAttack {
     public override void OnTriggerEnter2D(Collider2D other)
     {
         base.OnTriggerEnter2D(other);
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+        {
+            SpawnAndDestroy();
+        }
+
         /*
         Entity oe = other.GetComponent<Entity>();
         if (oe != null && oe == owner)

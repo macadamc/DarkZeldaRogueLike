@@ -17,7 +17,7 @@ public class Staff : MeleeBase {
         base.OnAttackEnd(entity);
         if (triggerHoldAtk)
         {
-            CreateProjectile(entity, entity.lookDir * 10f);
+            CreateProjectile(entity, entity.lookDir * 4f);
         }
     }
 
@@ -27,7 +27,6 @@ public class Staff : MeleeBase {
         arrow.transform.localPosition = entity.atkPos;
         arrow.GetComponent<Projectile>().owner = entity;
         arrow.GetComponent<Projectile>().moveVector = velocityVector;
-        arrow.GetComponent<Projectile>().destroyAfterTime = 2f;
         arrow.GetComponent<Projectile>().d_owner = entity.gameObject.GetComponent<Destructable>();
         arrow.GetComponent<Projectile>().weapon = this;
     }

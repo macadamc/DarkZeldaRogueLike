@@ -13,6 +13,7 @@ public class Entity : Destructable
     public float softCollisionForce;
 
     public bool flipSpriteBasedOnVel;
+    public bool flipSpriteBasedOnStateMachine;
 
     public ScriptableAnimationController sac;
     [HideInInspector]
@@ -105,7 +106,7 @@ public class Entity : Destructable
         //base.Start();
 
         Equip(weaponName, 0);
-        Equip("PoisonBow", 1);
+        Equip("Staff", 1);
 
         //curMaxSpd = stats.moveSpeed;
     }
@@ -225,9 +226,24 @@ public class Entity : Destructable
                     }
                 }
             }
+            if (flipSpriteBasedOnStateMachine && !strafe)
+            {
+                if (stateMachineTargetTransform == null)
+                    return;
+                if (stateMachineVisionToTarget == false)
+                    return;
+
+                if (stateMachineTargetTransform.position.x > transform.position.x)
+                {
+                    rend.flipX = false;
+                }
+                else
+                if (stateMachineTargetTransform.position.x < transform.position.x)
+                {
+                    rend.flipX = true;
+                }
+            }
         }
-
-
     }
 
     public void CheckForSoftCollisions(float size, float pushForce)

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: BatStats
   m_EditorClassIdentifier: 
   objName: Bat
-  health: 2
+  health: 1
   acceleration: 0
   moveSpeed: 3
   knockbackDeceleration: 5

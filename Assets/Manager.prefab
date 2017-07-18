@@ -2830,9 +2830,6 @@ MonoBehaviour:
   SpawnBoss: 0
   levelConfigs:
   - {fileID: 11400000, guid: 105ffaccc3f21d8489972d43242b9ded, type: 2}
-  - {fileID: 11400000, guid: 105ffaccc3f21d8489972d43242b9ded, type: 2}
-  - {fileID: 11400000, guid: 105ffaccc3f21d8489972d43242b9ded, type: 2}
-  - {fileID: 11400000, guid: c85c81490a486f3468f856f83fc81b44, type: 2}
   CurrentConfig: {fileID: 0}
 --- !u!114 &114534237762211084
 MonoBehaviour:

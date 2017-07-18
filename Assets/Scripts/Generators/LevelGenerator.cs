@@ -22,6 +22,14 @@ public class LevelGenerator : MonoBehaviour {
 
     }
 
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Backspace))
+        {
+            GenerateLvL();
+        }
+    }
+
     void OnLevelLoad(Scene scene, LoadSceneMode mode)
     {
         GenerateLvL();

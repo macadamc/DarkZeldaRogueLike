@@ -7,6 +7,8 @@ public class LookForTargetsAction : Action {
 
     public string[] targetTags;
 
+    public bool faceTarget;
+
     public override void BeginAction(StateMachine stateMachine)
     {
         base.BeginAction(stateMachine);

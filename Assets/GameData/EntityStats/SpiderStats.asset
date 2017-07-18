@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: SpiderStats
   m_EditorClassIdentifier: 
   objName: Spider
-  health: 3
+  health: 2
   acceleration: 1
   moveSpeed: 5
   knockbackDeceleration: 8
